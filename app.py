@@ -18,9 +18,11 @@ def save_books(books):
     with open(BOOKS_FILE, 'w') as f:
         json.dump(books, f, indent=4)
 
-@app.route('/')
+@app.route("/")
 def welcome():
-    return render_template('welcome.html')
+    image_folder = os.path.join(app.static_folder, 'images')
+    images = [img for img in os.listdir(image_folder) if img.endswith(('.jpg', '.png'))]
+    return render_template("welcome.html", images=images)
 
 @app.route('/home')
 def home():
