@@ -81,12 +81,11 @@ header nav ul li a:hover {
   background-color: #0056b3;
 }
 
-/* Book Carousel */
+/* Book Carousel with Auto-Scroll */
 .ad-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 40px 0;
+  overflow: hidden;
   background-color: #fff;
+  padding: 40px 0;
   border-top: 2px solid #eee;
   border-bottom: 2px solid #eee;
 }
@@ -95,11 +94,14 @@ header nav ul li a:hover {
   display: flex;
   gap: 20px;
   padding: 0 20px;
+  animation: scrollBooks 25s linear infinite;
+  width: max-content;
 }
 
 .ad-card {
-  display: inline-block;
+  flex: 0 0 auto;
   width: 180px;
+  height: 280px;
   background-color: #fefefe;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -107,17 +109,16 @@ header nav ul li a:hover {
   transition: transform 0.3s ease;
 }
 
-.ad-card:hover {
-  transform: scale(1.05);
-}
-
 .ad-card img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;
+  height: 100%;
   object-fit: contain;
   border-radius: 8px;
   background-color: #fff;
+}
+
+.ad-card:hover {
+  transform: scale(1.05);
 }
 
 /* Info Sections */
@@ -150,12 +151,17 @@ header nav ul li a:hover {
   text-decoration: underline;
 }
 
-/* Footer */
+/* Footer Fixes */
 footer {
   background-color: #1e1e2f;
   color: white;
   padding: 30px 20px;
   text-align: center;
+  margin-top: 60px;
+}
+
+footer nav {
+  margin-bottom: 10px;
 }
 
 footer nav a {
@@ -186,7 +192,12 @@ footer nav a:hover {
   100% { background-position: 0% 50%; }
 }
 
-/* Responsive */
+@keyframes scrollBooks {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 36px;
@@ -197,7 +208,8 @@ footer nav a:hover {
   }
 
   .ad-card {
-    width: 150px;
+    width: 140px;
+    height: 210px;
   }
 
   .info-section h2 {
@@ -206,5 +218,10 @@ footer nav a:hover {
 
   .info-section p {
     font-size: 16px;
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px 20px;
   }
 }
