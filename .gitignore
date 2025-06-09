@@ -1,0 +1,16 @@
+# Bytecode & cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+chatterbot_env/
+
+# Environment variables
+.env
+
+# OS/Editor files
+.DS_Store
+.vscode/
+.idea/
