@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +29,10 @@
   <div class="ad-container" data-aos="fade-up">
     <div class="ad-content">
       {% for img in [
-        'deepwork.jpg','richdad.jpg','alchemist.jpg'
+        'deep_work_cover.jpg', 'richdad_poordad.jpg', 'The Alchemist.jpg'
       ] %}
         <div class="ad-card">
-          <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ img.rsplit('.',1)[0] }}">
+          <img src="{{ url_for('static', filename='images/' + img) }}" alt="{{ img.rsplit('.',1)[0] }}">
         </div>
       {% endfor %}
     </div>
