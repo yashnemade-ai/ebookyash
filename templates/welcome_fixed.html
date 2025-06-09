@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - E‑Book Website</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="#support"><i class="fas fa-headset"></i> Support</a></li>
+        <li><a href="{{ url_for('home') }}" class="button"><i class="fas fa-book"></i> Browse Books</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero" data-aos="fade-in">
+    <h1>Welcome to the E‑Book World</h1>
+    <p>Your gateway to knowledge and inspiration</p>
+  </div>
+
+  <!-- Scrolling Book Cards -->
+  <div class="ad-container" data-aos="fade-up">
+    <div class="ad-content">
+      {% for img in [
+        'Atomic_habits.jpg','Hyperfocus.jpg','richdad_poordad.jpg','A.P.J. Abdul Kalam.jpg',
+        'M.K.Gandhi.jpg','The Alchemist.jpg','the intelligent investor.jpg',
+        'The psychology of money.jpg','The Simple Path To Wealth.jpg',
+        'the subconscious mind.jpg','Thinking, Fast and Slow.jpg',
+        'mans-search-for-meaning.jpg','deep_work_cover.jpg','the power of now.jpg',
+        'how to win friends and influece people.png','the 7 habits og highly effective people.jpg'] %}
+        <div class="ad-card">
+          <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ img.rsplit('.',1)[0] }}">
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="info-section" id="about" data-aos="fade-up">
+    <h2>About Us</h2>
+    <p>We are a platform dedicated to providing a diverse collection of e‑books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
+  </div>
+
+  <!-- Support Section -->
+  <div class="info-section" id="support" data-aos="fade-up">
+    <h2>Support</h2>
+    <p>If you have any questions or need assistance, feel free to contact us. Our support team is available 24/7 to help you with any queries you may have.</p>
+    <div class="contact-info">
+      <a href="tel:+917020435867"><i class="fas fa-phone"></i> Call: +91 7020435867</a>
+      <a href="mailto:support@ebookwebsite.com"><i class="fas fa-envelope"></i> Email: support@ebookwebsite.com</a>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="cta-section" data-aos="fade-up">
+    <h2>Discover your next favourite book today</h2>
+    <p>Browse our library and start reading instantly.</p>
+    <a href="{{ url_for('home') }}" class="button"><i class="fas fa-arrow-circle-right"></i> Browse Books</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <nav>
+      <a href="{{ url_for('welcome') }}">Home</a>
+      <a href="#about">About</a>
+      <a href="#support">Support</a>
+    </nav>
+    <p>&copy; 2025 E‑Book Website. All rights reserved.</p>
+  </footer>
+
+  <!-- AOS Animation Script -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>
