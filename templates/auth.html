@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #A7C7E7; /* Lighter Blue Background */
+      overflow: hidden;
+      animation: backgroundColor 10s ease infinite; /* Animation for background color */
+    }
+
+    @keyframes backgroundColor {
+      0% { background-color: #A7C7E7; }
+      50% { background-color: #A1C9D1; }
+      100% { background-color: #A7C7E7; }
+    }
+
+    /* Particle Background */
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      height: 500px;
+      display: flex;
+      position: relative;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      animation: formAnimation 0.8s ease-in-out; /* Animation for container */
+    }
+
+    @keyframes formAnimation {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .form-container {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      transition: all 0.5s ease;
+    }
+
+    .form-box {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.6s forwards;
+      align-items: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .form-box h2 {
+      font-size: 24px;
+      color: #007BFF;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: textFadeIn 1s ease-in-out;
+    }
+
+    @keyframes textFadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      animation: inputAnimation 0.5s ease-in-out;
+    }
+
+    @keyframes inputAnimation {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .form-box input:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+      outline: none;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 12px;
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: block;
+      transition: background 0.3s, transform 0.2s ease;
+      animation: buttonAnimation 0.7s ease-in-out;
+    }
+
+    @keyframes buttonAnimation {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .form-box button:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    .switch-button {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #007BFF;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .switch-button:hover {
+      color: #0056b3;
+    }
+
+    .info-panel {
+      width: 50%;
+      background: #007BFF; /* Blue background for info panel */
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      transition: all 0.5s ease;
+    }
+
+    .info-panel h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      animation: textFadeIn 1.2s ease-in-out;
+    }
+
+    .info-panel p {
+      font-size: 16px;
+      text-align: center;
+      max-width: 300px;
+      animation: textFadeIn 1.4s ease-in-out;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+      }
+
+      .form-container,
+      .info-panel {
+        width: 100%;
+        padding: 30px;
+      }
+
+      .info-panel {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div> <!-- Particle Background -->
+
+<div class="container" id="container">
+  <!-- Left: Login / Signup Forms -->
+  <div class="form-container" id="formPanel">
+    <!-- Login Box -->
+    <div class="form-box" id="loginBox">
+      <h2>Login</h2>
+      <form method="POST" action="/login" onsubmit="return validateLogin()">
+        <input type="email" id="loginEmail" name="email" placeholder="Email" required />
+        <input type="password" id="loginPassword" name="password" placeholder="Password" required />
+        <div id="loginError" class="error-message">Both fields are required!</div>
+        <button type="submit">Login</button>
+      </form>
+      <div class="switch-button" onclick="showSignup()">Don't have an account? Sign Up</div>
+    </div>
+
+    <!-- Sign Up Box -->
+    <div class="form-box" id="signupBox" style="display: none;">
+      <h2>Sign Up</h2>
+      <form method="POST" action="/signup" onsubmit="return validateSignup()">
+        <input type="text" id="username" name="username" placeholder="Username" required />
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required />
+        <div id="signupError" class="error-message">Passwords do not match!</div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="switch-button" onclick="showLogin()">Already have an account? Login</div>
+    </div>
+  </div>
+
+  <!-- Right: Blue Info Panel -->
+  <div class="info-panel" id="infoPanel">
+    <h1>Welcome Back!</h1>
+    <p>"Books are a uniquely portable magic." – Stephen King</p>
+  </div>
+</div>
+
+<script>
+  function showSignup() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "flex";
+    document.getElementById("infoPanel").querySelector("h1").innerText = "Join Us!";
+    document.getElementById("infoPanel").querySelector("p").innerText = "\"Start your reading journey with us.\"";
+  }
+
+  function showLogin() {
+    document.getElementById("signupBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "flex";
+    document.getElementById("infoPanel").querySelector("h1").innerText = "Welcome Back!";
+    document.getElementById("infoPanel").querySelector("p").innerText = "\"Books are a uniquely portable magic.\" – Stephen King";
+  }
+
+  function validateLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const error = document.getElementById('loginError');
+    if (!email || !password) {
+      error.style.display = "block";
+      return false;
+    }
+    error.style.display = "none";
+    return true;
+  }
+
+  function validateSignup() {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    const error = document.getElementById('signupError');
+    if (!username || !email || !password || !confirm) {
+      error.style.display = "block";
+      error.innerText = "All fields are required!";
+      return false;
+    }
+    if (password !== confirm) {
+      error.style.display = "block";
+      error.innerText = "Passwords do not match!";
+      return false;
+    }
+    error.style.display = "none";
+    return true;
+  }
+
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 100,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#007BFF"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#fff"
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 5,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 4,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#007BFF",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false
+      }
+    },
+    "retina_detect": true
+  });
+</script>
+
+</body>
+</html>

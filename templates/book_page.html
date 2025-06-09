@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ book.title }} | E-Book Reader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f7f7f7, #e0e7ff), url('https://www.transparenttextures.com/patterns/diagonal-stripes-light.png');
+      background-size: cover;
+      color: #333;
+      background-attachment: fixed;
+    }
+
+    header {
+      background-color: #1f2937;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      display: flex;
+      gap: 3rem;
+      padding: 0 2rem;
+      flex-wrap: wrap;
+      transition: transform 0.3s ease;
+    }
+
+    .book-image {
+      flex: 1 1 300px;
+      max-width: 350px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .book-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .book-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .book-info {
+      flex: 2;
+      max-width: 600px;
+    }
+
+    .book-info h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1f2937;
+      transition: color 0.3s ease;
+    }
+
+    .book-info h2:hover {
+      color: #2563eb;
+    }
+
+    .book-info .author {
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .book-info p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #444;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-4px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book-info {
+        text-align: center;
+      }
+
+      .book-image {
+        max-width: 300px;
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 1rem;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      nav a {
+        margin-left: 1rem;
+      }
+
+      .book-info h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>E-Book Reader</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="book-image">
+      <img src="{{ url_for('static', filename='images/' + book.image_url.split('/')[-1]) }}" alt="{{ book.title }} cover">
+    </div>
+
+    <div class="book-info">
+      <h2>{{ book.title }}</h2>
+      <p class="author">By {{ book.author }}</p>
+      <p>{{ book.description }}</p>
+      <a href="{{ url_for('book_pdf', id=book.id) }}" class="cta-button" target="_blank">📖 Read Book</a>
+    </div>
+  </div>
+
+  <!-- Font Awesome CDN (for logout icon) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

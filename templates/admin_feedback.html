@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Feedback</title>
+</head>
+<body>
+    <h1>Admin Feedback</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Feedback</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feedback in feedback_list %}
+                <tr>
+                    <td>{{ feedback.username }}</td>
+                    <td>{{ feedback.feedback }}</td>
+                    <td>{{ feedback.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></p>
+</body>
+</html>
