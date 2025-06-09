@@ -46,7 +46,7 @@ header nav ul li a:hover {
 
 /* Hero Section with Animated Gradient */
 .hero {
-  padding: 100px 20px;
+  padding: 100px 20px 40px;
   text-align: center;
   color: white;
   background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
@@ -62,23 +62,32 @@ header nav ul li a:hover {
 
 .hero p {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   animation: fadeInUp 1.2s ease-in-out;
 }
 
-/* Call-to-Action Buttons */
-.button {
+.hero .join-btn {
   padding: 12px 28px;
-  background-color: #007bff;
+  background-color: #ff6f61;
   color: white;
   text-decoration: none;
   border-radius: 30px;
   font-size: 16px;
   transition: 0.3s ease;
+  display: inline-block;
+  animation: fadeInUp 1.4s ease-in-out;
 }
 
-.button:hover {
-  background-color: #0056b3;
+.hero .join-btn:hover {
+  background-color: #e4574d;
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  color: #1e1e2f;
+  margin: 60px auto 20px;
 }
 
 /* Book Carousel with Auto-Scroll */
@@ -220,7 +229,8 @@ footer nav a:hover {
     height: 210px;
   }
 
-  .info-section h2 {
+  .info-section h2,
+  .section-title {
     font-size: 24px;
   }
 
@@ -228,7 +238,8 @@ footer nav a:hover {
     font-size: 16px;
   }
 
-  .button {
+  .button,
+  .hero .join-btn {
     font-size: 14px;
     padding: 10px 20px;
   }
