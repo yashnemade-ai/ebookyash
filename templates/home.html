@@ -3,87 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>E-Book Library – Home</title>
-
-  <!-- Main style sheet -->
+  <title>E‑Book Library</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- ─────── Header / Nav ─────── -->
+  <!-- Top Navbar -->
   <header>
     <nav>
       <ul>
-        <li style="margin-right:auto; font-weight:600; font-size:22px;">
-          <i class="fas fa-book-open-reader"></i> E-Book Library
-        </li>
-
         <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ─────── Hero Banner ─────── -->
-  <section class="home-hero">
+  <!-- Hero Section -->
+  <section class="hero">
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-    <!-- Search bar -->
-    <form class="search-bar" action="{{ url_for('search_books') }}" method="GET">
-      <input type="text" name="query" placeholder="Search for books by title…" required>
-
-      <select name="category">
-        <option value="">All Categories</option>
+    <form class="search-bar">
+      <input type="text" placeholder="Search for books by title...">
+      <select>
+        <option>All Categories</option>
         <option>Sci-Fi</option>
         <option>Adventure</option>
-        <option>Fantasy</option>
-        <option>Romance</option>
-        <option>Mystery</option>
+        <option>Self Help</option>
         <option>Biography</option>
-        <option>Self-Help</option>
-        <option>Finance</option>
-        <option>History</option>
+        <!-- You can hardcode or make dynamic -->
       </select>
-
       <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <!-- ─────── Featured Books ─────── -->
-  <h2 class="section-title">Featured Books</h2>
-  <p style="text-align:center; margin-top:-20px; color:#666;">
-    Explore our hand-picked selection of must-read books
-  </p>
+  <!-- Section Title -->
+  <section class="section-title">Featured Books</section>
+  <p style="text-align:center; margin-bottom: 20px; color: #666;">Explore our handpicked selection of must-read books</p>
 
+  <!-- Book Cards -->
   <div class="book-list">
     {% for book in books %}
       <div class="book-card">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }} cover">
-
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
         <h2>{{ book.title }}</h2>
-        <p>{{ book.description[:100] }}…</p>
-
-        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">
-          <i class="fas fa-file-pdf"></i> Read PDF
-        </a>
+        <p>{{ book.description[:100] }}...</p>
+        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
       </div>
     {% endfor %}
   </div>
 
-  <!-- ─────── Feedback / Chat Icon ─────── -->
-  <a href="#"
-     title="Send Feedback"
-     style="position:fixed; bottom:32px; right:32px; background:#ff3366; color:#fff;
-            width:60px; height:60px; border-radius:50%; display:flex; align-items:center;
-            justify-content:center; font-size:24px; box-shadow:0 4px 12px rgba(0,0,0,.2);">
-    <i class="fas fa-comment-dots"></i>
-  </a>
-
-  <!-- Optional: add JS for interactive category search later -->
 </body>
 </html>
