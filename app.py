@@ -1,5 +1,4 @@
-
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 import json
 
@@ -21,23 +20,23 @@ def save_books(books):
 @app.route("/")
 def welcome():
     image_folder = os.path.join(app.static_folder, 'images')
-    images = [img for img in os.listdir(image_folder) if img.endswith(('.jpg', '.png'))]
+    images = [img for img in os.listdir(image_folder) if img.endswith(('.jpg', '.png', '.jpeg'))]
     return render_template("welcome.html", images=images)
 
-@app.route('/home')
+@app.route("/home")
 def home():
     books = load_books()
-    return render_template('home.html', books=books)
+    return render_template("home.html", books=books)
 
-@app.route('/read/<int:book_id>')
+@app.route("/read/<int:book_id>")
 def read_book(book_id):
     books = load_books()
-    book = next((book for book in books if book['id'] == book_id), None)
+    book = next((b for b in books if b["id"] == book_id), None)
     if book:
-        return redirect(url_for('static', filename=book['pdf_file']))
+        return redirect(url_for('static', filename=book["pdf_file"]))
     else:
         flash("Book not found.")
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
 
 @app.before_first_request
 def populate_books_if_empty():
@@ -49,7 +48,7 @@ def populate_books_if_empty():
                 "title": "Deep Work",
                 "author": "Cal Newport",
                 "description": "Rules for focused success in a distracted world.",
-                "pdf_file": "css/pdf/Deep-Work.pdf",
+                "pdf_file": "pdf/Deep-Work.pdf",
                 "image_url": "images/deepwork.jpg"
             },
             {
@@ -57,7 +56,7 @@ def populate_books_if_empty():
                 "title": "Rich Dad Poor Dad",
                 "author": "Robert Kiyosaki",
                 "description": "What the rich teach their kids about money.",
-                "pdf_file": "css/pdf/Rich Dad Poor Dad.pdf",
+                "pdf_file": "pdf/Rich Dad Poor Dad.pdf",
                 "image_url": "images/richdad.jpg"
             },
             {
@@ -65,7 +64,7 @@ def populate_books_if_empty():
                 "title": "The Alchemist",
                 "author": "Paulo Coelho",
                 "description": "A journey of self-discovery.",
-                "pdf_file": "css/pdf/The_Alchemist.pdf",
+                "pdf_file": "pdf/The_Alchemist.pdf",
                 "image_url": "images/alchemist.jpg"
             }
         ]
