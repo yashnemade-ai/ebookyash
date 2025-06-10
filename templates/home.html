@@ -61,17 +61,17 @@
     }
     .blob {
       background:radial-gradient(circle, rgba(255,113,113,.35), rgba(255,113,113,0) 70%);
-      top:50px; left:-200px;
+      top:50px; right:0;
     }
     .blob.alt {
       background:radial-gradient(circle, rgba(123,104,238,.32), rgba(123,104,238,0) 70%);
-      top:100px; right:-200px;
+      top:100px; right:150px;
       animation-delay: 9s;
     }
     @keyframes horizontalMove {
-      0% { transform: translateX(-100px); }
-      50% { transform: translateX(100px); }
-      100% { transform: translateX(-100px); }
+      0% { transform: translateX(0); }
+      50% { transform: translateX(40px); }
+      100% { transform: translateX(0); }
     }
 
     /* Search Bar */
@@ -83,6 +83,7 @@
       box-shadow:0 12px 30px rgba(0,0,0,.08);
       padding:6px;
       display:flex; gap:0;
+      transition: all 0.3s ease-in-out;
     }
     .search-bar input{
       flex:2 1 280px; border:none; outline:none;
@@ -91,15 +92,20 @@
     }
     .search-bar select{
       flex:1 1 180px; border:none; outline:none;
-      font-size:.93rem; padding:0 20px; color:#555;
+      font-size:.93rem; padding:0 20px; color:#e74c3c;
       appearance:none;
       background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
       background-color: #fff;
+      font-weight:600;
+      transition: background 0.3s;
+    }
+    .search-bar select:hover {
+      background-color: #ffe6e6;
     }
     .search-bar button{
       border:none; outline:none; cursor:pointer;
       padding:0 34px; display:flex; align-items:center; gap:.45rem;
-      background:#e74c3c; color:#fff; font-weight:500;
+      background:#e74c3c; color:#fff; font-weight:600;
       border-radius:50px; transition:.25s;
     }
     .search-bar button:hover{ background:#c0392b; }
@@ -227,6 +233,4 @@
   </div>
 
 </body>
-</html> code and style is very good add same pink and purple bolobs at right  side Two gradient blobs (.blob, .blob.alt) now animate horizontally only for a calm, modern background motion. in seach button text bold and same for categories and make some animation add in dropout and select also andgive select color red and dont chnage layout style
-
-
+</html>
