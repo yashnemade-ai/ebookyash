@@ -3,230 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Book Library – Home</title>
+  <title>Book Home</title>
 
-  <!-- Google Font for that smooth weight -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Main site CSS (your existing stylesheet) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+  <!-- Extra page-specific styles -->
   <style>
-    /* ------------- RESET & BASE ------------ */
-    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-    body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
+    /* ----------  HERO BACKGROUND BLOBS  ---------- */
+    .home-hero {
+      position: relative;
+      background: linear-gradient(135deg,#f8faff 0%,#eef2ff 100%);
+      overflow:hidden;
+    }
+    .home-hero::before,
+    .home-hero::after{
+      content:"";
+      position:absolute;
+      width:550px;height:550px;
+      border-radius:50%;
+      filter:blur(140px);
+      opacity:.55;
+      animation: drift 15s linear infinite alternate;
+    }
+    .home-hero::before{ background:#ff5b8a; left:-300px; top:0;}
+    .home-hero::after { background:#6a5bff; right:-300px; top:60px;}
 
-    a { text-decoration:none; color:inherit; }
-    ul{ list-style:none; }
-
-    /* ------------- NAVBAR ------------------ */
-    header{
-      background:#141d33;   /* dark navy */
-      padding:14px 28px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .brand{
-      font-weight:600; font-size:1.3rem; color:#fff; display:flex; gap:.4rem;
-    }
-    nav ul{ display:flex; gap:18px; }
-    .nav-btn{
-      background:#1e2742; color:#fff; padding:8px 22px;
-      border-radius:6px; font-size:.92rem; transition:.25s;
-      display:flex; align-items:center; gap:.4rem;
-    }
-    .nav-btn:hover{ background:#2d3554; }
-
-    /* ------------- HERO SECTION ------------ */
-    .hero{
-      position:relative;
-      padding:110px 12px 160px;
-      text-align:center;
-      overflow:hidden;   /* hide animated blobs */
-    }
-    .hero h1{
-      font-size:clamp(2rem,4vw,3rem);
-      font-weight:600;
-      color:#111;
-      margin-bottom:.65rem;
-    }
-    .hero p{
-      font-size:clamp(.9rem,1.3vw,1.15rem);
-      color:#67718c;
-      margin-bottom:3.5rem;
+    @keyframes drift{
+      0%  { transform:translateX(-30px); }
+      100%{ transform:translateX(30px);  }
     }
 
-    /* softly-moving blobs */
-    .blob{
-      position:absolute; width:480px; height:480px;
-      background:radial-gradient(circle at 30% 30%,rgba(255,113,113,.35),rgba(255,113,113,0) 70%);
-      filter:blur(50px); border-radius:50%;
-      animation:float 18s linear infinite alternate;
-    }
-    .blob.alt{
-      width:530px; height:530px;
-      top:-120px; right:-120px;
-      background:radial-gradient(circle at 70% 40%,rgba(123,104,238,.32),rgba(123,104,238,0) 70%);
-      animation-duration:22s;
-    }
-    @keyframes float{
-      0%{transform:translate(-100px,60px) scale(.9);}
-      50%{transform:translate(80px,-40px) scale(1.05);}
-      100%{transform:translate(-60px,40px) scale(.9);}
-    }
-
-    /* ------------- SEARCH BAR -------------- */
+    /* ----------  SEARCH BAR  ---------- */
     .search-bar{
-      width:90%; max-width:730px;
-      margin-inline:auto;
-      background:#fff;
-      border-radius:50px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);
-      padding:6px;
-      display:flex; gap:0;
+      display:flex; gap:12px; margin:40px auto 0; padding:12px 18px;
+      background:#fff; border-radius:999px; box-shadow:0 10px 25px rgba(0,0,0,.06);
+      max-width:780px; width:90%; align-items:center; flex-wrap:wrap;
     }
     .search-bar input{
-      flex:2 1 280px; border:none; outline:none;
-      padding:16px 20px; border-radius:50px 0 0 50px;
-      font-size:.95rem;
+      flex:1 1 240px; border:none; outline:none; font-size:15px;
     }
     .search-bar select{
-      flex:1 1 180px; border:none; outline:none;
-      font-size:.93rem; padding:0 20px; color:#555;
-      appearance:none;     /* hide default arrow */
-      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+      flex:0 0 160px; border:none; outline:none; background:#f1f3f9;
+      padding:10px 14px; border-radius:8px; font-size:15px;
     }
-    .search-bar button{
-      border:none; outline:none; cursor:pointer;
-      padding:0 34px; display:flex; align-items:center; gap:.45rem;
-      background:#553CDF; color:#fff; font-weight:500;
-      border-radius:50px; transition:.25s;
+    .search-btn{
+      flex:0 0 120px; background:#4834d4; color:#fff;
+      font-weight:600; border:none; padding:12px 0; border-radius:60px;
+      cursor:pointer; transition:transform .2s, box-shadow .2s;
     }
-    .search-bar button:hover{ background:#432cc1; }
-    .search-bar i{ font-size:.95rem; }
-
-    /* ------------- SECTION TITLE ----------- */
-    .section-title{
-      text-align:center; margin-top:90px;
-    }
-    .section-title h2{
-      font-size:2rem; font-weight:600; color:#111;
-      position:relative; display:inline-block; padding-bottom:.4rem;
-    }
-    .section-title h2::after{
-      content:""; height:3px; width:60px;
-      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-      border-radius:2px;
-    }
-    .section-title p{ color:#67718c; margin-top:.6rem; }
-
-    /* ------------- BOOK CARDS -------------- */
-    .book-grid{
-      display:grid; gap:34px; justify-content:center;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      max-width:1100px; margin:60px auto 120px;
-      padding:0 16px;
-    }
-    .book-card{
-      background:#fff; border-radius:14px; overflow:hidden;
-      box-shadow:0 8px 22px rgba(0,0,0,.08);
-      transition:.3s ease;
-      display:flex; flex-direction:column; text-align:center;
-    }
-    .book-card:hover{ transform:translateY(-6px); box-shadow:0 14px 28px rgba(0,0,0,.12); }
-    .book-card img{ width:100%; height:250px; object-fit:cover; }
-    .book-body{ padding:22px 18px 28px; flex:1; display:flex; flex-direction:column; }
-    .book-body h3{ font-size:1.1rem; margin-bottom:.55rem; color:#222; }
-    .book-body p{ font-size:.87rem; color:#555; margin-bottom:auto; }
-    .book-body a{
-      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
+    .search-btn:active{
+      transform:scale(.93);
+      box-shadow:0 0 0 8px rgba(72,52,212,.25);
     }
 
-    /* ------------- RESPONSIVE -------------- */
-    @media(max-width:600px){
-      .search-bar{ flex-direction:column; border-radius:24px; padding:10px; }
-      .search-bar input,
-      .search-bar select,
-      .search-bar button{ border-radius:12px; width:100%; }
-      .search-bar button{ margin-top:8px; justify-content:center; }
+    @media(max-width:540px){
+      .search-bar{ flex-direction:column; gap:10px; border-radius:18px;}
+      .search-bar select{ width:100%;}
+      .search-btn{ width:100%;}
     }
+
+    /* ----------  BOOK CARDS  ---------- */
+    .book-card{ transition:transform .25s;}
+    .book-card.hide{ display:none;}
+    .book-card:hover{ transform:translateY(-6px);}
   </style>
-
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-
-  <!-- ========= NAVBAR ========= -->
-  <header>
-    <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
-    <nav>
-      <ul>
-        <li><a class="nav-btn" href="#"><i class="fas fa-home"></i> Home</a></li>
-        <li><a class="nav-btn" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- ========= HERO ========= -->
-  <section class="hero">
-    <!-- moving blobs -->
-    <span class="blob"></span>
-    <span class="blob alt"></span>
-
+  <!-- HERO  -->
+  <section class="home-hero">
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-    <!-- SEARCH BAR -->
-    <form class="search-bar">
-      <input type="text" placeholder="Search for books by title…" />
-      <select>
-        <option>All Categories</option>
-        <option>Adventure</option>
-        <option>Biography</option>
-        <option>Fantasy</option>
-        <option>Romance</option>
-        <option>Sci-Fi</option>
-        <option>Self-Help</option>
+    <!-- SEARCH BAR  -->
+    <form class="search-bar" id="filterForm" onsubmit="return false;">
+      <input id="searchInput" type="text" placeholder="Search for books by title…">
+
+      <!-- Category dropdown auto-filled from Jinja list -->
+      <select id="categorySelect">
+        <option value="*">All Categories</option>
+        {% for cat in categories %}
+          <option value="{{ cat|lower }}">{{ cat }}</option>
+        {% endfor %}
       </select>
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
+
+      <button class="search-btn" id="searchBtn">
+        <i class="fas fa-search"></i> Search
+      </button>
     </form>
   </section>
 
-  <!-- ========= FEATURED ========= -->
-  <div class="section-title">
-    <h2>Featured Books</h2>
-    <p>Explore our hand-picked selection of must-read books</p>
+  <!-- FEATURED SECTION -->
+  <h2 class="section-title">Featured Books</h2>
+  <p style="text-align:center;margin-top:-12px;color:#666">
+    Explore our hand-picked selection of must-read books
+  </p>
+
+  <!-- BOOK GRID -->
+  <div class="book-list" id="bookGrid">
+    {% for book in books %}
+      <div class="book-card"
+           data-title="{{ book.title|lower }}"
+           data-category="{{ book.category|lower }}">
+        <img src="{{ url_for('static', filename=book.image_url) }}"
+             alt="{{ book.title }}">
+        <h2>{{ book.title }}</h2>
+        <p>{{ book.description[:100] }}…</p>
+        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+      </div>
+    {% endfor %}
   </div>
 
-  <div class="book-grid">
-    <!-- Repeat these cards dynamically with Jinja                                               -->
-    <div class="book-card">
-      <img src="https://dummyimage.com/400x600/ddd/fff&text=Cover" alt="Book Cover">
-      <div class="book-body">
-        <h3>Deep Work</h3>
-        <p>Rules for focused success in a distracted world…</p>
-        <a href="#">Read PDF</a>
-      </div>
-    </div>
+  <!-- Font Awesome for icon -->
+  <script src="https://kit.fontawesome.com/a6a82c2d07.js" crossorigin="anonymous"></script>
 
-    <!-- Dummy cards for illustration -->
-    <div class="book-card">
-      <img src="https://dummyimage.com/400x600/cac/fff&text=Cover" alt="Book Cover">
-      <div class="book-body">
-        <h3>Rich Dad Poor Dad</h3>
-        <p>What the rich teach their kids about money…</p>
-        <a href="#">Read PDF</a>
-      </div>
-    </div>
+  <!-- ----------  FILTER JS  ---------- -->
+  <script>
+    const searchInput  = document.getElementById('searchInput');
+    const catSelect    = document.getElementById('categorySelect');
+    const bookCards    = [...document.querySelectorAll('.book-card')];
 
-    <div class="book-card">
-      <img src="https://dummyimage.com/400x600/bbb/fff&text=Cover" alt="Book Cover">
-      <div class="book-body">
-        <h3>The Alchemist</h3>
-        <p>A journey of self-discovery…</p>
-        <a href="#">Read PDF</a>
-      </div>
-    </div>
-  </div>
+    function runFilter(){
+      const q   = searchInput.value.trim().toLowerCase();
+      const cat = catSelect.value;
 
+      bookCards.forEach(card=>{
+        const matchTitle = card.dataset.title.includes(q);
+        const matchCat   = (cat==='*' || card.dataset.category===cat);
+        card.classList.toggle('hide', !(matchTitle && matchCat));
+      });
+    }
+
+    // live typing + dropdown change + button click
+    searchInput.addEventListener('keyup', runFilter);
+    catSelect  .addEventListener('change', runFilter);
+    document.getElementById('searchBtn').addEventListener('click',runFilter);
+  </script>
 </body>
 </html>
