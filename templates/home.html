@@ -1,83 +1,46 @@
-{% raw %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>E-Book Library – Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Home</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<!-- ────── HEADER ─────────────────────────────────────────── -->
-<header class="site-header">
-    <div class="header-inner">
-        <div class="logo"><i class="fas fa-book-reader"></i> E-Book Library</div>
-
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<!-- ────── HERO ───────────────────────────────────────────── -->
-<section class="home-hero" data-aos="fade-in">
+  <!-- Hero Section -->
+  <section class="home-hero">
     <h1>Discover Your Next Great Read</h1>
-    <p>Explore thousands of ebooks across every genre,<br>from best-sellers to hidden gems</p>
+    <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-    <!-- search bar -->
-    <form action="{{ url_for('search_books') }}" method="get" class="search-bar" data-aos="fade-up">
-        <input type="text" name="query" placeholder="Search for books by title or author …" required>
-        <!-- optional category dropdown (works even if you leave it empty) -->
-        <select name="category">
-            <option value="">All Categories</option>
-            {% set cats = books|map(attribute='category')|unique|list %}
-            {% for c in cats %}
-                <option value="{{ c }}">{{ c.title() }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit"><i class="fas fa-search"></i> Search</button>
+    <form class="search-bar">
+      <input type="text" placeholder="Search for books by title...">
+      <select>
+        <option>All Categories</option>
+        <!-- Add real categories here if needed -->
+      </select>
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
-</section>
+  </section>
 
-<!-- ────── FEATURED SECTION ───────────────────────────────── -->
-<section>
-    <h2 class="section-title" data-aos="fade-up">Featured Books</h2>
-    <p class="section-sub" data-aos="fade-up">Explore our hand-picked selection of must-read books</p>
+  <!-- Featured Books -->
+  <section class="section-title">Featured Books</section>
 
-    <div class="book-list">
-        {% for book in books %}
-        <div class="book-card" data-aos="zoom-in">
-            <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }} cover">
-            <h2>{{ book.title }}</h2>
-            <p>{{ book.description[:90] }}…</p>
-            <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">
-                <i class="fas fa-book-open"></i> Read PDF
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-</section>
+  <div class="book-list">
+    {% for book in books %}
+      <div class="book-card">
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+        <h2>{{ book.title }}</h2>
+        <p>{{ book.description[:100] }}...</p>
+        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+      </div>
+    {% endfor %}
+  </div>
 
-<!-- ────── FEEDBACK FLOATING BUTTON ───────────────────────── -->
-<a class="feedback-icon" href="#support" title="Leave feedback"><i class="fas fa-comment-dots"></i></a>
-
-<!-- ────── FOOTER (same as welcome page) ──────────────────── -->
-<footer>
-    <nav>
-        <a href="{{ url_for('welcome') }}">Home</a>
-        <a href="#about">About</a>
-        <a href="#support">Support</a>
-    </nav>
-    <p>&copy; {{ now().year }} E-Book Website. All rights reserved.</p>
-</footer>
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init();</script>
 </body>
 </html>
-{% endraw %}
