@@ -4,12 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Welcome - E‑Book Website</title>
+
+  <!-- Your CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- AOS Animations -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
+  <!-- Header Navigation -->
   <header>
     <nav>
       <ul>
@@ -21,12 +28,15 @@
     </nav>
   </header>
 
-  <div class="hero" data-aos="fade-in">
+  <!-- Hero Section -->
+  <section class="hero" data-aos="fade-in">
     <h1>Welcome to the E‑Book World</h1>
     <p>Your gateway to knowledge and inspiration</p>
-  </div>
+  </section>
 
-  <!-- Auto-loaded book covers -->
+  <!-- Featured Collection -->
+  <h2 class="section-title" data-aos="fade-up">Featured Collection</h2>
+
   <div class="ad-container" data-aos="fade-up">
     <div class="ad-content">
       {% for img in images %}
@@ -37,35 +47,40 @@
     </div>
   </div>
 
+  <!-- About Section -->
   <div class="info-section" id="about" data-aos="fade-up">
     <h2>About Us</h2>
     <p>We are a platform dedicated to providing a diverse collection of e‑books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
   </div>
 
+  <!-- Support Section -->
   <div class="info-section" id="support" data-aos="fade-up">
     <h2>Support</h2>
     <p>If you have any questions or need assistance, feel free to contact us. Our support team is available 24/7 to help you with any queries you may have.</p>
     <div class="contact-info">
-      <a href="tel:+917020435867"><i class="fas fa-phone"></i> Call: +91 7020435867</a>
+      <a href="tel:+917020435867"><i class="fas fa-phone"></i> Call: +91 7020435867</a>
       <a href="mailto:support@ebookwebsite.com"><i class="fas fa-envelope"></i> Email: support@ebookwebsite.com</a>
     </div>
   </div>
 
+  <!-- CTA Section -->
   <div class="cta-section" data-aos="fade-up">
     <h2>Discover your next favourite book today</h2>
     <p>Browse our library and start reading instantly.</p>
     <a href="{{ url_for('home') }}" class="button"><i class="fas fa-arrow-circle-right"></i> Browse Books</a>
   </div>
 
+  <!-- Footer -->
   <footer>
     <nav>
       <a href="{{ url_for('welcome') }}">Home</a>
       <a href="#about">About</a>
       <a href="#support">Support</a>
     </nav>
-    <p>&copy; 2025 E‑Book Website. All rights reserved.</p>
+    <p>&copy; 2025 E‑Book Website. All rights reserved.</p>
   </footer>
 
+  <!-- AOS Script -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>AOS.init();</script>
 </body>
