@@ -3,55 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E‑Book Library</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>E-Book Library – Home</title>
+
+  <!-- Google Font for that smooth weight -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ------------- RESET & BASE ------------ */
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
+
+    a { text-decoration:none; color:inherit; }
+    ul{ list-style:none; }
+
+    /* ------------- NAVBAR ------------------ */
+    header{
+      background:#141d33;   /* dark navy */
+      padding:14px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      font-weight:600; font-size:1.3rem; color:#fff; display:flex; gap:.4rem;
+    }
+    nav ul{ display:flex; gap:18px; }
+    .nav-btn{
+      background:#1e2742; color:#fff; padding:8px 22px;
+      border-radius:6px; font-size:.92rem; transition:.25s;
+      display:flex; align-items:center; gap:.4rem;
+    }
+    .nav-btn:hover{ background:#2d3554; }
+
+    /* ------------- HERO SECTION ------------ */
+    .hero{
+      position:relative;
+      padding:110px 12px 160px;
+      text-align:center;
+      overflow:hidden;   /* hide animated blobs */
+    }
+    .hero h1{
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:600;
+      color:#111;
+      margin-bottom:.65rem;
+    }
+    .hero p{
+      font-size:clamp(.9rem,1.3vw,1.15rem);
+      color:#67718c;
+      margin-bottom:3.5rem;
+    }
+
+    /* softly-moving blobs */
+    .blob{
+      position:absolute; width:480px; height:480px;
+      background:radial-gradient(circle at 30% 30%,rgba(255,113,113,.35),rgba(255,113,113,0) 70%);
+      filter:blur(50px); border-radius:50%;
+      animation:float 18s linear infinite alternate;
+    }
+    .blob.alt{
+      width:530px; height:530px;
+      top:-120px; right:-120px;
+      background:radial-gradient(circle at 70% 40%,rgba(123,104,238,.32),rgba(123,104,238,0) 70%);
+      animation-duration:22s;
+    }
+    @keyframes float{
+      0%{transform:translate(-100px,60px) scale(.9);}
+      50%{transform:translate(80px,-40px) scale(1.05);}
+      100%{transform:translate(-60px,40px) scale(.9);}
+    }
+
+    /* ------------- SEARCH BAR -------------- */
+    .search-bar{
+      width:90%; max-width:730px;
+      margin-inline:auto;
+      background:#fff;
+      border-radius:50px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      padding:6px;
+      display:flex; gap:0;
+    }
+    .search-bar input{
+      flex:2 1 280px; border:none; outline:none;
+      padding:16px 20px; border-radius:50px 0 0 50px;
+      font-size:.95rem;
+    }
+    .search-bar select{
+      flex:1 1 180px; border:none; outline:none;
+      font-size:.93rem; padding:0 20px; color:#555;
+      appearance:none;     /* hide default arrow */
+      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+    }
+    .search-bar button{
+      border:none; outline:none; cursor:pointer;
+      padding:0 34px; display:flex; align-items:center; gap:.45rem;
+      background:#553CDF; color:#fff; font-weight:500;
+      border-radius:50px; transition:.25s;
+    }
+    .search-bar button:hover{ background:#432cc1; }
+    .search-bar i{ font-size:.95rem; }
+
+    /* ------------- SECTION TITLE ----------- */
+    .section-title{
+      text-align:center; margin-top:90px;
+    }
+    .section-title h2{
+      font-size:2rem; font-weight:600; color:#111;
+      position:relative; display:inline-block; padding-bottom:.4rem;
+    }
+    .section-title h2::after{
+      content:""; height:3px; width:60px;
+      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      border-radius:2px;
+    }
+    .section-title p{ color:#67718c; margin-top:.6rem; }
+
+    /* ------------- BOOK CARDS -------------- */
+    .book-grid{
+      display:grid; gap:34px; justify-content:center;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      max-width:1100px; margin:60px auto 120px;
+      padding:0 16px;
+    }
+    .book-card{
+      background:#fff; border-radius:14px; overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+      transition:.3s ease;
+      display:flex; flex-direction:column; text-align:center;
+    }
+    .book-card:hover{ transform:translateY(-6px); box-shadow:0 14px 28px rgba(0,0,0,.12); }
+    .book-card img{ width:100%; height:250px; object-fit:cover; }
+    .book-body{ padding:22px 18px 28px; flex:1; display:flex; flex-direction:column; }
+    .book-body h3{ font-size:1.1rem; margin-bottom:.55rem; color:#222; }
+    .book-body p{ font-size:.87rem; color:#555; margin-bottom:auto; }
+    .book-body a{
+      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
+    }
+
+    /* ------------- RESPONSIVE -------------- */
+    @media(max-width:600px){
+      .search-bar{ flex-direction:column; border-radius:24px; padding:10px; }
+      .search-bar input,
+      .search-bar select,
+      .search-bar button{ border-radius:12px; width:100%; }
+      .search-bar button{ margin-top:8px; justify-content:center; }
+    }
+  </style>
+
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- Top Navbar -->
+  <!-- ========= NAVBAR ========= -->
   <header>
+    <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
     <nav>
       <ul>
-        <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a class="nav-btn" href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a class="nav-btn" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- ========= HERO ========= -->
   <section class="hero">
+    <!-- moving blobs -->
+    <span class="blob"></span>
+    <span class="blob alt"></span>
+
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
+    <!-- SEARCH BAR -->
     <form class="search-bar">
-      <input type="text" placeholder="Search for books by title...">
+      <input type="text" placeholder="Search for books by title…" />
       <select>
         <option>All Categories</option>
-        <option>Sci-Fi</option>
         <option>Adventure</option>
-        <option>Self Help</option>
         <option>Biography</option>
-        <!-- You can hardcode or make dynamic -->
+        <option>Fantasy</option>
+        <option>Romance</option>
+        <option>Sci-Fi</option>
+        <option>Self-Help</option>
       </select>
       <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <!-- Section Title -->
-  <section class="section-title">Featured Books</section>
-  <p style="text-align:center; margin-bottom: 20px; color: #666;">Explore our handpicked selection of must-read books</p>
+  <!-- ========= FEATURED ========= -->
+  <div class="section-title">
+    <h2>Featured Books</h2>
+    <p>Explore our hand-picked selection of must-read books</p>
+  </div>
 
-  <!-- Book Cards -->
-  <div class="book-list">
-    {% for book in books %}
-      <div class="book-card">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
-        <h2>{{ book.title }}</h2>
-        <p>{{ book.description[:100] }}...</p>
-        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+  <div class="book-grid">
+    <!-- Repeat these cards dynamically with Jinja                                               -->
+    <div class="book-card">
+      <img src="https://dummyimage.com/400x600/ddd/fff&text=Cover" alt="Book Cover">
+      <div class="book-body">
+        <h3>Deep Work</h3>
+        <p>Rules for focused success in a distracted world…</p>
+        <a href="#">Read PDF</a>
       </div>
-    {% endfor %}
+    </div>
+
+    <!-- Dummy cards for illustration -->
+    <div class="book-card">
+      <img src="https://dummyimage.com/400x600/cac/fff&text=Cover" alt="Book Cover">
+      <div class="book-body">
+        <h3>Rich Dad Poor Dad</h3>
+        <p>What the rich teach their kids about money…</p>
+        <a href="#">Read PDF</a>
+      </div>
+    </div>
+
+    <div class="book-card">
+      <img src="https://dummyimage.com/400x600/bbb/fff&text=Cover" alt="Book Cover">
+      <div class="book-body">
+        <h3>The Alchemist</h3>
+        <p>A journey of self-discovery…</p>
+        <a href="#">Read PDF</a>
+      </div>
+    </div>
   </div>
 
 </body>
