@@ -1,250 +1,127 @@
-/* Global Reset and Typography */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  scroll-behavior: smooth;
+/* ────────────────────────────────
+   HOME PAGE EXTRAS
+   ─────────────────────────────── */
+
+.site-header .header-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
 }
 
-body {
-  background: linear-gradient(120deg, #f4f6f9, #edf1f5);
-  color: #333;
+.logo{
+  font-weight:700;
+  font-size:20px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-/* Header Styles */
-header {
-  background-color: #1e1e2f;
-  padding: 15px 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.header-inner nav ul{
+  display:flex;
+  gap:18px;
 }
 
-header nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.header-inner nav ul li a{
+  display:inline-block;
+  background:#3e3e50;
+  padding:8px 18px;
+  border-radius:6px;
+  color:#fff;
+  font-size:14px;
+  transition:.25s;
 }
+.header-inner nav ul li a:hover{background:#007bff}
 
-header nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-  background-color: #3e3e50;
-  border-radius: 6px;
-  transition: 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* ---------- Hero ---------- */
+.home-hero{
+  padding:120px 20px 160px;
+  text-align:center;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(106,13,173,.8),rgba(122,54,255,.8),rgba(106,13,173,.8));
+  background-size:400% 400%;
+  animation:gradientShift 15s ease infinite;
 }
+.home-hero h1{font-size:56px;font-weight:700;margin-bottom:16px;}
+.home-hero p{font-size:18px;color:#e3e3e3;margin-bottom:48px}
 
-header nav ul li a:hover {
-  background-color: #007bff;
+/* ---------- Search Bar ---------- */
+.search-bar{
+  max-width:840px;
+  margin:0 auto;
+  display:flex;
+  background:#fff;
+  border-radius:60px;
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  overflow:hidden;
 }
-
-/* Hero Section with Animated Gradient */
-.hero {
-  padding: 100px 20px 40px;
-  text-align: center;
-  color: white;
-  background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+.search-bar input{
+  flex:1; border:none; outline:none;
+  padding:18px 24px; font-size:16px;
 }
-
-.hero h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-  animation: fadeInUp 1s ease-in-out;
+.search-bar select{
+  border:none; outline:none; font-size:16px;
+  padding:18px 20px; color:#666; font-weight:500;
 }
-
-.hero p {
-  font-size: 20px;
-  margin-bottom: 25px;
-  animation: fadeInUp 1.2s ease-in-out;
+.search-bar button{
+  background:#563dff; color:#fff; border:none; outline:none;
+  padding:18px 34px; font-size:16px; cursor:pointer;
+  transition:.3s
 }
+.search-bar button:hover{background:#4630d4}
 
-.hero .join-btn {
-  padding: 12px 28px;
-  background-color: #ff6f61;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-size: 16px;
-  transition: 0.3s ease;
-  display: inline-block;
-  animation: fadeInUp 1.4s ease-in-out;
+/* ---------- Book grid ---------- */
+.book-list{
+  max-width:1200px;
+  margin:40px auto 80px;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:40px;
 }
-
-.hero .join-btn:hover {
-  background-color: #e4574d;
+.book-card{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+  transition:transform .3s;
+  display:flex;
+  flex-direction:column;
 }
-
-/* Section Title */
-.section-title {
-  text-align: center;
-  font-size: 32px;
-  color: #1e1e2f;
-  margin: 60px auto 20px;
+.book-card:hover{transform:translateY(-6px)}
+.book-card img{
+  width:100%; height:320px; object-fit:cover;
+  border-top-left-radius:12px;border-top-right-radius:12px;
 }
-
-/* Book Carousel with Auto-Scroll */
-.ad-container {
-  overflow: hidden;
-  background-color: #fff;
-  padding: 40px 0;
-  border-top: 2px solid #eee;
-  border-bottom: 2px solid #eee;
+.book-card h2{font-size:18px;font-weight:600;color:#1e1e2f;margin:16px 16px 0}
+.book-card p{font-size:14px;color:#555;margin:4px 16px 0}
+.book-card a{
+  margin:16px; margin-top:auto;
+  background:#007bff;color:#fff;padding:10px 20px;
+  border-radius:30px;font-size:14px;text-decoration:none;
+  display:inline-block
 }
+.book-card a:hover{background:#0056b3}
 
-.ad-content {
-  display: flex;
-  gap: 30px;
-  padding: 0 20px;
-  animation: scrollBooks 25s linear infinite;
-  width: max-content;
+/* ---------- Floating feedback ---------- */
+.feedback-icon{
+  position:fixed; bottom:24px; right:24px;
+  width:60px; height:60px; background:#007bff; color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%; box-shadow:0 8px 20px rgba(0,0,0,.2);
+  cursor:pointer; z-index:200
 }
+.feedback-icon:hover{background:#0056b3}
 
-.ad-card {
-  flex: 0 0 auto;
-  width: 200px;
-  height: 300px;
-  background-color: #fefefe;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.ad-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.ad-card:hover {
-  transform: scale(1.05);
-}
-
-/* Info Sections */
-.info-section {
-  max-width: 900px;
-  margin: 60px auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.info-section h2 {
-  font-size: 32px;
-  color: #1e1e2f;
-  margin-bottom: 10px;
-}
-
-.info-section p {
-  font-size: 18px;
-  color: #555;
-}
-
-.contact-info a {
-  display: block;
-  margin: 10px 0;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.contact-info a:hover {
-  text-decoration: underline;
-}
-
-/* CTA Section Below Support */
-.cta-section {
-  max-width: 900px;
-  margin: 40px auto 0;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-/* Footer Fixes */
-footer {
-  background-color: #1e1e2f;
-  color: white;
-  padding: 30px 20px;
-  text-align: center;
-  margin-top: 60px;
-}
-
-footer nav {
-  margin-bottom: 10px;
-}
-
-footer nav a {
-  margin: 0 10px;
-  color: #bbb;
-  text-decoration: none;
-}
-
-footer nav a:hover {
-  color: white;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes scrollBooks {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-
-  .ad-card {
-    width: 140px;
-    height: 210px;
-  }
-
-  .info-section h2,
-  .section-title {
-    font-size: 24px;
-  }
-
-  .info-section p {
-    font-size: 16px;
-  }
-
-  .button,
-  .hero .join-btn {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  .cta-section {
-    padding-bottom: 30px;
-  }
+/* ---------- Responsive tweaks ---------- */
+@media(max-width:768px){
+  .home-hero h1{font-size:36px}
+  .search-bar{flex-direction:column;padding:12px}
+  .search-bar input,.search-bar select,.search-bar button{width:100%;border-bottom:1px solid #eee}
+  .search-bar button{border:none;margin-top:8px}
+  .book-card img{height:260px}
 }
