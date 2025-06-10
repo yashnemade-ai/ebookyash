@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-Book Library – Home</title>
 
-  <!-- Google Font -->
+  <!-- Google Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <style>
-    /* Same styles as you've used before… (keep your existing styles) */
-  </style>
+  <!-- ✅ Link to your external stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
@@ -20,7 +19,7 @@
     <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
     <nav>
       <ul>
-        <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a class="nav-btn" href="#"><i class="fas fa-home"></i> Home</a></li>
         <li><a class="nav-btn" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
       </ul>
     </nav>
@@ -59,15 +58,15 @@
     <p>Explore our hand-picked selection of must-read books</p>
   </div>
 
-  <!-- Dynamic Book Grid -->
+  <!-- Books -->
   <div class="book-grid">
     {% for book in books %}
       <div class="book-card">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+        <img src="{{ url_for('static', filename='books/' + book.cover) }}" alt="{{ book.title }} Cover">
         <div class="book-body">
           <h3>{{ book.title }}</h3>
           <p>{{ book.description }}</p>
-          <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+          <a href="{{ url_for('static', filename='books/' + book.file) }}" target="_blank">Read PDF</a>
         </div>
       </div>
     {% endfor %}
