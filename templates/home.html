@@ -3,142 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book Home</title>
-
-  <!-- Main site CSS (your existing stylesheet) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-  <!-- Extra page-specific styles -->
+  <title>E-Book Library</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-K5mF3mF+Zz5U6Vf+2Vo5VkKrF0zKeXHZo2qkY7TzRvhBk7l6e6Bo0Ex9YmXEvwHbwUvmG3X+8XLKzpQdT3jvnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* ----------  HERO BACKGROUND BLOBS  ---------- */
-    .home-hero {
-      position: relative;
-      background: linear-gradient(135deg,#f8faff 0%,#eef2ff 100%);
-      overflow:hidden;
+    :root {
+      --primary: #3e3e50;
+      --accent: #6a0dad;
+      --bg-light: #f4f6f9;
+      --highlight: #007bff;
+      --white: #fff;
+      --gray: #999;
     }
-    .home-hero::before,
-    .home-hero::after{
-      content:"";
-      position:absolute;
-      width:550px;height:550px;
-      border-radius:50%;
-      filter:blur(140px);
-      opacity:.55;
-      animation: drift 15s linear infinite alternate;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .home-hero::before{ background:#ff5b8a; left:-300px; top:0;}
-    .home-hero::after { background:#6a5bff; right:-300px; top:60px;}
-
-    @keyframes drift{
-      0%  { transform:translateX(-30px); }
-      100%{ transform:translateX(30px);  }
+    body {
+      background: var(--bg-light);
+      color: #333;
     }
-
-    /* ----------  SEARCH BAR  ---------- */
-    .search-bar{
-      display:flex; gap:12px; margin:40px auto 0; padding:12px 18px;
-      background:#fff; border-radius:999px; box-shadow:0 10px 25px rgba(0,0,0,.06);
-      max-width:780px; width:90%; align-items:center; flex-wrap:wrap;
+    header {
+      background: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      color: white;
     }
-    .search-bar input{
-      flex:1 1 240px; border:none; outline:none; font-size:15px;
+    header h1 {
+      font-weight: 700;
     }
-    .search-bar select{
-      flex:0 0 160px; border:none; outline:none; background:#f1f3f9;
-      padding:10px 14px; border-radius:8px; font-size:15px;
+    nav button {
+      background: #29293d;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      margin-left: 10px;
+      cursor: pointer;
     }
-    .search-btn{
-      flex:0 0 120px; background:#4834d4; color:#fff;
-      font-weight:600; border:none; padding:12px 0; border-radius:60px;
-      cursor:pointer; transition:transform .2s, box-shadow .2s;
+    .hero {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(135deg, #ecebff, #f9f9ff);
     }
-    .search-btn:active{
-      transform:scale(.93);
-      box-shadow:0 0 0 8px rgba(72,52,212,.25);
+    .hero h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #2d2d35;
     }
-
-    @media(max-width:540px){
-      .search-bar{ flex-direction:column; gap:10px; border-radius:18px;}
-      .search-bar select{ width:100%;}
-      .search-btn{ width:100%;}
+    .hero p {
+      color: #666;
+      font-size: 18px;
+      margin-top: 10px;
     }
-
-    /* ----------  BOOK CARDS  ---------- */
-    .book-card{ transition:transform .25s;}
-    .book-card.hide{ display:none;}
-    .book-card:hover{ transform:translateY(-6px);}
+    .search-bar {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      max-width: 800px;
+      margin: 30px auto;
+      border-radius: 14px;
+      overflow: hidden;
+      align-items: center;
+    }
+    .search-bar input, .search-bar select {
+      padding: 16px;
+      border: none;
+      flex: 1;
+    }
+    .search-bar select {
+      flex: 0.4;
+      background: #f4f6f9;
+    }
+    .search-bar button {
+      background: #5e3ef9;
+      color: white;
+      border: none;
+      padding: 16px 24px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 60px;
+    }
+    .book-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .book-card {
+      width: 240px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    .book-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .book-card h3 {
+      font-size: 18px;
+      margin: 10px 0 6px;
+    }
+    .book-card p {
+      font-size: 14px;
+      color: var(--gray);
+    }
+    .book-card a {
+      display: inline-block;
+      margin-top: 12px;
+      text-decoration: none;
+      color: var(--highlight);
+      font-weight: 600;
+    }
   </style>
 </head>
-
 <body>
-  <!-- HERO  -->
-  <section class="home-hero">
-    <h1>Discover Your Next Great Read</h1>
+  <header>
+    <h1><i class="fas fa-book"></i> E-Book Library</h1>
+    <nav>
+      <button><i class="fas fa-home"></i> Home</button>
+      <button><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Discover Your Next Great Read</h2>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
-
-    <!-- SEARCH BAR  -->
-    <form class="search-bar" id="filterForm" onsubmit="return false;">
-      <input id="searchInput" type="text" placeholder="Search for books by title…">
-
-      <!-- Category dropdown auto-filled from Jinja list -->
-      <select id="categorySelect">
-        <option value="*">All Categories</option>
-        {% for cat in categories %}
-          <option value="{{ cat|lower }}">{{ cat }}</option>
-        {% endfor %}
+    <form class="search-bar">
+      <input type="text" placeholder="Search for books by title..." />
+      <select>
+        <option>All Categories</option>
+        <option>Sci-Fi</option>
+        <option>Adventure</option>
+        <option>Romance</option>
+        <option>Fantasy</option>
       </select>
-
-      <button class="search-btn" id="searchBtn">
-        <i class="fas fa-search"></i> Search
-      </button>
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <!-- FEATURED SECTION -->
-  <h2 class="section-title">Featured Books</h2>
-  <p style="text-align:center;margin-top:-12px;color:#666">
-    Explore our hand-picked selection of must-read books
-  </p>
-
-  <!-- BOOK GRID -->
-  <div class="book-list" id="bookGrid">
-    {% for book in books %}
-      <div class="book-card"
-           data-title="{{ book.title|lower }}"
-           data-category="{{ book.category|lower }}">
-        <img src="{{ url_for('static', filename=book.image_url) }}"
-             alt="{{ book.title }}">
-        <h2>{{ book.title }}</h2>
-        <p>{{ book.description[:100] }}…</p>
-        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
-      </div>
-    {% endfor %}
+  <h3 class="section-title">Featured Books</h3>
+  <div class="book-list">
+    <!-- Book cards inserted dynamically -->
+    <div class="book-card">
+      <img src="/static/images/deepwork.jpg" alt="Deep Work">
+      <h3>Deep Work</h3>
+      <p>Rules for focused success in a distracted world</p>
+      <a href="#">Read PDF</a>
+    </div>
+    <div class="book-card">
+      <img src="/static/images/richdad.jpg" alt="Rich Dad Poor Dad">
+      <h3>Rich Dad Poor Dad</h3>
+      <p>What the rich teach their kids about money</p>
+      <a href="#">Read PDF</a>
+    </div>
+    <div class="book-card">
+      <img src="/static/images/alchemist.jpg" alt="The Alchemist">
+      <h3>The Alchemist</h3>
+      <p>A journey of self-discovery</p>
+      <a href="#">Read PDF</a>
+    </div>
   </div>
-
-  <!-- Font Awesome for icon -->
-  <script src="https://kit.fontawesome.com/a6a82c2d07.js" crossorigin="anonymous"></script>
-
-  <!-- ----------  FILTER JS  ---------- -->
-  <script>
-    const searchInput  = document.getElementById('searchInput');
-    const catSelect    = document.getElementById('categorySelect');
-    const bookCards    = [...document.querySelectorAll('.book-card')];
-
-    function runFilter(){
-      const q   = searchInput.value.trim().toLowerCase();
-      const cat = catSelect.value;
-
-      bookCards.forEach(card=>{
-        const matchTitle = card.dataset.title.includes(q);
-        const matchCat   = (cat==='*' || card.dataset.category===cat);
-        card.classList.toggle('hide', !(matchTitle && matchCat));
-      });
-    }
-
-    // live typing + dropdown change + button click
-    searchInput.addEventListener('keyup', runFilter);
-    catSelect  .addEventListener('change', runFilter);
-    document.getElementById('searchBtn').addEventListener('click',runFilter);
-  </script>
 </body>
 </html>
