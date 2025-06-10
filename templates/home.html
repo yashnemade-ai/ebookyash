@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book Home</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
+  <!-- Navigation (Optional) -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#featured"><i class="fas fa-star"></i> Featured</a></li>
+        <li><a href="#"><i class="fas fa-book"></i> All Books</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <!-- Hero Section -->
   <section class="home-hero">
     <h1>Discover Your Next Great Read</h1>
@@ -16,25 +29,36 @@
       <input type="text" placeholder="Search for books by title...">
       <select>
         <option>All Categories</option>
-        <!-- Add real categories here if needed -->
+        <!-- Optionally populate this dynamically -->
       </select>
       <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <!-- Featured Books -->
-  <section class="section-title">Featured Books</section>
+  <!-- Featured Section -->
+  <section id="featured">
+    <h2 class="section-title">Featured Books</h2>
 
-  <div class="book-list">
-    {% for book in books %}
-      <div class="book-card">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
-        <h2>{{ book.title }}</h2>
-        <p>{{ book.description[:100] }}...</p>
-        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
-      </div>
-    {% endfor %}
-  </div>
+    <div class="book-list">
+      {% for book in books %}
+        <div class="book-card" data-aos="fade-up">
+          <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+          <h2>{{ book.title }}</h2>
+          <p>{{ book.description[:100] }}...</p>
+          <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <nav>
+      <a href="{{ url_for('welcome') }}">Home</a>
+      <a href="#featured">Featured</a>
+    </nav>
+    <p>&copy; 2025 E‑Book Website. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
