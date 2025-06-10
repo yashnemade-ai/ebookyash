@@ -3,135 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Book Library · Home</title>
-
-  <!-- Shared project stylesheet -->
+  <title>E‑Book Library</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-  <!-- Google font → sleek headings / UI -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Page-specific polish -->
-  <style>
-    :root{
-      --accent:#5b55ff;        /* purple buttons */
-      --accent-hover:#453ff0;
-      --bg:#f5f7fc;
-      --dark:#0f0f18;
-      --shadow:0 10px 24px rgba(0,0,0,.06);
-    }
-    body{font-family:'Poppins',sans-serif;background:var(--bg);color:#444}
-
-    /* ───────── Header (stays as-is – style.css already handles it) ───────── */
-
-    /* ───────── HERO ───────── */
-    .hero{
-      text-align:center;
-      padding:120px 20px 90px;
-      background:linear-gradient(145deg,#ffffff 0%,#eef1fb 40%,#ffffff 100%);
-      position:relative;overflow:hidden;
-    }
-    /* subtle white “floating” blobs */
-    .hero::before,
-    .hero::after{
-      content:"";position:absolute;border-radius:50%;
-      width:420px;height:420px;
-      background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.7) 0%,rgba(255,255,255,0) 60%);
-      animation:float 28s linear infinite;
-      pointer-events:none;opacity:.7;
-    }
-    .hero::before{top:-180px;left:-180px;}
-    .hero::after{bottom:-180px;right:-180px;animation-direction:reverse}
-    @keyframes float{from{transform:translateX(0);}to{transform:translateX(-300px);}}
-
-    .hero h1{font-size:48px;font-weight:700;color:var(--dark);margin-bottom:10px}
-    .hero p {font-size:17px;color:#6d6d6d}
-
-    /* ───────── Search bar ───────── */
-    .search-bar{
-      margin:55px auto 0;max-width:840px;width:92%;
-      background:#fff;border-radius:60px;padding:20px 24px;
-      display:flex;gap:14px;flex-wrap:wrap;box-shadow:var(--shadow);
-    }
-    .search-bar input,
-    .search-bar select{
-      border:1px solid #d8d8d8;border-radius:12px;outline:none;
-      padding:12px 16px;font-size:15px;flex:1 1 250px;
-      transition:.25s;min-width:0; /* keeps flex nice on mobile */
-    }
-    .search-bar select{flex:0 0 180px;cursor:pointer;background:#fafafa;}
-    .search-btn{
-      flex:0 0 120px;border:none;border-radius:32px;
-      background:var(--accent);color:#fff;font-weight:600;
-      cursor:pointer;transition:.25s;position:relative;overflow:hidden;
-    }
-    .search-btn:hover{background:var(--accent-hover)}
-    /* button press ripple */
-    .search-btn:active{transform:scale(.96)}
-    .search-btn:active::after{
-      content:"";position:absolute;inset:0;border-radius:inherit;
-      background:rgba(255,255,255,.35);animation:rip .5s ease-out;
-    }
-    @keyframes rip{from{opacity:1}to{opacity:0}}
-
-    /* ───────── Section titles ───────── */
-    .section-title{text-align:center;margin:70px 0 6px;font-size:32px;font-weight:600;color:var(--dark)}
-    .section-sub{color:#7a7a7a;text-align:center;font-size:14px;margin-bottom:32px}
-
-    /* ───────── Book grid ───────── */
-    .book-list{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;padding:0 20px 80px}
-    .book-card{
-      width:240px;background:#fff;border-radius:16px;padding:22px;
-      box-shadow:var(--shadow);text-align:center;transition:.3s
-    }
-    .book-card:hover{transform:translateY(-6px)}
-    .book-card img{width:100%;height:260px;object-fit:cover;border-radius:10px}
-    .book-card h2{font-size:18px;margin:14px 0 6px}
-    .book-card p {font-size:13px;color:#666;min-height:40px}
-    .book-card a{color:var(--accent);font-weight:600;text-decoration:none;font-size:14px}
-
-    /* hide helper for live filter */
-    .hide{display:none}
-
-    /* ───────── Responsiveness ───────── */
-    @media(max-width:600px){
-      .hero h1{font-size:34px}
-      .search-bar{flex-direction:column;border-radius:24px;padding:18px}
-      .search-bar select,.search-btn{width:100%}
-      .book-card{width:90%}
-    }
-  </style>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- HERO -->
+  <!-- Top Navbar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
   <section class="hero">
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-    <form class="search-bar" onsubmit="return false;">
-      <input id="searchInput" type="text" placeholder="Search for books by title…">
-      <select id="categorySelect">
-        <option value="*">All Categories</option>
-        <option value="sci-fi">Sci-Fi</option>
-        <option value="adventure">Adventure</option>
-        <option value="romance">Romance</option>
-        <option value="fantasy">Fantasy</option>
+    <form class="search-bar">
+      <input type="text" placeholder="Search for books by title...">
+      <select>
+        <option>All Categories</option>
+        <option>Sci-Fi</option>
+        <option>Adventure</option>
+        <option>Self Help</option>
+        <option>Biography</option>
+        <!-- You can hardcode or make dynamic -->
       </select>
-      <button class="search-btn" id="searchBtn">Search</button>
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <!-- FEATURED -->
-  <h2 class="section-title">Featured Books</h2>
-  <p class="section-sub">Our hand-picked selection of must-read titles</p>
+  <!-- Section Title -->
+  <section class="section-title">Featured Books</section>
+  <p style="text-align:center; margin-bottom: 20px; color: #666;">Explore our handpicked selection of must-read books</p>
 
-  <div id="bookGrid" class="book-list">
+  <!-- Book Cards -->
+  <div class="book-list">
     {% for book in books %}
-      <div class="book-card"
-           data-title="{{ book.title|lower }}"
-           data-category="{{ (book.category if book.category else 'uncat')|lower }}">
+      <div class="book-card">
         <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
         <h2>{{ book.title }}</h2>
         <p>{{ book.description[:100] }}...</p>
@@ -140,25 +54,5 @@
     {% endfor %}
   </div>
 
-  <!-- Icons CDN (optional) -->
-  <script src="https://kit.fontawesome.com/a6a82c2d07.js" crossorigin="anonymous"></script>
-
-  <!-- Live filter -->
-  <script>
-    const q = document.getElementById('searchInput');
-    const c = document.getElementById('categorySelect');
-    const cards = [...document.querySelectorAll('.book-card')];
-    function filter(){
-      const term = q.value.toLowerCase().trim();
-      const cat  = c.value;
-      cards.forEach(card=>{
-        const matchText = card.dataset.title.includes(term);
-        const matchCat  = cat==='*'||card.dataset.category===cat;
-        card.classList.toggle('hide', !(matchText && matchCat));
-      });
-    }
-    q.addEventListener('input',filter);c.addEventListener('change',filter);
-    document.getElementById('searchBtn').addEventListener('click',filter);
-  </script>
 </body>
 </html>
