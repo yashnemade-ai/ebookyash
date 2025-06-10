@@ -3,179 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Book Library</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-K5mF3mF+Zz5U6Vf+2Vo5VkKrF0zKeXHZo2qkY7TzRvhBk7l6e6Bo0Ex9YmXEvwHbwUvmG3X+8XLKzpQdT3jvnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    :root {
-      --primary: #3e3e50;
-      --accent: #6a0dad;
-      --bg-light: #f4f6f9;
-      --highlight: #007bff;
-      --white: #fff;
-      --gray: #999;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      background: var(--bg-light);
-      color: #333;
-    }
-    header {
-      background: var(--primary);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      color: white;
-    }
-    header h1 {
-      font-weight: 700;
-    }
-    nav button {
-      background: #29293d;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    .hero {
-      text-align: center;
-      padding: 60px 20px 30px;
-      background: linear-gradient(135deg, #ecebff, #f9f9ff);
-    }
-    .hero h2 {
-      font-size: 42px;
-      font-weight: 700;
-      color: #2d2d35;
-    }
-    .hero p {
-      color: #666;
-      font-size: 18px;
-      margin-top: 10px;
-    }
-    .search-bar {
-      background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      display: flex;
-      max-width: 800px;
-      margin: 30px auto;
-      border-radius: 14px;
-      overflow: hidden;
-      align-items: center;
-    }
-    .search-bar input, .search-bar select {
-      padding: 16px;
-      border: none;
-      flex: 1;
-    }
-    .search-bar select {
-      flex: 0.4;
-      background: #f4f6f9;
-    }
-    .search-bar button {
-      background: #5e3ef9;
-      color: white;
-      border: none;
-      padding: 16px 24px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 700;
-      margin-top: 60px;
-    }
-    .book-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-    .book-card {
-      width: 240px;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-    .book-card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    .book-card h3 {
-      font-size: 18px;
-      margin: 10px 0 6px;
-    }
-    .book-card p {
-      font-size: 14px;
-      color: var(--gray);
-    }
-    .book-card a {
-      display: inline-block;
-      margin-top: 12px;
-      text-decoration: none;
-      color: var(--highlight);
-      font-weight: 600;
-    }
-  </style>
+  <title>E‑Book Library</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+  <!-- Top Navbar -->
   <header>
-    <h1><i class="fas fa-book"></i> E-Book Library</h1>
     <nav>
-      <button><i class="fas fa-home"></i> Home</button>
-      <button><i class="fas fa-sign-out-alt"></i> Logout</button>
+      <ul>
+        <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
     </nav>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
-    <h2>Discover Your Next Great Read</h2>
+    <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
+
     <form class="search-bar">
-      <input type="text" placeholder="Search for books by title..." />
+      <input type="text" placeholder="Search for books by title...">
       <select>
         <option>All Categories</option>
         <option>Sci-Fi</option>
         <option>Adventure</option>
-        <option>Romance</option>
-        <option>Fantasy</option>
+        <option>Self Help</option>
+        <option>Biography</option>
+        <!-- You can hardcode or make dynamic -->
       </select>
       <button type="submit"><i class="fas fa-search"></i> Search</button>
     </form>
   </section>
 
-  <h3 class="section-title">Featured Books</h3>
+  <!-- Section Title -->
+  <section class="section-title">Featured Books</section>
+  <p style="text-align:center; margin-bottom: 20px; color: #666;">Explore our handpicked selection of must-read books</p>
+
+  <!-- Book Cards -->
   <div class="book-list">
-    <!-- Book cards inserted dynamically -->
-    <div class="book-card">
-      <img src="/static/images/deepwork.jpg" alt="Deep Work">
-      <h3>Deep Work</h3>
-      <p>Rules for focused success in a distracted world</p>
-      <a href="#">Read PDF</a>
-    </div>
-    <div class="book-card">
-      <img src="/static/images/richdad.jpg" alt="Rich Dad Poor Dad">
-      <h3>Rich Dad Poor Dad</h3>
-      <p>What the rich teach their kids about money</p>
-      <a href="#">Read PDF</a>
-    </div>
-    <div class="book-card">
-      <img src="/static/images/alchemist.jpg" alt="The Alchemist">
-      <h3>The Alchemist</h3>
-      <p>A journey of self-discovery</p>
-      <a href="#">Read PDF</a>
-    </div>
+    {% for book in books %}
+      <div class="book-card">
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+        <h2>{{ book.title }}</h2>
+        <p>{{ book.description[:100] }}...</p>
+        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+      </div>
+    {% endfor %}
   </div>
+
 </body>
 </html>
