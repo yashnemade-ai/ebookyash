@@ -1,161 +1,146 @@
 [
-    {
-        "id": 1,
-        "title": "Atomic Habits",
-        "author": "James Clear",
-        "category": "Non-fiction",
-        "description": "No matter your goals, Atomic Habits offers a proven framework for improving--every day. James Clear, one of the world's leading experts on habit formation, reveals practical strategies that will teach you exactly how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results.",
-        "pdf_file": "static/books/atomic habits.pdf",
-        "image_url": "static/images/Atomic_habits.jpg"
-    },
-
-    {
-        "id": 2,
-        "title": "Rich Dad Poor Dad",
-        "author": "Robert Kiyosaki",
-        "category": "fictional",
-        "description": "Rich Dad Poor Dad' by Robert T. Kiyosaki and Sharon Lechter is a personal finance book that advocates for financial literacy, independence, and wealth building through investing in assets and starting businesses, contrasting the values of Kiyosaki's 'rich dad' (his friend's father) with his own 'poor dad'.",
-        "pdf_file": "static/books/Rich Dad Poor Dad.pdf",
-        "image_url": "static/images/richdad_poordad.jpg"
-    },
-
-    {
-        "id": 3,
-        "title": "Hyper Focus",
-        "author": "Chris Bailey",
-        "category": "Non-fiction",
-        "description": "Hyperfocus provides profound insights into how you can best take charge of your attention to achieve a greater sense of purpose and productivity throughout the day. learning when to pay attention and when to let your mind wander wherever it wants to.",
-        "pdf_file": "static/books/Hyperfocus The New Science of Attention, Productivity, and Creativity ( PDFDrive ).pdf",
-        "image_url": "static/images\/Hyperfocus.jpg"
-    },
-
-    {
-        "id": 4,
-        "title": "A.P.J Abdul Kalam-Autobiography",
-        "author": "A.P.J Abdul Kalam",
-        "category": "Autobiography",
-        "description": "Dr. A.P.J. Abdul Kalam, fondly known as the Missile Man of India, was a renowned Indian aerospace scientist and the 11th President of India, serving from 2002 to 2007. Born in Rameswaram, Tamil Nadu, in 1931, Kalam rose from humble beginnings to become one of India's most celebrated figures. His contributions to the Indian Space Research Organisation (ISRO) and the Defence Research and Development Organisation (DRDO) played a pivotal role in advancing India's aeronautical and defense capabilities. Beyond his scientific accomplishments, Kalam was a devoted educator and author, inspiring millions through his teachings and writings. His profound commitment to social causes, education, and youth empowerment have left an indelible mark on the nation and established him as a beloved visionary and a source of inspiration for generations to come.",
-        "pdf_file": "static/books/a.p.j. abdul kalam.pdf",
-        "image_url": "static/images/A.P.J. Abdul Kalam.jpg"
-    },
-
-    {
-        "id": 5,
-        "title": "Mahatma Gandhi-Autobiography",
-        "author": "mahatma gandhi",
-        "category": "Autobiography",
-        "description": "Mahatma Gandhi wrote his autobiography, titled 'The Story of My Experiments with Truth', in Gujarati. The autobiography was initially published in installments in his journal, Navjeevan, from 1925 to 1929. It was later translated into English and other Indian languages. ",
-        "pdf_file": "static/books/M.K.Gandhi Autobiography.pdf",
-        "image_url": "static/images/M.K.Gandhi.jpg"
-    },
-
-    {
-        "id": 6,
-        "title": "The Intelligent Investor",
-        "author": "Benjamin Graham",
-        "category": "value investing-educational",
-        "description": "The Intelligent Investor by Benjamin Graham, first published in 1949, is a widely acclaimed book on value investing. The book provides strategies on how to successfully use value investing in the stock market. Historically, the book has been one of the most popular books on investing and Graham's legacy remains.",
-        "pdf_file": "static/books/The Intelligent Investor.pdf",
-        "image_url": "static/images/the intelligent investor.jpg"
-    },
-
-    {
-        "id": 7,
-        "title": "The Subconscious Mind",
-        "author": "Joseph Murphy",
-        "category": "Self-Help Book",
-        "description": "Combining time-honored spiritual wisdom with cutting edge scientific research, Dr. Murphy explains how the subconscious mind influences every single thing that you do and how, by understanding it and learning to control its incredible force, you can improve the quality of your daily life.Everything, from the promotion ...",
-        "pdf_file": "static/books/The Power of Your Subconcious Mind.pdf",
-        "image_url": "static/images/the subconscious mind.jpg"
-    },
-
-    {
-        "id":8 ,
-        "title": "The Simple Path To Wealth",
-        "author": "J. L. Collins",
-        "category": "Personal Finance / Investing / Financial Independence",
-        "description": "A clear, no-nonsense guide to financial independence through frugal living and low-cost index fund investing. Simple advice, powerful results.",
-        "pdf_file": "static/books/the simple path to wealth.pdf",
-        "image_url": "static/images/The Simple Path To Wealth.jpg"
-    },
-
-    {
-        "id": 9,
-        "title": "The Alchemist",
-        "author": "Paulo Coelho",
-        "category": "Fiction / Inspirational / Philosophical",
-        "description": "A mystical, poetic novel about a shepherd named Santiago who follows his dreams in search of treasure, only to discover deeper meaning, purpose, and the treasure within.",
-        "pdf_file": "static/books/The_Alchemist.pdf",
-        "image_url": "static/images/The Alchemist.jpg"
-    },
-
-    {
-        "id": 10,
-        "title": "The Psychology of Money",
-        "author": "Morgan Housel",
-        "category": "Personal Finance / Behavioral Economics / Psychology",
-        "description": "An insightful exploration of how emotions, habits, and human behavior shape our financial decisions—more than math or logic ever could.",
-        "pdf_file": "static/books/the-psychology-of-money.pdf",
-        "image_url": "static/images/The psychology of money.jpg"
-    },
-
-    {
-        "id": 11,
-        "title": "Thinking, Fast and Slow",
-        "author": "Daniel Kahneman",
-        "category": "Non-fiction",
-        "description": "This book reveals how our minds are tripped up by error and prejudice (even when we think we are being logical), and gives you practical techniques for slower, smarter thinking.",
-        "pdf_file": "static/books/Thinking, Fast and Slow.pdf",
-        "image_url": "static/images/Thinking, Fast and Slow.jpg"
-    },
-
-    {
-        "id": 12,
-        "title": "Man's Search for Meaning",
-        "author": "Viktor Frankl",
-        "category": "Autobiography",
-        "description": "Man's Search for Meaning,'a memoir by Viktor Frankl, explores the search for meaning in life, particularly in the face of suffering and adversity. Frankl recounts his experiences as a Jewish psychiatrist imprisoned in Nazi concentration camps, illustrating how he and his fellow prisoners found meaning in the most horrific circumstances through work, love, and courage. The book also introduces Frankl's theory of logotherapy, which emphasizes the primary human drive to find purpose and meaning in life. ",
-        "pdf_file": "static/books/mans-search-for-meaning.pdf",
-        "image_url": "static/images/mans-search-for-meaning.jpg"
-    },
-
-    {
-        "id": 13,
-        "title": "Deep Work",
-        "author": "Cal Newport",
-        "category": "Self-Help Book",
-        "description": "Deep work is the ability to focus without distraction on a cognitively demanding task. It's a skill that allows you to quickly master complicated information and produce better results in less time.",
-        "pdf_file": "static/books/Deep-Work.pdf",
-        "image_url": "static/images/deep_work_cover.jpg"
-    },
-
-    {
-        "id": 14,
-        "title": "The Power of Now",
-        "author": "Eckhart Tolle",
-        "category": "Self-Help Book",
-        "description": "The Power of Now: A Guide to Spiritual Enlightenment is a book by Eckhart Tolle. It is a discussion about how people interact with themselves and others. The concept of self-reflection and presence in the moment are presented along with simple exercises for the achievement of its principles.",
-        "pdf_file": "static/books/The Power Of Now.pdf",
-        "image_url": "static/images/the power of now.jpg"
-    },
-
-    {
-        "id": 15,
-        "title": "How to Win Friends and Influence People",
-        "author": "Dale Carnegie",
-        "category": "Action-book",
-        "description": "The book says that an impression is created only when a person makes others feel important or elevates them to a pedestal of significance. This is an art because at no point should the other person feel like you are manipulating him or her. How to Win Friends and Influence People was published in 1998 by Gallery Books.",
-        "pdf_file": "static/books/how-to-win-friends-and-influence-people.pdf",
-        "image_url": "static/images/how to win friends and influece people.png"
-    },
-
-    {
-        "id":16 ,
-        "title": "The 7 Habits of Highly Effective People",
-        "author": "Stephen Covey",
-        "category": "Self-Help Book",
-        "description": "The 7 Habits of Highly Effective People provides invaluable guidance for anyone looking to improve their personal and professional life. By following these habits, readers can increase their effectiveness at work and home, eventually discovering the kind of success that matters most.",
-        "pdf_file": "static/books/the 7 habits og highly effective people.pdf",
-        "image_url": "static/images/the 7 habits og highly effective people.jpg"
-    }
+  {
+    "id": 1,
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "category": "Non-fiction",
+    "description": "No matter your goals, Atomic Habits offers a proven framework for improving--every day...",
+    "pdf_file": "static/books/atomic habits.pdf",
+    "image_url": "images/Atomic_habits.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Rich Dad Poor Dad",
+    "author": "Robert Kiyosaki",
+    "category": "fictional",
+    "description": "Rich Dad Poor Dad by Robert T. Kiyosaki advocates for financial literacy and wealth building.",
+    "pdf_file": "static/books/Rich Dad Poor Dad.pdf",
+    "image_url": "images/richdad_poordad.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Hyper Focus",
+    "author": "Chris Bailey",
+    "category": "Non-fiction",
+    "description": "Hyperfocus helps you take charge of your attention to achieve greater purpose and productivity.",
+    "pdf_file": "static/books/Hyperfocus The New Science of Attention, Productivity, and Creativity ( PDFDrive ).pdf",
+    "image_url": "images/Hyperfocus.jpg"
+  },
+  {
+    "id": 4,
+    "title": "A.P.J Abdul Kalam-Autobiography",
+    "author": "A.P.J Abdul Kalam",
+    "category": "Autobiography",
+    "description": "An inspiring journey of India's former president and missile man, Dr. Kalam.",
+    "pdf_file": "static/books/a.p.j. abdul kalam.pdf",
+    "image_url": "images/A.P.J. Abdul Kalam.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Mahatma Gandhi-Autobiography",
+    "author": "mahatma gandhi",
+    "category": "Autobiography",
+    "description": "The Story of My Experiments with Truth by Mahatma Gandhi, his reflections on life and values.",
+    "pdf_file": "static/books/M.K.Gandhi Autobiography.pdf",
+    "image_url": "images/M.K.Gandhi.jpg"
+  },
+  {
+    "id": 6,
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "category": "value investing-educational",
+    "description": "The classic book on value investing by Benjamin Graham.",
+    "pdf_file": "static/books/The Intelligent Investor.pdf",
+    "image_url": "images/the intelligent investor.jpg"
+  },
+  {
+    "id": 7,
+    "title": "The Subconscious Mind",
+    "author": "Joseph Murphy",
+    "category": "Self-Help Book",
+    "description": "Explores how your subconscious influences your behavior and how to harness it.",
+    "pdf_file": "static/books/The Power of Your Subconcious Mind.pdf",
+    "image_url": "images/the subconscious mind.jpg"
+  },
+  {
+    "id": 8,
+    "title": "The Simple Path To Wealth",
+    "author": "J. L. Collins",
+    "category": "Personal Finance / Investing / Financial Independence",
+    "description": "Simple advice for achieving financial independence through index funds.",
+    "pdf_file": "static/books/the simple path to wealth.pdf",
+    "image_url": "images/The Simple Path To Wealth.jpg"
+  },
+  {
+    "id": 9,
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "category": "Fiction / Inspirational / Philosophical",
+    "description": "A poetic journey of self-discovery and purpose.",
+    "pdf_file": "static/books/The_Alchemist.pdf",
+    "image_url": "images/The Alchemist.jpg"
+  },
+  {
+    "id": 10,
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "category": "Personal Finance / Behavioral Economics / Psychology",
+    "description": "Explores the human behaviors and emotions behind money decisions.",
+    "pdf_file": "static/books/the-psychology-of-money.pdf",
+    "image_url": "images/The psychology of money.jpg"
+  },
+  {
+    "id": 11,
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "category": "Non-fiction",
+    "description": "Reveals how two systems of thinking shape our judgments and decisions.",
+    "pdf_file": "static/books/Thinking, Fast and Slow.pdf",
+    "image_url": "images/Thinking, Fast and Slow.jpg"
+  },
+  {
+    "id": 12,
+    "title": "Man's Search for Meaning",
+    "author": "Viktor Frankl",
+    "category": "Autobiography",
+    "description": "A Holocaust survivor’s story and his theory of finding meaning through suffering.",
+    "pdf_file": "static/books/mans-search-for-meaning.pdf",
+    "image_url": "images/mans-search-for-meaning.jpg"
+  },
+  {
+    "id": 13,
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "category": "Self-Help Book",
+    "description": "Learn to focus deeply and produce high-quality work in less time.",
+    "pdf_file": "static/books/Deep-Work.pdf",
+    "image_url": "images/deep_work_cover.jpg"
+  },
+  {
+    "id": 14,
+    "title": "The Power of Now",
+    "author": "Eckhart Tolle",
+    "category": "Self-Help Book",
+    "description": "A spiritual guide to staying present and finding peace in the moment.",
+    "pdf_file": "static/books/The Power Of Now.pdf",
+    "image_url": "images/the power of now.jpg"
+  },
+  {
+    "id": 15,
+    "title": "How to Win Friends and Influence People",
+    "author": "Dale Carnegie",
+    "category": "Action-book",
+    "description": "Timeless principles on connecting with people and influencing with integrity.",
+    "pdf_file": "static/books/how-to-win-friends-and-influence-people.pdf",
+    "image_url": "images/how to win friends and influece people.png"
+  },
+  {
+    "id": 16,
+    "title": "The 7 Habits of Highly Effective People",
+    "author": "Stephen Covey",
+    "category": "Self-Help Book",
+    "description": "A classic framework for achieving personal and professional success.",
+    "pdf_file": "static/books/the 7 habits og highly effective people.pdf",
+    "image_url": "images/the 7 habits og highly effective people.jpg"
+  }
 ]
