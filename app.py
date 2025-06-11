@@ -36,6 +36,12 @@ def home():
 def signup():
     return render_template("signup.html")
 
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    flash("Logged out successfully.")
+    return redirect(url_for("welcome"))
+
 @app.route("/book/<int:id>")
 def book_page(id):
     book = next((b for b in load_books() if b["id"] == id), None)
