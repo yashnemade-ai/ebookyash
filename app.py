@@ -66,24 +66,34 @@ def signup():
     return render_template("signup.html")
 
 # ────────── Auth: Login ─────────
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email    = request.form["email"].lower().strip()
-        password = request.form["password"]
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-        user = next((u for u in load_users()
-                     if u["email"] == email), None)
+        if not all([email, password]):
+            flash("All fields are required.", "error")
+            return redirect(url_for("login"))
 
-        if user and ws.check_password_hash(user["password"], password):
-            session["user"] = email
-            flash("Logged in successfully!", "success")
+        if not os.path.exists("users.json"):
+            flash("No users registered yet.", "error")
+            return redirect(url_for("signup"))
+
+        users = json.load(open("users.json"))
+        user = next((u for u in users if u["email"] == email and u["password"] == password), None)
+
+        if user:
+            session["user"] = user["email"]
+            flash("Login successful!", "success")
             return redirect(url_for("home"))
-
-        flash("Invalid email or password.", "danger")
-        return redirect(url_for("login"))
+        else:
+            flash("Invalid email or password.", "error")
+            return redirect(url_for("login"))
 
     return render_template("login.html")
+
 
 # ────────── Auth: Logout ────────
 @app.route("/logout")
