@@ -30,6 +30,10 @@ def home():
     books = load_books()
     return render_template("home.html", books=books)
 
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
 @app.route("/book/<int:id>")
 def book_page(id):
     book = next((b for b in load_books() if b["id"] == id), None)
