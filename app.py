@@ -105,10 +105,44 @@ def logout():
 # ────────── Protected: Home ─────
 @app.route("/home")
 def home():
+    """
+    ① ?q=<keyword>      → filter by title (case-insensitive, substring)
+    ② ?category=<name>  → filter by category (exact match, case-insensitive)
+    ③ Both together     → combined AND filter
+       – If a category is chosen, we slice the result to the first 3 books
+         so *at most* three are shown (=> “at least 3 stored, show ≤3”).
+    """
     if "user" not in session:
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
-    return render_template("home.html", books=load_books())
+
+    # query-string values -------------------------------------------------
+    keyword   = request.args.get("q", "").strip().lower()
+    category  = request.args.get("category", "").strip()
+
+    books = load_books()
+
+    # filter by category (if any) ----------------------------------------
+    if category:
+        books = [b for b in books
+                 if b["category"].lower() == category.lower()]
+        # keep only the first three books in that category
+        books = books[:3]
+
+    # filter by search keyword -------------------------------------------
+    if keyword:
+        books = [b for b in books 
+                 if keyword in b["title"].lower()]
+
+    # pass the filters back to the template so
+    # the <input> and <select> keep their values
+    return render_template(
+        "home.html",
+        books            = books,
+        search_term      = keyword,
+        selected_category= category.lower() or "all"
+    )
+
 
 # ────────── Protected: Book pages
 @app.route("/book/<int:id>")
