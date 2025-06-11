@@ -5,17 +5,17 @@
     "author": "James Clear",
     "category": "Non-fiction",
     "description": "No matter your goals, Atomic Habits offers a proven framework for improving--every day...",
-    "pdf_file": "static/books/atomic habits.pdf",
-    "image_url": "images/Atomic_habits.jpg"
+    "pdf_file": "books/atomic-habits.pdf",
+    "image_url": "images/atomic-habits.jpg"
   },
   {
     "id": 2,
     "title": "Rich Dad Poor Dad",
     "author": "Robert Kiyosaki",
-    "category": "fictional",
+    "category": "Fictional",
     "description": "Rich Dad Poor Dad by Robert T. Kiyosaki advocates for financial literacy and wealth building.",
-    "pdf_file": "static/books/Rich Dad Poor Dad.pdf",
-    "image_url": "images/richdad_poordad.jpg"
+    "pdf_file": "books/rich-dad-poor-dad.pdf",
+    "image_url": "images/richdad-poordad.jpg"
   },
   {
     "id": 3,
@@ -23,8 +23,8 @@
     "author": "Chris Bailey",
     "category": "Non-fiction",
     "description": "Hyperfocus helps you take charge of your attention to achieve greater purpose and productivity.",
-    "pdf_file": "static/books/Hyperfocus The New Science of Attention, Productivity, and Creativity ( PDFDrive ).pdf",
-    "image_url": "images/Hyperfocus.jpg"
+    "pdf_file": "books/hyperfocus.pdf",
+    "image_url": "images/hyperfocus.jpg"
   },
   {
     "id": 4,
@@ -32,26 +32,26 @@
     "author": "A.P.J Abdul Kalam",
     "category": "Autobiography",
     "description": "An inspiring journey of India's former president and missile man, Dr. Kalam.",
-    "pdf_file": "static/books/a.p.j. abdul kalam.pdf",
-    "image_url": "images/A.P.J. Abdul Kalam.jpg"
+    "pdf_file": "books/apj-abdul-kalam.pdf",
+    "image_url": "images/apj-abdul-kalam.jpg"
   },
   {
     "id": 5,
     "title": "Mahatma Gandhi-Autobiography",
-    "author": "mahatma gandhi",
+    "author": "Mahatma Gandhi",
     "category": "Autobiography",
     "description": "The Story of My Experiments with Truth by Mahatma Gandhi, his reflections on life and values.",
-    "pdf_file": "static/books/M.K.Gandhi Autobiography.pdf",
-    "image_url": "images/M.K.Gandhi.jpg"
+    "pdf_file": "books/mk-gandhi-autobiography.pdf",
+    "image_url": "images/mk-gandhi.jpg"
   },
   {
     "id": 6,
     "title": "The Intelligent Investor",
     "author": "Benjamin Graham",
-    "category": "value investing-educational",
+    "category": "Value Investing / Educational",
     "description": "The classic book on value investing by Benjamin Graham.",
-    "pdf_file": "static/books/The Intelligent Investor.pdf",
-    "image_url": "images/the intelligent investor.jpg"
+    "pdf_file": "books/the-intelligent-investor.pdf",
+    "image_url": "images/the-intelligent-investor.jpg"
   },
   {
     "id": 7,
@@ -59,8 +59,8 @@
     "author": "Joseph Murphy",
     "category": "Self-Help Book",
     "description": "Explores how your subconscious influences your behavior and how to harness it.",
-    "pdf_file": "static/books/The Power of Your Subconcious Mind.pdf",
-    "image_url": "images/the subconscious mind.jpg"
+    "pdf_file": "books/the-power-of-your-subconscious-mind.pdf",
+    "image_url": "images/the-subconscious-mind.jpg"
   },
   {
     "id": 8,
@@ -68,8 +68,8 @@
     "author": "J. L. Collins",
     "category": "Personal Finance / Investing / Financial Independence",
     "description": "Simple advice for achieving financial independence through index funds.",
-    "pdf_file": "static/books/the simple path to wealth.pdf",
-    "image_url": "images/The Simple Path To Wealth.jpg"
+    "pdf_file": "books/the-simple-path-to-wealth.pdf",
+    "image_url": "images/the-simple-path-to-wealth.jpg"
   },
   {
     "id": 9,
@@ -77,8 +77,8 @@
     "author": "Paulo Coelho",
     "category": "Fiction / Inspirational / Philosophical",
     "description": "A poetic journey of self-discovery and purpose.",
-    "pdf_file": "static/books/The_Alchemist.pdf",
-    "image_url": "images/The Alchemist.jpg"
+    "pdf_file": "books/the-alchemist.pdf",
+    "image_url": "images/the-alchemist.jpg"
   },
   {
     "id": 10,
@@ -86,8 +86,8 @@
     "author": "Morgan Housel",
     "category": "Personal Finance / Behavioral Economics / Psychology",
     "description": "Explores the human behaviors and emotions behind money decisions.",
-    "pdf_file": "static/books/the-psychology-of-money.pdf",
-    "image_url": "images/The psychology of money.jpg"
+    "pdf_file": "books/the-psychology-of-money.pdf",
+    "image_url": "images/the-psychology-of-money.jpg"
   },
   {
     "id": 11,
@@ -95,8 +95,8 @@
     "author": "Daniel Kahneman",
     "category": "Non-fiction",
     "description": "Reveals how two systems of thinking shape our judgments and decisions.",
-    "pdf_file": "static/books/Thinking, Fast and Slow.pdf",
-    "image_url": "images/Thinking, Fast and Slow.jpg"
+    "pdf_file": "books/thinking-fast-and-slow.pdf",
+    "image_url": "images/thinking-fast-and-slow.jpg"
   },
   {
     "id": 12,
@@ -104,7 +104,7 @@
     "author": "Viktor Frankl",
     "category": "Autobiography",
     "description": "A Holocaust survivor’s story and his theory of finding meaning through suffering.",
-    "pdf_file": "static/books/mans-search-for-meaning.pdf",
+    "pdf_file": "books/mans-search-for-meaning.pdf",
     "image_url": "images/mans-search-for-meaning.jpg"
   },
   {
@@ -113,8 +113,8 @@
     "author": "Cal Newport",
     "category": "Self-Help Book",
     "description": "Learn to focus deeply and produce high-quality work in less time.",
-    "pdf_file": "static/books/Deep-Work.pdf",
-    "image_url": "images/deep_work_cover.jpg"
+    "pdf_file": "books/deep-work.pdf",
+    "image_url": "images/deep-work-cover.jpg"
   },
   {
     "id": 14,
@@ -122,8 +122,8 @@
     "author": "Eckhart Tolle",
     "category": "Self-Help Book",
     "description": "A spiritual guide to staying present and finding peace in the moment.",
-    "pdf_file": "static/books/The Power Of Now.pdf",
-    "image_url": "images/the power of now.jpg"
+    "pdf_file": "books/the-power-of-now.pdf",
+    "image_url": "images/the-power-of-now.jpg"
   },
   {
     "id": 15,
@@ -131,8 +131,8 @@
     "author": "Dale Carnegie",
     "category": "Action-book",
     "description": "Timeless principles on connecting with people and influencing with integrity.",
-    "pdf_file": "static/books/how-to-win-friends-and-influence-people.pdf",
-    "image_url": "images/how to win friends and influece people.png"
+    "pdf_file": "books/how-to-win-friends-and-influence-people.pdf",
+    "image_url": "images/how-to-win-friends-and-influence-people.png"
   },
   {
     "id": 16,
@@ -140,7 +140,7 @@
     "author": "Stephen Covey",
     "category": "Self-Help Book",
     "description": "A classic framework for achieving personal and professional success.",
-    "pdf_file": "static/books/the 7 habits og highly effective people.pdf",
-    "image_url": "images/the 7 habits og highly effective people.jpg"
+    "pdf_file": "books/the-7-habits-of-highly-effective-people.pdf",
+    "image_url": "images/the-7-habits-of-highly-effective-people.jpg"
   }
 ]
