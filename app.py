@@ -1,10 +1,10 @@
-# app.py  ──────────────────────────────────────────────
+# app.py  
 from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session
 )
 import os, json
-import werkzeug.security as ws      # for password hashing
+import werkzeug.security as ws  # for password hashing
 
 app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
@@ -27,18 +27,20 @@ def save_books(data):
 # ────────── Helpers: users ──────
 def load_users():
     if os.path.exists(USERS_FILE):
-        with open(USERS_FILE) as f:
-            return json.load(f)
+        try:
+            with open(USERS_FILE) as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return []
     return []
 
-def save_users(data):
+def save_users(users):
     with open(USERS_FILE, "w") as f:
-        json.dump(data, f, indent=4)
+        json.dump(users, f, indent=4)
 
 # ────────── Public: Welcome ─────
 @app.route("/")
 def welcome():
-    # show a scrolling wall of covers on the landing page
     img_dir = os.path.join(app.static_folder, "images")
     images  = [f for f in os.listdir(img_dir)
                if f.lower().endswith((".jpg", ".jpeg", ".png"))]
@@ -48,17 +50,21 @@ def welcome():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email    = request.form.get("email", "").strip()
+        password = request.form.get("password", "").strip()
 
         if not email or not password:
             flash("All fields are required.", "error")
             return redirect(url_for("signup"))
 
-        # Store users in a simple file or dict (in production use DB)
-        user_data = {"email": email, "password": password}
-        with open("users.json", "a") as f:
-            f.write(json.dumps(user_data) + "\n")
+        users = load_users()
+        if any(u["email"] == email for u in users):
+            flash("User already exists. Please log in.", "error")
+            return redirect(url_for("login"))
+
+        hash_pw = ws.generate_password_hash(password)
+        users.append({"email": email, "password": hash_pw})
+        save_users(users)
 
         flash("Signup successful. Please log in.", "success")
         return redirect(url_for("login"))
@@ -66,25 +72,20 @@ def signup():
     return render_template("signup.html")
 
 # ────────── Auth: Login ─────────
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email    = request.form.get("email", "").strip()
+        password = request.form.get("password", "").strip()
 
-        if not all([email, password]):
+        if not email or not password:
             flash("All fields are required.", "error")
             return redirect(url_for("login"))
 
-        if not os.path.exists("users.json"):
-            flash("No users registered yet.", "error")
-            return redirect(url_for("signup"))
+        users = load_users()
+        user  = next((u for u in users if u["email"] == email), None)
 
-        users = json.load(open("users.json"))
-        user = next((u for u in users if u["email"] == email and u["password"] == password), None)
-
-        if user:
+        if user and ws.check_password_hash(user["password"], password):
             session["user"] = user["email"]
             flash("Login successful!", "success")
             return redirect(url_for("home"))
@@ -93,7 +94,6 @@ def login():
             return redirect(url_for("login"))
 
     return render_template("login.html")
-
 
 # ────────── Auth: Logout ────────
 @app.route("/logout")
@@ -133,10 +133,8 @@ def book_pdf(id):
     if not book:
         flash("PDF not found.", "danger")
         return redirect(url_for("home"))
-    # Serve the file inside /static/…
     return redirect(url_for("static", filename=book["pdf_file"]))
 
-# legacy link
 @app.route("/read/<int:id>")
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
