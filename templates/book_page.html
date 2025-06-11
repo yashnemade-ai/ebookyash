@@ -1,185 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ book.title }} | E-Book Library</title>
 
-  <!-- Google font + icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Google font & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
-    /* ---------- RESET / BASE ---------- */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{
-      font-family:"Inter",sans-serif;
-      background:linear-gradient(135deg,#f7f8fe,#e5edff);
-      color:#374151;
+      font-family:'Poppins',sans-serif;
+      background:linear-gradient(135deg,#f7f7f7,#e0e7ff);
       min-height:100vh;
+      color:#333;
     }
-    a{text-decoration:none;color:inherit}
-    img{display:block;max-width:100%}
 
-    /* ---------- HEADER ---------- */
+    /* ───────── NAVBAR ───────── */
     header{
       background:#1f2937;
       color:#fff;
-      padding:1rem 2rem;
+      padding:14px 28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
+    header .brand{display:flex;align-items:center;gap:.45rem;font-weight:600;font-size:1.35rem}
+    header nav a{
+      color:#fff;
+      margin-left:1.7rem;
+      font-weight:500;
+      transition:color .25s;
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      gap:.35rem;
     }
-    header h1{font-size:1.4rem;font-weight:700}
-    header nav a{
-      margin-left:1.5rem;
-      font-weight:600;
-      transition:color .25s;
-    }
-    header nav a:hover{color:#60a5fa}
+    header nav a:hover{color:#3b82f6}
 
-    /* ---------- CARD WRAPPER ---------- */
+    /* ───────── MAIN CARD ───────── */
     .wrapper{
-      max-width:1100px;
-      margin:2.5rem auto;
-      padding:2rem;
+      max-width:1150px;
+      margin:50px auto;
+      padding:0 16px;
+    }
+    .card{
       background:#fff;
-      border-radius:18px;
-      position:relative;
-      box-shadow:0 18px 40px rgba(0,0,0,.06);
+      border-radius:14px;
+      padding:40px 50px;
       display:flex;
-      gap:3rem;
-      flex-wrap:wrap;
-    }
-    /* thin gradient bar */
-    .wrapper::before{
-      content:"";
-      position:absolute;
-      top:0;left:0;
-      height:6px;width:100%;
-      border-radius:18px 18px 0 0;
-      background:linear-gradient(90deg,#f43f5e,#7c3aed);
-    }
-
-    /* ---------- COVER IMAGE ---------- */
-    .cover{
-      flex:1 1 280px;
-      max-width:360px;
-      border-radius:12px;
+      gap:50px;
+      box-shadow:0 12px 30px rgba(0,0,0,.06);
       overflow:hidden;
-      box-shadow:0 12px 28px rgba(0,0,0,.08);
-      transition:transform .35s ease;
+      position:relative;
     }
-    .cover:hover{transform:scale(1.04)}
+    /* coloured accent strip on the top */
+    .card::before{
+      content:'';
+      position:absolute;
+      left:0;top:0;
+      width:100%;height:6px;
+      background:#e11d48;               /* rose-600 */
+    }
 
-    /* ---------- INFO ---------- */
-    .info{flex:2 1 420px}
-    .category-pill{
-      display:inline-block;
-      font-size:.75rem;font-weight:600;
-      letter-spacing:.04em;
-      padding:.35rem 1rem;
-      border-radius:9999px;
-      background:#eef2ff;
-      color:#6366f1;
-      margin-bottom:1rem;
-      text-transform:lowercase;
+    /* cover image */
+    .cover{
+      flex:0 0 320px;
     }
-    .info h2{
-      font-size:2.2rem;
+    .cover img{
+      width:100%;height:auto;
+      border-radius:10px;
+      object-fit:cover;
+      box-shadow:0 8px 18px rgba(0,0,0,.07);
+    }
+
+    /* book info */
+    .info{flex:1 1 500px;display:flex;flex-direction:column}
+
+    .pill{
+      display:inline-block;
+      padding:4px 14px;
+      font-size:.75rem;
+      font-weight:600;
+      border-radius:9999px;
+      background:#e2e8f0;
+      color:#64748b;
+      margin-bottom:14px;
+      text-transform:capitalize;
+    }
+    h1{
+      font-size:2.1rem;
       font-weight:700;
-      margin:.35rem 0 1rem;
       color:#111827;
+      margin-bottom:12px;
     }
     .author{
       color:#6b7280;
       font-weight:600;
-      margin-bottom:1.25rem;
+      margin-bottom:30px;
+      display:flex;align-items:center;gap:.45rem;
     }
-    .desc{
+    .description{
+      line-height:1.7;
       font-size:1rem;
-      line-height:1.6;
-      margin-bottom:2rem;
-    }
-    .meta{
-      font-size:.88rem;
-      color:#4b5563;
-      margin-bottom:2rem;
+      margin-bottom:40px;
     }
 
-    /* ---------- BUTTONS ---------- */
+    .meta{
+      font-size:.9rem;
+      color:#6b7280;
+      margin-bottom:35px;
+    }
+
+    .btn-group{display:flex;gap:22px;flex-wrap:wrap}
     .btn{
       display:inline-flex;
-      align-items:center;
-      gap:.4rem;
-      padding:.85rem 1.6rem;
-      border-radius:10px;
+      align-items:center;gap:.45rem;
+      padding:12px 30px;
       font-weight:600;
+      font-size:1rem;
+      border:none;
+      border-radius:9999px;
       cursor:pointer;
-      transition:background .25s,transform .25s;
+      transition:transform .25s,box-shadow .25s;
+      text-decoration:none;
     }
-    .btn-read{
-      background:#3b82f6;color:#fff;
-      margin-right:1rem;
+    .btn-primary{background:#3b82f6;color:#fff;}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 14px rgba(59,130,246,.3);}
+    .btn-outline{
+      background:#fff;
+      color:#3b82f6;
+      border:2px solid #3b82f6;
     }
-    .btn-read:hover{background:#2563eb;transform:translateY(-3px)}
-    .btn-dl{
-      background:#f3f4f6;color:#1f2937;
-    }
-    .btn-dl:hover{background:#e5e7eb;transform:translateY(-3px)}
+    .btn-outline:hover{background:#3b82f6;color:#fff}
 
-    /* ---------- MOBILE ---------- */
-    @media(max-width:780px){
-      .wrapper{flex-direction:column;align-items:center;padding:1.5rem}
-      .info{text-align:center}
-      .btn{width:180px;justify-content:center}
+    /* ───────── RWD ───────── */
+    @media(max-width:900px){
+      .card{flex-direction:column;align-items:center;padding:30px 26px}
+      .cover{width:260px}
+      .info{align-items:center;text-align:center}
+      .btn-group{justify-content:center}
+    }
+    @media(max-width:500px){
+      .cover{width:220px}
+      h1{font-size:1.7rem}
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- NAVBAR -->
   <header>
-    <h1><i class="fas fa-book-reader" style="margin-right:.5rem"></i>E-Book Library</h1>
+    <div class="brand"><i class="fa-solid fa-book-open"></i> E-Book Library</div>
+
     <nav>
-      <a href="/"><i class="fas fa-home"></i> Home</a>
-      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      <a href="{{ url_for('welcome') }}"><i class="fa-solid fa-home"></i> Home</a>
+      <a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </nav>
   </header>
 
-  <!-- ===== BOOK CARD ===== -->
-  <section class="wrapper">
-    <!-- cover -->
-    <div class="cover">
-      <!-- if you use Flask, this keeps the original filename -->
-      <img src="{{ url_for('static', filename=book.image_url) }}"
-           alt="{{ book.title }} cover">
-    </div>
+  <!-- MAIN BOOK CARD -->
+  <main class="wrapper">
+    <div class="card">
 
-    <!-- book information -->
-    <div class="info">
-      <span class="category-pill">{{ book.category }}</span>
+      <!-- cover -->
+      <div class="cover">
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }} cover">
+      </div>
 
-      <h2>{{ book.title }}</h2>
-      <p class="author"><i class="fas fa-user-edit"></i> By {{ book.author }}</p>
+      <!-- info -->
+      <div class="info">
 
-      <p class="desc">{{ book.description }}</p>
+        <span class="pill">{{ book.category }}</span>
 
-      <p class="meta"><strong>Format</strong>  PDF</p>
+        <h1>{{ book.title }}</h1>
 
-      <!-- CTAs -->
-      <a href="{{ url_for('book_pdf', id=book.id) }}" class="btn btn-read" target="_blank">
-        <i class="fas fa-book-open"></i> Read Now
-      </a>
-      <a href="{{ url_for('book_pdf', id=book.id) }}" class="btn btn-dl" download>
-        <i class="fas fa-download"></i> Download PDF
-      </a>
-    </div>
-  </section>
+        <div class="author">
+          <i class="fa-solid fa-user-pen"></i>
+          By {{ book.author }}
+        </div>
 
-  <!-- Font-Awesome script (optional if icons already load) -->
+        <p class="description">{{ book.description }}</p>
+
+        <div class="meta">
+          <strong>Format</strong> &nbsp;PDF
+        </div>
+
+        <div class="btn-group">
+          <!-- READ -->
+          <a class="btn btn-primary" href="{{ url_for('book_pdf', id=book.id) }}" target="_blank">
+            <i class="fa-solid fa-book-open-reader"></i> Read Now
+          </a>
+          <!-- DOWNLOAD -->
+          <a class="btn btn-outline" href="{{ url_for('book_pdf', id=book.id) }}" download>
+            <i class="fa-solid fa-download"></i> Download PDF
+          </a>
+        </div>
+
+      </div><!-- /info -->
+    </div><!-- /card -->
+  </main>
+
+  <!-- Font Awesome JS (for icons that need JS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
