@@ -1,185 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ book.title }} | E-Book Reader</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>{{ book.title }} | E-Book Library</title>
+
+  <!-- Google font + icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #f7f7f7, #e0e7ff), url('https://www.transparenttextures.com/patterns/diagonal-stripes-light.png');
-      background-size: cover;
-      color: #333;
-      background-attachment: fixed;
+    /* ---------- RESET / BASE ---------- */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Inter",sans-serif;
+      background:linear-gradient(135deg,#f7f8fe,#e5edff);
+      color:#374151;
+      min-height:100vh;
+    }
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+
+    /* ---------- HEADER ---------- */
+    header{
+      background:#1f2937;
+      color:#fff;
+      padding:1rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    header h1{font-size:1.4rem;font-weight:700}
+    header nav a{
+      margin-left:1.5rem;
+      font-weight:600;
+      transition:color .25s;
+    }
+    header nav a:hover{color:#60a5fa}
+
+    /* ---------- CARD WRAPPER ---------- */
+    .wrapper{
+      max-width:1100px;
+      margin:2.5rem auto;
+      padding:2rem;
+      background:#fff;
+      border-radius:18px;
+      position:relative;
+      box-shadow:0 18px 40px rgba(0,0,0,.06);
+      display:flex;
+      gap:3rem;
+      flex-wrap:wrap;
+    }
+    /* thin gradient bar */
+    .wrapper::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;
+      height:6px;width:100%;
+      border-radius:18px 18px 0 0;
+      background:linear-gradient(90deg,#f43f5e,#7c3aed);
     }
 
-    header {
-      background-color: #1f2937;
-      padding: 1rem 2rem;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    /* ---------- COVER IMAGE ---------- */
+    .cover{
+      flex:1 1 280px;
+      max-width:360px;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 12px 28px rgba(0,0,0,.08);
+      transition:transform .35s ease;
+    }
+    .cover:hover{transform:scale(1.04)}
+
+    /* ---------- INFO ---------- */
+    .info{flex:2 1 420px}
+    .category-pill{
+      display:inline-block;
+      font-size:.75rem;font-weight:600;
+      letter-spacing:.04em;
+      padding:.35rem 1rem;
+      border-radius:9999px;
+      background:#eef2ff;
+      color:#6366f1;
+      margin-bottom:1rem;
+      text-transform:lowercase;
+    }
+    .info h2{
+      font-size:2.2rem;
+      font-weight:700;
+      margin:.35rem 0 1rem;
+      color:#111827;
+    }
+    .author{
+      color:#6b7280;
+      font-weight:600;
+      margin-bottom:1.25rem;
+    }
+    .desc{
+      font-size:1rem;
+      line-height:1.6;
+      margin-bottom:2rem;
+    }
+    .meta{
+      font-size:.88rem;
+      color:#4b5563;
+      margin-bottom:2rem;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      font-weight: 700;
+    /* ---------- BUTTONS ---------- */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      padding:.85rem 1.6rem;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .25s,transform .25s;
     }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-weight: 500;
-      transition: color 0.3s ease;
+    .btn-read{
+      background:#3b82f6;color:#fff;
+      margin-right:1rem;
     }
-
-    nav a:hover {
-      color: #2563eb;
+    .btn-read:hover{background:#2563eb;transform:translateY(-3px)}
+    .btn-dl{
+      background:#f3f4f6;color:#1f2937;
     }
+    .btn-dl:hover{background:#e5e7eb;transform:translateY(-3px)}
 
-    .container {
-      max-width: 1100px;
-      margin: 2rem auto;
-      display: flex;
-      gap: 3rem;
-      padding: 0 2rem;
-      flex-wrap: wrap;
-      transition: transform 0.3s ease;
-    }
-
-    .book-image {
-      flex: 1 1 300px;
-      max-width: 350px;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      position: relative;
-    }
-
-    .book-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .book-image:hover img {
-      transform: scale(1.05);
-    }
-
-    .book-info {
-      flex: 2;
-      max-width: 600px;
-    }
-
-    .book-info h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #1f2937;
-      transition: color 0.3s ease;
-    }
-
-    .book-info h2:hover {
-      color: #2563eb;
-    }
-
-    .book-info .author {
-      color: #6b7280;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .book-info p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      color: #444;
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #2563eb;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .cta-button:hover {
-      background-color: #1d4ed8;
-      transform: translateY(-4px);
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .book-info {
-        text-align: center;
-      }
-
-      .book-image {
-        max-width: 300px;
-        margin-bottom: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        padding: 1rem;
-      }
-
-      header h1 {
-        font-size: 1.4rem;
-      }
-
-      nav a {
-        margin-left: 1rem;
-      }
-
-      .book-info h2 {
-        font-size: 2rem;
-      }
+    /* ---------- MOBILE ---------- */
+    @media(max-width:780px){
+      .wrapper{flex-direction:column;align-items:center;padding:1.5rem}
+      .info{text-align:center}
+      .btn{width:180px;justify-content:center}
     }
   </style>
 </head>
 <body>
+
+  <!-- ===== HEADER ===== -->
   <header>
-    <h1>E-Book Reader</h1>
+    <h1><i class="fas fa-book-reader" style="margin-right:.5rem"></i>E-Book Library</h1>
     <nav>
-      <a href="/">Home</a>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
       <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </header>
 
-  <div class="container">
-    <div class="book-image">
-      <img src="{{ url_for('static', filename='images/' + book.image_url.split('/')[-1]) }}" alt="{{ book.title }} cover">
+  <!-- ===== BOOK CARD ===== -->
+  <section class="wrapper">
+    <!-- cover -->
+    <div class="cover">
+      <!-- if you use Flask, this keeps the original filename -->
+      <img src="{{ url_for('static', filename=book.image_url) }}"
+           alt="{{ book.title }} cover">
     </div>
 
-    <div class="book-info">
+    <!-- book information -->
+    <div class="info">
+      <span class="category-pill">{{ book.category }}</span>
+
       <h2>{{ book.title }}</h2>
-      <p class="author">By {{ book.author }}</p>
-      <p>{{ book.description }}</p>
-      <a href="{{ url_for('book_pdf', id=book.id) }}" class="cta-button" target="_blank">📖 Read Book</a>
-    </div>
-  </div>
+      <p class="author"><i class="fas fa-user-edit"></i> By {{ book.author }}</p>
 
-  <!-- Font Awesome CDN (for logout icon) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+      <p class="desc">{{ book.description }}</p>
+
+      <p class="meta"><strong>Format</strong>  PDF</p>
+
+      <!-- CTAs -->
+      <a href="{{ url_for('book_pdf', id=book.id) }}" class="btn btn-read" target="_blank">
+        <i class="fas fa-book-open"></i> Read Now
+      </a>
+      <a href="{{ url_for('book_pdf', id=book.id) }}" class="btn btn-dl" download>
+        <i class="fas fa-download"></i> Download PDF
+      </a>
+    </div>
+  </section>
+
+  <!-- Font-Awesome script (optional if icons already load) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
