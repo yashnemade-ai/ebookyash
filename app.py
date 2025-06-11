@@ -27,8 +27,10 @@ def welcome():
 
 @app.route("/home")
 def home():
-    books = load_books()
-    return render_template("home.html", books=books)
+    if "user" not in session:
+        flash("You must log in first.")
+        return redirect(url_for("login"))
+    return render_template("home.html", books=load_books())
 
 @app.route("/signup")
 def signup():
