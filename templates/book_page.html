@@ -3,207 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ book.title }} | E-Book Library</title>
+  <title>E-Book Library – Home</title>
 
-  <!-- Google font & icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:'Poppins',sans-serif;
-      background:linear-gradient(135deg,#f7f7f7,#e0e7ff);
-      min-height:100vh;
-      color:#333;
-    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
+    a { text-decoration:none; color:inherit; }
+    ul { list-style:none; }
 
-    /* ───────── NAVBAR ───────── */
-    header{
-      background:#1f2937;
-      color:#fff;
+    /* Navbar */
+    header {
+      background:#141d33;
       padding:14px 28px;
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      align-items:center;
-      box-shadow:0 4px 10px rgba(0,0,0,.08);
     }
-    header .brand{display:flex;align-items:center;gap:.45rem;font-weight:600;font-size:1.35rem}
-    header nav a{
-      color:#fff;
-      margin-left:1.7rem;
-      font-weight:500;
-      transition:color .25s;
-      display:flex;
-      align-items:center;
-      gap:.35rem;
+    .brand {
+      font-weight:600; font-size:1.3rem; color:#fff; display:flex; gap:.4rem;
     }
-    header nav a:hover{color:#3b82f6}
+    nav ul { display:flex; gap:18px; }
+    .nav-btn {
+      background:#1e2742; color:#fff; padding:8px 22px;
+      border-radius:6px; font-size:.92rem; transition:.25s;
+      display:flex; align-items:center; gap:.4rem;
+    }
+    .nav-btn:hover { background:#2d3554; }
 
-    /* ───────── MAIN CARD ───────── */
-    .wrapper{
-      max-width:1150px;
-      margin:50px auto;
+    /* Hero Section */
+    .hero {
+      position:relative;
+      padding:110px 12px 160px;
+      text-align:center;
+      overflow:hidden;
+    }
+    .hero h1 {
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:600;
+      color:#111;
+      margin-bottom:.65rem;
+    }
+    .hero p {
+      font-size:clamp(.9rem,1.3vw,1.15rem);
+      color:#67718c;
+      margin-bottom:3.5rem;
+    }
+
+    /* Animated Blobs */
+    .blob, .blob.alt {
+      position:absolute;
+      width:480px; height:480px;
+      filter:blur(50px); border-radius:50%;
+      animation:horizontalMove 18s linear infinite;
+    }
+    .blob {
+      background:radial-gradient(circle, rgba(255,113,113,.35), rgba(255,113,113,0) 70%);
+      top:50px; left:0;
+    }
+    .blob.alt {
+      background:radial-gradient(circle, rgba(123,104,238,.32), rgba(123,104,238,0) 70%);
+      top:100px; right:0;
+      animation-delay: 9s;
+    }
+    @keyframes horizontalMove {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(40px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Search Bar */
+    .search-bar {
+      width:90%; max-width:730px;
+      margin-inline:auto;
+      background:#fff;
+      border-radius:50px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      padding:6px;
+      display:flex; gap:0;
+    }
+    .search-bar input {
+      flex:2 1 280px; border:none; outline:none;
+      padding:16px 20px; border-radius:50px 0 0 50px;
+      font-size:.95rem;
+    }
+    .search-bar select {
+      flex:1 1 180px; border:none; outline:none;
+      font-size:.93rem; padding:0 20px;
+      color:#000; font-weight:600;
+      appearance:none;
+      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+      background-color:#fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .search-bar select:hover,
+    .search-bar select:focus {
+      background-color:#ffeaea;
+      color:#e74c3c;
+    }
+    .search-bar button {
+      border:none; outline:none; cursor:pointer;
+      padding:0 34px; display:flex; align-items:center; gap:.45rem;
+      background:#e74c3c; color:#fff;
+      font-weight:600;
+      border-radius:50px; transition:.25s;
+    }
+    .search-bar button:hover { background:#c0392b; }
+    .search-bar i { font-size:.95rem; }
+
+    /* Section Title */
+    .section-title {
+      text-align:center; margin-top:90px;
+    }
+    .section-title h2 {
+      font-size:2rem; font-weight:600; color:#111;
+      position:relative; display:inline-block; padding-bottom:.4rem;
+    }
+    .section-title h2::after {
+      content:""; height:3px; width:60px;
+      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      border-radius:2px;
+    }
+    .section-title p { color:#67718c; margin-top:.6rem; }
+
+    /* Book Grid */
+    .book-grid {
+      display:grid; gap:34px; justify-content:center;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      max-width:1100px; margin:60px auto 120px;
       padding:0 16px;
     }
-    .card{
-      background:#fff;
-      border-radius:14px;
-      padding:40px 50px;
-      display:flex;
-      gap:50px;
-      box-shadow:0 12px 30px rgba(0,0,0,.06);
-      overflow:hidden;
-      position:relative;
+    .book-card {
+      background:#fff; border-radius:14px; overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+      transition:.3s ease;
+      display:flex; flex-direction:column; text-align:center;
     }
-    /* coloured accent strip on the top */
-    .card::before{
-      content:'';
-      position:absolute;
-      left:0;top:0;
-      width:100%;height:6px;
-      background:#e11d48;               /* rose-600 */
+    .book-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 14px 28px rgba(0,0,0,.12);
     }
-
-    /* cover image */
-    .cover{
-      flex:0 0 320px;
+    .book-card img {
+      width:100%; height:250px; object-fit:cover;
     }
-    .cover img{
-      width:100%;height:auto;
-      border-radius:10px;
-      object-fit:cover;
-      box-shadow:0 8px 18px rgba(0,0,0,.07);
+    .book-body {
+      padding:22px 18px 28px;
+      flex:1; display:flex; flex-direction:column;
+    }
+    .book-body h3 { font-size:1.1rem; margin-bottom:.55rem; color:#222; }
+    .book-body p { font-size:.87rem; color:#555; margin-bottom:auto; }
+    .book-body a {
+      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
     }
 
-    /* book info */
-    .info{flex:1 1 500px;display:flex;flex-direction:column}
-
-    .pill{
-      display:inline-block;
-      padding:4px 14px;
-      font-size:.75rem;
-      font-weight:600;
-      border-radius:9999px;
-      background:#e2e8f0;
-      color:#64748b;
-      margin-bottom:14px;
-      text-transform:capitalize;
-    }
-    h1{
-      font-size:2.1rem;
-      font-weight:700;
-      color:#111827;
-      margin-bottom:12px;
-    }
-    .author{
-      color:#6b7280;
-      font-weight:600;
-      margin-bottom:30px;
-      display:flex;align-items:center;gap:.45rem;
-    }
-    .description{
-      line-height:1.7;
-      font-size:1rem;
-      margin-bottom:40px;
-    }
-
-    .meta{
-      font-size:.9rem;
-      color:#6b7280;
-      margin-bottom:35px;
-    }
-
-    .btn-group{display:flex;gap:22px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;
-      align-items:center;gap:.45rem;
-      padding:12px 30px;
-      font-weight:600;
-      font-size:1rem;
-      border:none;
-      border-radius:9999px;
-      cursor:pointer;
-      transition:transform .25s,box-shadow .25s;
-      text-decoration:none;
-    }
-    .btn-primary{background:#3b82f6;color:#fff;}
-    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 14px rgba(59,130,246,.3);}
-    .btn-outline{
-      background:#fff;
-      color:#3b82f6;
-      border:2px solid #3b82f6;
-    }
-    .btn-outline:hover{background:#3b82f6;color:#fff}
-
-    /* ───────── RWD ───────── */
-    @media(max-width:900px){
-      .card{flex-direction:column;align-items:center;padding:30px 26px}
-      .cover{width:260px}
-      .info{align-items:center;text-align:center}
-      .btn-group{justify-content:center}
-    }
-    @media(max-width:500px){
-      .cover{width:220px}
-      h1{font-size:1.7rem}
+    /* Responsive */
+    @media(max-width:600px){
+      .search-bar {
+        flex-direction:column;
+        border-radius:24px; padding:10px;
+      }
+      .search-bar input,
+      .search-bar select,
+      .search-bar button {
+        border-radius:12px; width:100%;
+      }
+      .search-bar button {
+        margin-top:8px; justify-content:center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- Navbar -->
   <header>
-    <div class="brand"><i class="fa-solid fa-book-open"></i> E-Book Library</div>
-
+    <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
     <nav>
-      <a href="{{ url_for('welcome') }}"><i class="fa-solid fa-home"></i> Home</a>
-      <a href="{{ url_for('logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <ul>
+        <li><a class="nav-btn" href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a class="nav-btn" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!-- MAIN BOOK CARD -->
-  <main class="wrapper">
-    <div class="card">
+  <!-- Hero -->
+  <section class="hero">
+    <span class="blob"></span>
+    <span class="blob alt"></span>
 
-      <!-- cover -->
-      <div class="cover">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }} cover">
+    <h1>Discover Your Next Great Read</h1>
+    <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
+
+    <!-- Search Bar -->
+    <form class="search-bar">
+      <input type="text" placeholder="Search for books by title…" />
+      <select>
+        <option>All Categories</option>
+        <option>Adventure</option>
+        <option>Biography</option>
+        <option>Fantasy</option>
+        <option>Romance</option>
+        <option>Sci-Fi</option>
+        <option>Self-Help</option>
+        <option>Non-Fiction</option>
+        <option>Comedy</option>
+        <option>Action</option>
+      </select>
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
+    </form>
+  </section>
+
+  <!-- Featured Books -->
+  <div class="section-title">
+    <h2>Featured Books</h2>
+    <p>Explore our hand-picked selection of must-read books</p>
+  </div>
+
+  <div class="book-grid">
+    {% for book in books %}
+    <div class="book-card">
+      <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+      <div class="book-body">
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description }}</p>
+        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
       </div>
+    </div>
+    {% endfor %}
+  </div>
 
-      <!-- info -->
-      <div class="info">
-
-        <span class="pill">{{ book.category }}</span>
-
-        <h1>{{ book.title }}</h1>
-
-        <div class="author">
-          <i class="fa-solid fa-user-pen"></i>
-          By {{ book.author }}
-        </div>
-
-        <p class="description">{{ book.description }}</p>
-
-        <div class="meta">
-          <strong>Format</strong> &nbsp;PDF
-        </div>
-
-        <div class="btn-group">
-          <!-- READ -->
-          <a class="btn btn-primary" href="{{ url_for('book_pdf', id=book.id) }}" target="_blank">
-            <i class="fa-solid fa-book-open-reader"></i> Read Now
-          </a>
-          <!-- DOWNLOAD -->
-          <a class="btn btn-outline" href="{{ url_for('book_pdf', id=book.id) }}" download>
-            <i class="fa-solid fa-download"></i> Download PDF
-          </a>
-        </div>
-
-      </div><!-- /info -->
-    </div><!-- /card -->
-  </main>
-
-  <!-- Font Awesome JS (for icons that need JS) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
