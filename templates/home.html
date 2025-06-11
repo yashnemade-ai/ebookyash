@@ -198,20 +198,19 @@
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
     <!-- Search Bar -->
-    <form class="search-bar">
-      <input type="text" placeholder="Search for books by title…" />
-      <select>
-        <option>All Categories</option>
-        <option>Adventure</option>
-        <option>Biography</option>
-        <option>Sci-Fi</option>
-        <option>Self-Help</option>
-        <option>Non-Fiction</option>
-        <option>Action</option>
-      </select>
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
-    </form>
-  </section>
+   <form class="search-bar" method="get" action="{{ url_for('home') }}">
+  <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
+  <select name="category">
+    <option value="">All Categories</option>
+    <option value="Adventure">Adventure</option>
+    <option value="Biography">Biography</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+    <option value="Self-Help">Self-Help</option>
+    <option value="Non-Fiction">Non-Fiction</option>
+    <option value="Action">Action</option>
+  </select>
+  <button type="submit"><i class="fas fa-search"></i> Search</button>
+</form>
 
   <!-- Featured Books -->
   <div class="section-title">
