@@ -48,24 +48,19 @@ def welcome():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        email    = request.form["email"].lower().strip()
-        password = request.form["password"]
+        email = request.form.get("email")
+        password = request.form.get("password")
 
         if not email or not password:
-            flash("Both fields are required.", "danger")
+            flash("All fields are required.", "error")
             return redirect(url_for("signup"))
 
-        users = load_users()
-        if any(u["email"] == email for u in users):
-            flash("Email already registered.", "warning")
-            return redirect(url_for("signup"))
+        # Store users in a simple file or dict (in production use DB)
+        user_data = {"email": email, "password": password}
+        with open("users.json", "a") as f:
+            f.write(json.dumps(user_data) + "\n")
 
-        users.append({
-            "email":    email,
-            "password": ws.generate_password_hash(password)
-        })
-        save_users(users)
-        flash("Account created. You can log in!", "success")
+        flash("Signup successful. Please log in.", "success")
         return redirect(url_for("login"))
 
     return render_template("signup.html")
