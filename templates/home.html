@@ -15,7 +15,6 @@
     a { text-decoration:none; color:inherit; }
     ul { list-style:none; }
 
-    /* Navbar */
     header {
       background:#141d33;
       padding:14px 28px;
@@ -34,7 +33,6 @@
     }
     .nav-btn:hover { background:#2d3554; }
 
-    /* Hero Section */
     .hero {
       position:relative;
       padding:110px 12px 160px;
@@ -53,7 +51,6 @@
       margin-bottom:3.5rem;
     }
 
-    /* Animated Blobs */
     .blob, .blob.alt {
       position:absolute;
       width:480px; height:480px;
@@ -75,46 +72,6 @@
       100% { transform: translateX(0); }
     }
 
-    /* Search Bar */
-    .search-bar {
-      width:90%; max-width:730px;
-      margin-inline:auto;
-      background:#fff;
-      border-radius:50px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);
-      padding:6px;
-      display:flex; gap:0;
-    }
-    .search-bar input {
-      flex:2 1 280px; border:none; outline:none;
-      padding:16px 20px; border-radius:50px 0 0 50px;
-      font-size:.95rem;
-    }
-    .search-bar select {
-      flex:1 1 180px; border:none; outline:none;
-      font-size:.93rem; padding:0 20px;
-      color:#000; font-weight:600;
-      appearance:none;
-      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
-      background-color:#fff;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .search-bar select:hover,
-    .search-bar select:focus {
-      background-color:#ffeaea;
-      color:#e74c3c;
-    }
-    .search-bar button {
-      border:none; outline:none; cursor:pointer;
-      padding:0 34px; display:flex; align-items:center; gap:.45rem;
-      background:#e74c3c; color:#fff;
-      font-weight:600;
-      border-radius:50px; transition:.25s;
-    }
-    .search-bar button:hover { background:#c0392b; }
-    .search-bar i { font-size:.95rem; }
-
-    /* Section Title */
     .section-title {
       text-align:center; margin-top:90px;
     }
@@ -129,7 +86,6 @@
     }
     .section-title p { color:#67718c; margin-top:.6rem; }
 
-    /* Book Grid */
     .book-grid {
       display:grid; gap:34px; justify-content:center;
       grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
@@ -153,25 +109,26 @@
       padding:22px 18px 28px;
       flex:1; display:flex; flex-direction:column;
     }
-    .book-body h3 { font-size:1.1rem; margin-bottom:.55rem; color:#222; }
-    .book-body p { font-size:.87rem; color:#555; margin-bottom:auto; }
-    .book-body a {
-      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
+    .book-body h3 {
+      font-size:1.1rem;
+      margin-bottom:.55rem;
+      color:#222;
+    }
+    .book-body p {
+      font-size:.87rem;
+      color:#555;
+      margin-bottom:auto;
+    }
+    .book-body a.more-link {
+      margin-top:18px;
+      color:#553CDF;
+      font-weight:600;
+      font-size:.9rem;
     }
 
-    /* Responsive */
     @media(max-width:600px){
-      .search-bar {
-        flex-direction:column;
-        border-radius:24px; padding:10px;
-      }
-      .search-bar input,
-      .search-bar select,
-      .search-bar button {
-        border-radius:12px; width:100%;
-      }
-      .search-bar button {
-        margin-top:8px; justify-content:center;
+      .book-grid {
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -196,24 +153,6 @@
 
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
-
-    <!-- Search Bar -->
-    <form class="search-bar">
-      <input type="text" placeholder="Search for books by title…" />
-      <select>
-        <option>All Categories</option>
-        <option>Adventure</option>
-        <option>Biography</option>
-        <option>Fantasy</option>
-        <option>Romance</option>
-        <option>Sci-Fi</option>
-        <option>Self-Help</option>
-        <option>Non-Fiction</option>
-        <option>Comedy</option>
-        <option>Action</option>
-      </select>
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
-    </form>
   </section>
 
   <!-- Featured Books -->
@@ -225,15 +164,17 @@
   <div class="book-grid">
     {% for book in books %}
     <div class="book-card">
-      <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+      <a href="{{ url_for('book_detail', book_id=book.id) }}">
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+      </a>
       <div class="book-body">
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.description }}</p>
-        <a href="{{ url_for('static', filename=book.pdf_file) }}" target="_blank">Read PDF</a>
+        <h3><a href="{{ url_for('book_detail', book_id=book.id) }}">{{ book.title }}</a></h3>
+        <p>{{ book.description[:120] }}...</p>
+        <a href="{{ url_for('book_detail', book_id=book.id) }}" class="more-link">More Info</a>
       </div>
     </div>
     {% endfor %}
   </div>
 
 </body>
-</html> this is home.html
+</html>
