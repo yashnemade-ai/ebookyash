@@ -1,15 +1,22 @@
-from flask import Flask, render_template, redirect, url_for, flash
+# app.py  ──────────────────────────────────────────────
+from flask import (
+    Flask, render_template, request, redirect,
+    url_for, flash, session
+)
 import os, json
+import werkzeug.security as ws      # for password hashing
 
 app = Flask(__name__)
-app.secret_key = "your-secret-key"
+app.secret_key = "replace-with-real-secret-key"
 
-BOOKS_FILE = "books.json"
+# ────────── File names ──────────
+BOOKS_FILE  = "books.json"
+USERS_FILE  = "users.json"
 
-# ────────── Helpers ──────────
+# ────────── Helpers: books ──────
 def load_books():
     if os.path.exists(BOOKS_FILE):
-        with open(BOOKS_FILE, "r") as f:
+        with open(BOOKS_FILE) as f:
             return json.load(f)
     return []
 
@@ -17,63 +24,124 @@ def save_books(data):
     with open(BOOKS_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-# ────────── Routes ──────────
+# ────────── Helpers: users ──────
+def load_users():
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE) as f:
+            return json.load(f)
+    return []
+
+def save_users(data):
+    with open(USERS_FILE, "w") as f:
+        json.dump(data, f, indent=4)
+
+# ────────── Public: Welcome ─────
 @app.route("/")
 def welcome():
-    # Optional welcome page showing all book covers
+    # show a scrolling wall of covers on the landing page
     img_dir = os.path.join(app.static_folder, "images")
-    images = [f for f in os.listdir(img_dir) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+    images  = [f for f in os.listdir(img_dir)
+               if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     return render_template("welcome.html", images=images)
 
-@app.route("/home")
-def home():
-    if "user" not in session:
-        flash("You must log in first.")
-        return redirect(url_for("login"))
-    return render_template("home.html", books=load_books())
-
-@app.route("/signup")
+# ────────── Auth: Sign-up ───────
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
+    if request.method == "POST":
+        email    = request.form["email"].lower().strip()
+        password = request.form["password"]
+
+        if not email or not password:
+            flash("Both fields are required.", "danger")
+            return redirect(url_for("signup"))
+
+        users = load_users()
+        if any(u["email"] == email for u in users):
+            flash("Email already registered.", "warning")
+            return redirect(url_for("signup"))
+
+        users.append({
+            "email":    email,
+            "password": ws.generate_password_hash(password)
+        })
+        save_users(users)
+        flash("Account created. You can log in!", "success")
+        return redirect(url_for("login"))
+
     return render_template("signup.html")
 
-@app.route("/login")
+# ────────── Auth: Login ─────────
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        email    = request.form["email"].lower().strip()
+        password = request.form["password"]
+
+        user = next((u for u in load_users()
+                     if u["email"] == email), None)
+
+        if user and ws.check_password_hash(user["password"], password):
+            session["user"] = email
+            flash("Logged in successfully!", "success")
+            return redirect(url_for("home"))
+
+        flash("Invalid email or password.", "danger")
+        return redirect(url_for("login"))
+
     return render_template("login.html")
 
+# ────────── Auth: Logout ────────
 @app.route("/logout")
 def logout():
     session.pop("user", None)
-    flash("Logged out successfully.")
+    flash("Logged out.", "info")
     return redirect(url_for("welcome"))
 
+# ────────── Protected: Home ─────
+@app.route("/home")
+def home():
+    if "user" not in session:
+        flash("Please log in first.", "warning")
+        return redirect(url_for("login"))
+    return render_template("home.html", books=load_books())
+
+# ────────── Protected: Book pages
 @app.route("/book/<int:id>")
 def book_page(id):
+    if "user" not in session:
+        flash("Please log in first.", "warning")
+        return redirect(url_for("login"))
+
     book = next((b for b in load_books() if b["id"] == id), None)
     if not book:
-        flash("Book not found.")
+        flash("Book not found.", "danger")
         return redirect(url_for("home"))
     return render_template("book_page.html", book=book)
 
 @app.route("/book/pdf/<int:id>")
 def book_pdf(id):
+    if "user" not in session:
+        flash("Please log in first.", "warning")
+        return redirect(url_for("login"))
+
     book = next((b for b in load_books() if b["id"] == id), None)
     if not book:
-        flash("PDF not found.")
+        flash("PDF not found.", "danger")
         return redirect(url_for("home"))
+    # Serve the file inside /static/…
     return redirect(url_for("static", filename=book["pdf_file"]))
 
+# legacy link
 @app.route("/read/<int:id>")
 def read_book(id):
-    # Legacy route redirecting to new PDF reader
     return redirect(url_for("book_pdf", id=id))
 
-# ────────── Bootstrap Sample Data ──────────
+# ────────── Seed sample data ────
 @app.before_first_request
-def populate_if_empty():
+def seed_books():
     if load_books():
         return
-
-    sample_books = [
+    sample = [
         {
             "id": 1,
             "title": "Deep Work",
@@ -102,10 +170,9 @@ def populate_if_empty():
             "image_url": "images/alchemist.jpg"
         }
     ]
+    save_books(sample)
+    print("📚  sample books added → books.json")
 
-    save_books(sample_books)
-    print("📚 Sample books added to books.json")
-
-# ────────── Run the app ──────────
+# ────────── Run ────────────────
 if __name__ == "__main__":
     app.run(debug=True)
