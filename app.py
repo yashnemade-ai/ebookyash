@@ -6,7 +6,7 @@ app.secret_key = "your-secret-key"
 
 BOOKS_FILE = "books.json"
 
-# ───────── helpers ─────────
+# ────────── Helpers ──────────
 def load_books():
     if os.path.exists(BOOKS_FILE):
         with open(BOOKS_FILE, "r") as f:
@@ -17,18 +17,18 @@ def save_books(data):
     with open(BOOKS_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-# ───────── routes ─────────
+# ────────── Routes ──────────
 @app.route("/")
 def welcome():
-    # simple welcome page that shows all cover pictures (optional)
+    # Optional welcome page showing all book covers
     img_dir = os.path.join(app.static_folder, "images")
-    images = [f for f in os.listdir(img_dir)
-              if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+    images = [f for f in os.listdir(img_dir) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     return render_template("welcome.html", images=images)
 
 @app.route("/home")
 def home():
-    return render_template("home.html", books=load_books())
+    books = load_books()
+    return render_template("home.html", books=books)
 
 @app.route("/book/<int:id>")
 def book_page(id):
@@ -44,21 +44,20 @@ def book_pdf(id):
     if not book:
         flash("PDF not found.")
         return redirect(url_for("home"))
-    # PDFs live inside /static/pdf/
     return redirect(url_for("static", filename=book["pdf_file"]))
 
-# keep the old /read/<id> route so existing links don't break
 @app.route("/read/<int:id>")
 def read_book(id):
+    # Legacy route redirecting to new PDF reader
     return redirect(url_for("book_pdf", id=id))
 
-# ───────── bootstrap a few books if books.json is empty ─────────
+# ────────── Bootstrap Sample Data ──────────
 @app.before_first_request
 def populate_if_empty():
     if load_books():
         return
 
-    sample = [
+    sample_books = [
         {
             "id": 1,
             "title": "Deep Work",
@@ -87,8 +86,10 @@ def populate_if_empty():
             "image_url": "images/alchemist.jpg"
         }
     ]
-    save_books(sample)
-    print("📚  sample books added to books.json")
 
+    save_books(sample_books)
+    print("📚 Sample books added to books.json")
+
+# ────────── Run the app ──────────
 if __name__ == "__main__":
     app.run(debug=True)
