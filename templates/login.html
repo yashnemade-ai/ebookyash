@@ -1,13 +1,78 @@
-<!-- templates/login.html -->
-<!doctype html>
-<title>Login</title>
-<h2>Login</h2>
-{% with m = get_flashed_messages(with_categories=true) %}
-  {% for c,msg in m %}<p class="{{c}}">{{ msg }}</p>{% endfor %}
-{% endwith %}
-<form method="post">
-  <input name="email"    type="email"    placeholder="Email"    required>
-  <input name="password" type="password" placeholder="Password" required>
-  <button type="submit">Log In</button>
-</form>
-<a href="{{ url_for('signup') }}">Need an account? Sign Up</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | E-Book Library</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #d8eafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-wrapper {
+      width: 90%;
+      max-width: 900px;
+      background-color: white;
+      display: flex;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .form-side {
+      flex: 1;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-side h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 14px;
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+
+    button:hover {
+      background-color: #c039
