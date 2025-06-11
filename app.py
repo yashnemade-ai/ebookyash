@@ -103,36 +103,73 @@ def logout():
     return redirect(url_for("welcome"))
 
 # ────────── Protected: Home ─────
+# ────────── Protected: Home ──────────
 @app.route("/home")
 def home():
     """
-    ① ?q=<keyword>      → filter by title (case-insensitive, substring)
-    ② ?category=<name>  → filter by category (exact match, case-insensitive)
-    ③ Both together     → combined AND filter
-       – If a category is chosen, we slice the result to the first 3 books
-         so *at most* three are shown (=> “at least 3 stored, show ≤3”).
+    Title search   : ?q=<keyword>      (case-insensitive)
+    Category filter: ?category=<value> (friendly or exact JSON name)
+    Combined search: both filters applied (AND)
+
+    • When a category is selected we always return *up to the
+      first three* books in that category (≥0 and ≤3).
     """
     if "user" not in session:
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    # query-string values -------------------------------------------------
-    keyword   = request.args.get("q", "").strip().lower()
-    category  = request.args.get("category", "").strip()
+    # what came from the query-string
+    raw_q        = request.args.get("q",        "").strip()
+    raw_category = request.args.get("category", "").strip()
 
+    # ------------------------------------------------------------------ #
+    # 1) normalise the requested category so it matches JSON categories  #
+    # ------------------------------------------------------------------ #
+    alias_map = {
+        "self-help"     : "Self-Help Book",
+        "self help"     : "Self-Help Book",
+        "biography"     : "Autobiography",
+        "bio"           : "Autobiography",
+        "nonfiction"    : "Non-fiction",
+        "personalfinance": "Personal Finance",
+        "fiction"       : "Fiction / Inspirational / Philosophical",
+        "action"        : "Action-book",
+        "value"         : "value investing-educational",
+        "sci-fi"        : "Sci-Fi",                      # if you ever add such books
+        "adventure"     : "Adventure"                    # idem
+    }
+
+    canonical_category = alias_map.get(raw_category.lower(), raw_category)
+
+    # ------------------------------------------------------------------ #
+    # 2) pull the books and apply filters                                #
+    # ------------------------------------------------------------------ #
     books = load_books()
 
-    # filter by category (if any) ----------------------------------------
-    if category:
-        books = [b for b in books
-                 if b["category"].lower() == category.lower()]
-        # keep only the first three books in that category
+    # filter by (canonical) category first
+    if canonical_category:
+        books = [
+            b for b in books
+            if b["category"].lower() == canonical_category.lower()
+        ]
+        # keep *max* first three
         books = books[:3]
 
-    # filter by search keyword -------------------------------------------
-    if keyword:
-        books = [b for b in books 
-                 if keyword in b["title"].lower()]
+    # filter by keyword afterwards (AND logic)
+    if raw_q:
+        keyword = raw_q.lower()
+        books = [b for b in books if keyword in b["title"].lower()]
+
+    # ------------------------------------------------------------------ #
+    # 3) render the template                                             #
+    # ------------------------------------------------------------------ #
+    return render_template(
+        "home.html",
+        books              = books,
+        search_term        = raw_q,
+        selected_category  = raw_category
+    )
+
 
     # pass the filters back to the template so
     # the <input> and <select> keep their values
