@@ -3,49 +3,268 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome - E‑Book Website</title>
+  <title>Welcome - E-Book Website</title>
 
-  <!-- Your CSS -->
+  <!-- External CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-  <!-- AOS Animations -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #1e1e2f;
+      --bg-light: #f4f6f9;
+      --text-dark: #333;
+      --white: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(-45deg, var(--bg-light), #dbe9f4, #e0f7fa, var(--bg-light));
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-dark);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      background-color: var(--secondary-color);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.6s ease-out forwards;
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    header nav ul {
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 40px;
+    }
+
+    header nav ul li {
+      margin: 10px;
+    }
+
+    header nav ul li a {
+      color: var(--white);
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #3e3e50;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    header nav ul li a:hover {
+      background-color: #57576f;
+    }
+
+    .hero {
+      position: relative;
+      padding: 100px 20px;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(-45deg, #1e1e2f, #007bff, #6f42c1, #1e1e2f);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      z-index: -1;
+      opacity: 0.85;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      animation: fadeInUp 1.4s ease-out forwards;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .ad-container {
+      width: 100%;
+      overflow-x: auto;
+      background-color: white;
+      padding: 30px 0;
+      margin-top: 40px;
+      border-top: 4px solid #ddd;
+      border-bottom: 4px solid #ddd;
+    }
+
+    .ad-content {
+      display: flex;
+      width: max-content;
+    }
+
+    .ad-card {
+      flex: 0 0 auto;
+      margin: 0 10px;
+      width: 200px;
+      height: 300px;
+      background-color: #fafafa;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .ad-card:hover {
+      transform: scale(1.05);
+    }
+
+    .ad-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .info-section, .cta-section {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: var(--white);
+      animation: fadeInUp 1.5s ease-out forwards;
+    }
+
+    .info-section h2, .cta-section h2 {
+      font-size: 32px;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+
+    .info-section p, .cta-section p {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .contact-info a {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--primary-color);
+      font-size: 18px;
+      margin: 10px;
+    }
+
+    footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer nav {
+      margin-bottom: 10px;
+    }
+
+    footer nav a {
+      color: #bbb;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    footer nav a:hover {
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .ad-card {
+        width: 150px;
+        height: 220px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header Navigation -->
+  <!-- Header -->
   <header>
     <nav>
       <ul>
         <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
         <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
         <li><a href="#support"><i class="fas fa-headset"></i> Support</a></li>
-        <li><a href="{{ url_for('login') }}" class="nav-btn">Login</a></li>
+        <li><a href="{{ url_for('login') }}" class="button"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li><a href="{{ url_for('signup') }}" class="button"><i class="fas fa-user-plus"></i> Sign Up</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Hero Section -->
- <section class="hero">
-  <h1>Welcome to the E-Book Library</h1>
-  <p>Discover and explore thousands of books.</p>
-  <a href="{{ url_for('signup') }}" class="nav-btn" style="margin-top: 20px; display: inline-block; background:#3b82f6; color:white; padding:12px 28px; border-radius:8px; font-weight:600;">
-    <i class="fas fa-user-plus"></i> Sign Up
-  </a>
-</section>
+  <!-- Hero -->
+  <div class="hero" data-aos="fade-in">
+    <h1>Welcome to the E-Book World</h1>
+    <p>Your gateway to knowledge and inspiration</p>
+  </div>
 
-  <!-- Featured Collection -->
-  <h2 class="section-title" data-aos="fade-up">Featured Collection</h2>
-
+  <!-- Scrolling Book Cards -->
   <div class="ad-container" data-aos="fade-up">
     <div class="ad-content">
-      {% for img in images %}
-        <div class="ad-card">
-          <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="{{ img.rsplit('.',1)[0] }}">
-        </div>
+      {% for image in images %}
+        <div class="ad-card"><img src="{{ url_for('static', filename='images/' + image) }}" alt="E-Book Cover"></div>
       {% endfor %}
     </div>
   </div>
@@ -53,7 +272,7 @@
   <!-- About Section -->
   <div class="info-section" id="about" data-aos="fade-up">
     <h2>About Us</h2>
-    <p>We are a platform dedicated to providing a diverse collection of e‑books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
+    <p>We are a platform dedicated to providing a diverse collection of e-books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
   </div>
 
   <!-- Support Section -->
@@ -66,11 +285,11 @@
     </div>
   </div>
 
-  <!-- CTA Section -->
+  <!-- Call to Action -->
   <div class="cta-section" data-aos="fade-up">
-    <h2>Discover your next favourite book today</h2>
-    <p>Browse our library and start reading instantly.</p>
-    <a href="{{ url_for('home') }}" class="button"><i class="fas fa-arrow-circle-right"></i> Browse Books</a>
+    <h2>Discover your next favorite book today</h2>
+    <p>Join thousands of readers expanding their minds and unlocking new ideas.</p>
+    <a href="{{ url_for('login') }}" class="button"><i class="fas fa-arrow-circle-right"></i> Get Started</a>
   </div>
 
   <!-- Footer -->
@@ -80,11 +299,13 @@
       <a href="#about">About</a>
       <a href="#support">Support</a>
     </nav>
-    <p>&copy; 2025 E‑Book Website. All rights reserved.</p>
+    <p>&copy; 2025 E-Book Website. All rights reserved.</p>
   </footer>
 
-  <!-- AOS Script -->
+  <!-- AOS Animation Script -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
