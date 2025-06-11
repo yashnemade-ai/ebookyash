@@ -36,6 +36,10 @@ def home():
 def signup():
     return render_template("signup.html")
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
 @app.route("/logout")
 def logout():
     session.pop("user", None)
