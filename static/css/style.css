@@ -77,48 +77,50 @@ header nav ul li a:hover {
    Home Page Hero (home.html)
 -------------------------------------------------- */
 .hero {
-  padding: 100px 20px 40px;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
   position: relative;
+  padding: 110px 12px 160px;
+  text-align: center;
+  background: #f4f6f9; /* Match your body background for smooth blend */
   overflow: hidden;
+  z-index: 1;
 }
 
+.hero h1, .hero p {
+  position: relative;
+  z-index: 2; /* Make text stay above the animation */
+}
+
+/* Animated background behind the text */
 .hero::before,
 .hero::after {
   content: "";
   position: absolute;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.5;
-  animation: moveBlob 20s ease-in-out infinite alternate;
-  z-index: 0;
+  z-index: 1;
+  opacity: 0.3;
+  animation: floatBlobs 12s ease-in-out infinite alternate;
 }
 
 .hero::before {
-  width: 500px;
-  height: 500px;
-  top: -100px;
-  left: -150px;
+  top: 20%;
+  left: 30%;
   background: radial-gradient(circle, #ff7ce0, transparent 70%);
 }
 
 .hero::after {
-  width: 500px;
-  height: 500px;
-  bottom: -120px;
-  right: -120px;
+  bottom: 10%;
+  right: 25%;
   background: radial-gradient(circle, #7ec8ff, transparent 70%);
-  animation-delay: 10s;
+  animation-delay: 5s;
 }
 
-@keyframes moveBlob {
-  0%   { transform: scale(1) translate(0, 0) rotate(0deg); }
-  50%  { transform: scale(1.1) translate(20px, -10px) rotate(20deg); }
-  100% { transform: scale(1) translate(-10px, 10px) rotate(0deg); }
+@keyframes floatBlobs {
+  0%   { transform: scale(1) translate(0, 0); }
+  50%  { transform: scale(1.2) translate(30px, -20px); }
+  100% { transform: scale(1) translate(-10px, 20px); }
 }
 
 
