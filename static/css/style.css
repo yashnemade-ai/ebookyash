@@ -76,16 +76,51 @@ header nav ul li a:hover {
 /* -------------------------------------------------
    Home Page Hero (home.html)
 -------------------------------------------------- */
-.home-hero {
-  padding: 100px 20px 70px;
+.hero {
+  padding: 100px 20px 40px;
   text-align: center;
-  background: url("../images/hero-bg.jpg") center/cover no-repeat;
-  backdrop-filter: brightness(.6);
   color: #fff;
+  background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  position: relative;
+  overflow: hidden;
 }
 
-.home-hero h1 { font-size: 42px; margin-bottom: 8px; }
-.home-hero p  { font-size: 18px; margin-bottom: 35px; }
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: moveBlob 20s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.hero::before {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  left: -150px;
+  background: radial-gradient(circle, #ff7ce0, transparent 70%);
+}
+
+.hero::after {
+  width: 500px;
+  height: 500px;
+  bottom: -120px;
+  right: -120px;
+  background: radial-gradient(circle, #7ec8ff, transparent 70%);
+  animation-delay: 10s;
+}
+
+@keyframes moveBlob {
+  0%   { transform: scale(1) translate(0, 0) rotate(0deg); }
+  50%  { transform: scale(1.1) translate(20px, -10px) rotate(20deg); }
+  100% { transform: scale(1) translate(-10px, 10px) rotate(0deg); }
+}
+
 
 /* Search bar */
 .search-bar {
