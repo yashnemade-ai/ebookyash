@@ -198,18 +198,18 @@
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
     <!-- Search Bar -->
-   <form class="search-bar" method="get" action="{{ url_for('home') }}">
+ <form class="search-bar" method="get" action="{{ url_for('home') }}">
   <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
-  <select name="category">
-    <option value="">All Categories</option>
-    <option value="Adventure">Adventure</option>
-    <option value="Biography">Biography</option>
-    <option value="Sci-Fi">Sci-Fi</option>
-    <option value="Self-Help">Self-Help</option>
-    <option value="Non-Fiction">Non-Fiction</option>
-    <option value="Action">Action</option>
-  </select>
   <select name="category" onchange="this.form.submit()">
+    <option value="">All Categories</option>
+    <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
+    <option value="Biography" {% if selected_category == "Biography" %}selected{% endif %}>Biography</option>
+    <option value="Sci-Fi" {% if selected_category == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
+    <option value="Self-Help" {% if selected_category == "Self-Help" %}selected{% endif %}>Self-Help</option>
+    <option value="Non-Fiction" {% if selected_category == "Non-Fiction" %}selected{% endif %}>Non-Fiction</option>
+    <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
+  </select>
+  <button type="submit"><i class="fas fa-search"></i> Search</button>
 </form>
 
   <!-- Featured Books -->
