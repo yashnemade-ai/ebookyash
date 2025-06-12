@@ -265,4 +265,35 @@ footer nav a:hover { color: #fff; }
   .search-bar input, .search-bar select, .search-bar button { width: 100%; }
   .book-card { width: 90%; }
   .ad-card { width: 140px; height: 210px; }
+
+   @media (max-width: 768px) {
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .ad-card {
+    width: 140px;
+    height: 210px;
+  }
+
+  .white-box {
+    padding: 20px 15px;
+  }
+
+  .button {
+    width: 90%;
+    display: block;
+    margin: 10px auto;
+  }
+}
+
 }
