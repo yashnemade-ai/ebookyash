@@ -173,17 +173,32 @@
       display: block;
     }
 
-    .info-section h2, .cta-section h2 {
+    .white-box {
+      background: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      border-radius: 12px;
+      padding: 40px 30px;
+      margin: 40px auto;
+      max-width: 1000px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .white-box:hover {
+      transform: translateY(-4px);
+    }
+
+    .white-box h2 {
       font-size: 32px;
       color: var(--secondary-color);
       margin-bottom: 20px;
     }
 
-    .info-section p, .cta-section p {
-      max-width: 800px;
-      margin: 0 auto 20px;
+    .white-box p {
       font-size: 18px;
       color: #555;
+      max-width: 800px;
+      margin: 0 auto 20px;
     }
 
     .contact-info a {
@@ -217,41 +232,31 @@
     }
 
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .ad-card {
-        width: 150px;
-        height: 220px;
-      }
+      .hero h1 { font-size: 32px; }
+      .hero p  { font-size: 16px; }
+      .ad-card { width: 150px; height: 220px; }
     }
   </style>
 </head>
 <body>
 
   <!-- Header -->
- <header>
-  <nav>
-    <ul>
-      <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
-      <li><a class="nav-btn" href="#about"><i class="fas fa-info-circle"></i> About</a></li>
-      <li><a class="nav-btn" href="#support"><i class="fas fa-headset"></i> Support</a></li>
-      <li><a href="{{ url_for('login') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-    </ul>
-  </nav>
-</header>
-
+  <header>
+    <nav>
+      <ul>
+        <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a class="nav-btn" href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a class="nav-btn" href="#support"><i class="fas fa-headset"></i> Support</a></li>
+        <li><a href="{{ url_for('login') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero -->
   <div class="hero" data-aos="fade-in">
     <h1>Welcome to the E-Book World</h1>
     <p>Your gateway to knowledge and inspiration</p>
-    <li><a href="{{ url_for('signup') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+    <a href="{{ url_for('signup') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-user-plus"></i> Sign Up</a>
   </div>
 
   <!-- Scrolling Book Cards -->
@@ -264,13 +269,13 @@
   </div>
 
   <!-- About Section -->
-  <div class="info-section" id="about" data-aos="fade-up">
+  <div class="white-box" id="about" data-aos="fade-up">
     <h2>About Us</h2>
     <p>We are a platform dedicated to providing a diverse collection of e-books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
   </div>
 
   <!-- Support Section -->
-  <div class="info-section" id="support" data-aos="fade-up">
+  <div class="white-box" id="support" data-aos="fade-up">
     <h2>Support</h2>
     <p>If you have any questions or need assistance, feel free to contact us. Our support team is available 24/7 to help you with any queries you may have.</p>
     <div class="contact-info">
@@ -280,7 +285,7 @@
   </div>
 
   <!-- Call to Action -->
-  <div class="cta-section" data-aos="fade-up">
+  <div class="white-box" data-aos="fade-up">
     <h2>Discover your next favorite book today</h2>
     <p>Join thousands of readers expanding their minds and unlocking new ideas.</p>
     <a href="{{ url_for('login') }}" class="button"><i class="fas fa-arrow-circle-right"></i> Get Started</a>
