@@ -1,4 +1,3 @@
-{% raw %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +7,154 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <!--  full CSS exactly as you had it … -->
   <style>
-    /*  …  identical CSS omitted for brevity  … */
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background: #1e1e2f;
+      color: #fff;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .brand {
+      font-weight: 600;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+    }
+
+    .cover img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .pill {
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .info h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .author {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+
+    .btn-outline {
+      border: 2px solid #007bff;
+      color: #007bff;
+    }
+
+    .btn-outline:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .cover img {
+        max-width: 100%;
+      }
+
+      .btn-group {
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -34,7 +178,7 @@
       <h1>{{ book.title }}</h1>
       <div class="author"><i class="fa-solid fa-user-pen"></i> By {{ book.author }}</div>
       <p class="description">{{ book.description }}</p>
-      <div class="meta"><strong>Format</strong>&nbsp;PDF</div>
+      <div class="meta"><strong>Format:</strong> PDF</div>
 
       <div class="btn-group">
         <a class="btn btn-primary" href="{{ url_for('book_pdf', id=book.id) }}" target="_blank">
@@ -51,4 +195,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
-{% endraw %}
