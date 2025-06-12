@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* --- Your Existing Styles --- */
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
     body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
     a { text-decoration:none; color:inherit; }
     ul { list-style:none; }
 
+    /* Navbar */
     header {
       background:#141d33;
       padding:14px 28px;
@@ -34,6 +34,7 @@
     }
     .nav-btn:hover { background:#2d3554; }
 
+    /* Hero Section */
     .hero {
       position:relative;
       padding:110px 12px 160px;
@@ -45,57 +46,134 @@
       font-weight:600;
       color:#111;
       margin-bottom:.65rem;
-      position:relative;
-      z-index:1;
     }
     .hero p {
       font-size:clamp(.9rem,1.3vw,1.15rem);
       color:#67718c;
       margin-bottom:3.5rem;
-      position:relative;
-      z-index:1;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255,113,113,0.2), rgba(255,113,113,0) 70%);
-      animation: pulse 6s ease-in-out infinite;
-      z-index: 0;
-      border-radius: 50%;
+    /* Animated Blobs */
+    .blob, .blob.alt {
+      position:absolute;
+      width:480px; height:480px;
+      filter:blur(50px); border-radius:50%;
+      animation:horizontalMove 18s linear infinite;
+    }
+    .blob {
+      background:radial-gradient(circle, rgba(255,113,113,.35), rgba(255,113,113,0) 70%);
+      top:50px; left:0;
+    }
+    .blob.alt {
+      background:radial-gradient(circle, rgba(123,104,238,.32), rgba(123,104,238,0) 70%);
+      top:100px; right:0;
+      animation-delay: 9s;
+    }
+    @keyframes horizontalMove {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(40px); }
+      100% { transform: translateX(0); }
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 55%;
-      left: 45%;
-      transform: translate(-50%, -50%);
-      width: 360px;
-      height: 360px;
-      background: radial-gradient(circle, rgba(123,104,238,0.2), rgba(123,104,238,0) 70%);
-      animation: pulse2 8s ease-in-out infinite;
-      z-index: 0;
-      border-radius: 50%;
+    /* Search Bar */
+    .search-bar {
+      width:90%; max-width:730px;
+      margin-inline:auto;
+      background:#fff;
+      border-radius:50px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      padding:6px;
+      display:flex; gap:0;
+    }
+    .search-bar input {
+      flex:2 1 280px; border:none; outline:none;
+      padding:16px 20px; border-radius:50px 0 0 50px;
+      font-size:.95rem;
+    }
+    .search-bar select {
+      flex:1 1 180px; border:none; outline:none;
+      font-size:.93rem; padding:0 20px;
+      color:#000; font-weight:600;
+      appearance:none;
+      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+      background-color:#fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .search-bar select:hover,
+    .search-bar select:focus {
+      background-color:#ffffff;
+      color:#000000;
+    }
+    .search-bar button {
+      border:none; outline:none; cursor:pointer;
+      padding:0 34px; display:flex; align-items:center; gap:.45rem;
+      background:#e74c3c; color:#fff;
+      font-weight:600;
+      border-radius:50px; transition:.25s;
+    }
+    .search-bar button:hover { background:#c0392b; }
+    .search-bar i { font-size:.95rem; }
+
+    /* Section Title */
+    .section-title {
+      text-align:center; margin-top:90px;
+    }
+    .section-title h2 {
+      font-size:2rem; font-weight:600; color:#111;
+      position:relative; display:inline-block; padding-bottom:.4rem;
+    }
+    .section-title h2::after {
+      content:""; height:3px; width:60px;
+      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      border-radius:2px;
+    }
+    .section-title p { color:#67718c; margin-top:.6rem; }
+
+    /* Book Grid */
+    .book-grid {
+      display:grid; gap:34px; justify-content:center;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      max-width:1100px; margin:60px auto 120px;
+      padding:0 16px;
+    }
+    .book-card {
+      background:#fff; border-radius:14px; overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+      transition:.3s ease;
+      display:flex; flex-direction:column; text-align:center;
+    }
+    .book-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 14px 28px rgba(0,0,0,.12);
+    }
+    .book-card img {
+      width:100%; height:250px; object-fit:cover;
+    }
+    .book-body {
+      padding:22px 18px 28px;
+      flex:1; display:flex; flex-direction:column;
+    }
+    .book-body h3 { font-size:1.1rem; margin-bottom:.55rem; color:#222; }
+    .book-body p { font-size:.87rem; color:#555; margin-bottom:auto; }
+    .book-body a {
+      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.25; }
-      50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 0.4; }
+    /* Responsive */
+    @media(max-width:600px){
+      .search-bar {
+        flex-direction:column;
+        border-radius:24px; padding:10px;
+      }
+      .search-bar input,
+      .search-bar select,
+      .search-bar button {
+        border-radius:12px; width:100%;
+      }
+      .search-bar button {
+        margin-top:8px; justify-content:center;
+      }
     }
-
-    @keyframes pulse2 {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
-      50%      { transform: translate(-50%, -50%) scale(1.2); opacity: 0.35; }
-    }
-
-    /* Keep rest of your styles exactly the same... */
-    /* Search bar, section-title, book-grid, etc. remain unchanged */
   </style>
 </head>
 <body>
@@ -104,33 +182,34 @@
   <header>
     <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
     <nav>
-      <ul>
-        <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
-        <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-      </ul>
-    </nav>
+  <ul>
+    <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+    <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  </ul>
+</nav>
   </header>
 
   <!-- Hero -->
   <section class="hero">
+    <div class="animated-bg"></div>
+
     <h1>Discover Your Next Great Read</h1>
     <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
     <!-- Search Bar -->
-    <form class="search-bar" method="get" action="{{ url_for('home') }}">
-      <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
-      <select name="category" onchange="this.form.submit()">
-        <option value="">All Categories</option>
-        <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
-        <option value="Biography" {% if selected_category == "Biography" %}selected{% endif %}>Biography</option>
-        <option value="Sci-Fi" {% if selected_category == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
-        <option value="Self-Help" {% if selected_category == "Self-Help" %}selected{% endif %}>Self-Help</option>
-        <option value="Non-Fiction" {% if selected_category == "Non-Fiction" %}selected{% endif %}>Non-Fiction</option>
-        <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
-      </select>
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
-    </form>
-  </section>
+ <form class="search-bar" method="get" action="{{ url_for('home') }}">
+  <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
+  <select name="category" onchange="this.form.submit()">
+    <option value="">All Categories</option>
+    <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
+    <option value="Biography" {% if selected_category == "Biography" %}selected{% endif %}>Biography</option>
+    <option value="Sci-Fi" {% if selected_category == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
+    <option value="Self-Help" {% if selected_category == "Self-Help" %}selected{% endif %}>Self-Help</option>
+    <option value="Non-Fiction" {% if selected_category == "Non-Fiction" %}selected{% endif %}>Non-Fiction</option>
+    <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
+  </select>
+  <button type="submit"><i class="fas fa-search"></i> Search</button>
+</form>
 
   <!-- Featured Books -->
   <div class="section-title">
