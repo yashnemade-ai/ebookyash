@@ -76,53 +76,16 @@ header nav ul li a:hover {
 /* -------------------------------------------------
    Home Page Hero (home.html)
 -------------------------------------------------- */
-.hero {
-  position: relative;
-  padding: 110px 12px 160px;
+.home-hero {
+  padding: 100px 20px 70px;
   text-align: center;
-  background: #f4f6f9; /* Match your body background for smooth blend */
-  overflow: hidden;
-  z-index: 1;
+  background: url("../images/hero-bg.jpg") center/cover no-repeat;
+  backdrop-filter: brightness(.6);
+  color: #fff;
 }
 
-.hero h1, .hero p {
-  position: relative;
-  z-index: 2; /* Make text stay above the animation */
-}
-
-/* Animated background behind the text */
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 1;
-  opacity: 0.3;
-  animation: floatBlobs 12s ease-in-out infinite alternate;
-}
-
-.hero::before {
-  top: 20%;
-  left: 30%;
-  background: radial-gradient(circle, #ff7ce0, transparent 70%);
-}
-
-.hero::after {
-  bottom: 10%;
-  right: 25%;
-  background: radial-gradient(circle, #7ec8ff, transparent 70%);
-  animation-delay: 5s;
-}
-
-@keyframes floatBlobs {
-  0%   { transform: scale(1) translate(0, 0); }
-  50%  { transform: scale(1.2) translate(30px, -20px); }
-  100% { transform: scale(1) translate(-10px, 20px); }
-}
-
+.home-hero h1 { font-size: 42px; margin-bottom: 8px; }
+.home-hero p  { font-size: 18px; margin-bottom: 35px; }
 
 /* Search bar */
 .search-bar {
@@ -302,4 +265,4 @@ footer nav a:hover { color: #fff; }
   .search-bar input, .search-bar select, .search-bar button { width: 100%; }
   .book-card { width: 90%; }
   .ad-card { width: 140px; height: 210px; }
-} 
+}
