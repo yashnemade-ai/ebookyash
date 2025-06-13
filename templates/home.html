@@ -80,25 +80,23 @@
       box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
       padding: 6px;
       display: flex;
-      gap: 0;
     }
     .search-bar input, .search-bar select, .search-bar button {
       border: none;
       outline: none;
     }
     .search-bar input {
-      flex: 2 1 280px;
+      flex: 2;
       padding: 16px 20px;
       border-radius: 50px 0 0 50px;
       font-size: .95rem;
     }
     .search-bar select {
-      flex: 1 1 180px;
+      flex: 1;
       font-size: .93rem;
       padding: 0 20px;
-      color: #000;
-      font-weight: 600;
       appearance: none;
+      font-weight: 600;
       background: url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
       background-color: #fff;
     }
@@ -168,8 +166,7 @@
       transform: translateY(-6px);
       box-shadow: 0 14px 28px rgba(0, 0, 0, .12);
     }
-
-    .book-card .img-container {
+    .img-container {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -177,12 +174,10 @@
       background-color: #f9f9f9;
       overflow: hidden;
     }
-
-    .book-card img {
+    .img-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      padding: 0;
     }
 
     .book-body {
@@ -372,10 +367,8 @@
   {% endfor %}
 </div>
 
-<button class="feedback-btn" onclick="document.getElementById('feedback-modal').style.display='flex'">
-  💬 Feedback
-</button>
-
+<!-- Feedback Button & Modal -->
+<button class="feedback-btn" onclick="document.getElementById('feedback-modal').style.display='flex'">💬 Feedback</button>
 <div class="feedback-modal" id="feedback-modal">
   <span class="close-btn" onclick="document.getElementById('feedback-modal').style.display='none'">&times;</span>
   <form method="POST" action="{{ url_for('submit_feedback') }}">
