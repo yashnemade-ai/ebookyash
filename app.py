@@ -177,6 +177,11 @@ def home():
         search_term      = keyword,
         selected_category= category.lower() or "all"
     )
+    
+@app.route('/home')
+def home():
+    session.pop('show_feedback_popup', None)
+    return render_template("home.html")
 
 from datetime import datetime
 
