@@ -189,19 +189,18 @@ header nav ul li a:hover {
 }
 
 .book-card .img-container {
-  background-color: #fff;
+  width: 100%;
   height: 270px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
+  overflow: hidden;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
 }
 
 .book-card img {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  padding: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .book-body {
