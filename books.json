@@ -143,4 +143,13 @@
     "pdf_file": "pdf/the 7 habits og highly effective people.pdf",
     "image_url": "images/the 7 habits og highly effective people.jpg"
   }
+  {
+    "id": 17,
+    "title": "20,000 Leagues Under the Sea",
+    "author": "Jules Verne",
+    "category": "Adventure",
+    "description": "Brace yourself for a seafaring adventure you will never forget! Experience the adrenaline rush of being on board the amazing submarine, the Nautilus, while Captain Nemo, his crew and passengers, traverse the oceans on a quest for scientific knowledge",
+    "pdf_file": "pdf/20000-leagues-under-the-sea.pdf",
+    "image_url": "images/20000-twenty-thousand-leagues-under-the-sea.jpg"
+  }
 ]
