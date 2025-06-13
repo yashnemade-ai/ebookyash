@@ -178,14 +178,38 @@ def home():
         selected_category= category.lower() or "all"
     )
 
-@app.route("/admin/feedback")
-def admin_feedback():
-    if not os.path.exists("feedback.json"):
-        feedback_list = []
-    else:
+from datetime import datetime
+
+@app.route("/submit_feedback", methods=["POST"])
+def submit_feedback():
+    if "user" not in session:
+        flash("Please log in to submit feedback.", "warning")
+        return redirect(url_for("login"))
+
+    feedback_text = request.form.get("feedback", "").strip()
+    if not feedback_text:
+        flash("Feedback cannot be empty.", "error")
+        return redirect(url_for("home"))
+
+    feedback_entry = {
+        "username": session["user"],
+        "feedback": feedback_text,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M")
+    }
+
+    if os.path.exists("feedback.json"):
         with open("feedback.json") as f:
             feedback_list = json.load(f)
-    return render_template("admin_feedback.html", feedback_list=feedback_list)
+    else:
+        feedback_list = []
+
+    feedback_list.append(feedback_entry)
+    with open("feedback.json", "w") as f:
+        json.dump(feedback_list, f, indent=2)
+
+    flash("Thanks for your feedback!", "success")
+    return redirect(url_for("home"))
+
 
 
 # ────────── Protected: Book pages
