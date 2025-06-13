@@ -1,15 +1,15 @@
-# app.py  
+# app.py
 from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session
 )
 import os, json
 import werkzeug.security as ws  # for password hashing
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
 
-# ────────── File names ──────────
 BOOKS_FILE  = "books.json"
 USERS_FILE  = "users.json"
 
@@ -87,6 +87,7 @@ def login():
 
         if user and ws.check_password_hash(user["password"], password):
             session["user"] = user["email"]
+            session["show_feedback_popup"] = True  # Feedback popup trigger
             flash("Login successful!", "success")
             return redirect(url_for("home"))
         else:
@@ -103,88 +104,53 @@ def logout():
     return redirect(url_for("welcome"))
 
 # ────────── Protected: Home ─────
-# ────────── Protected: Home ──────────
 @app.route("/home")
 def home():
-    """
-    Title search   : ?q=<keyword>      (case-insensitive)
-    Category filter: ?category=<value> (friendly or exact JSON name)
-    Combined search: both filters applied (AND)
-
-    • When a category is selected we always return *up to the
-      first three* books in that category (≥0 and ≤3).
-    """
     if "user" not in session:
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    # what came from the query-string
-    raw_q        = request.args.get("q",        "").strip()
+    raw_q        = request.args.get("q", "").strip()
     raw_category = request.args.get("category", "").strip()
 
-    # ------------------------------------------------------------------ #
-    # 1) normalise the requested category so it matches JSON categories  #
-    # ------------------------------------------------------------------ #
     alias_map = {
-        "self-help"     : "Self-Help Book",
-        "self help"     : "Self-Help Book",
-        "biography"     : "Autobiography",
-        "bio"           : "Autobiography",
-        "nonfiction"    : "Non-fiction",
+        "self-help": "Self-Help Book",
+        "self help": "Self-Help Book",
+        "biography": "Autobiography",
+        "bio": "Autobiography",
+        "nonfiction": "Non-fiction",
         "personalfinance": "Personal Finance",
-        "fiction"       : "Fiction / Inspirational / Philosophical",
-        "action"        : "Action-book",
-        "value"         : "value investing-educational",
-        "sci-fi"        : "Sci-Fi",                      # if you ever add such books
-        "adventure"     : "Adventure"                    # idem
+        "fiction": "Fiction / Inspirational / Philosophical",
+        "action": "Action-book",
+        "value": "value investing-educational",
+        "sci-fi": "Sci-Fi",
+        "adventure": "Adventure"
     }
 
     canonical_category = alias_map.get(raw_category.lower(), raw_category)
-
-    # ------------------------------------------------------------------ #
-    # 2) pull the books and apply filters                                #
-    # ------------------------------------------------------------------ #
     books = load_books()
 
-    # filter by (canonical) category first
     if canonical_category:
         books = [
             b for b in books
             if b["category"].lower() == canonical_category.lower()
-        ]
-        # keep *max* first three
-        books = books[:3]
+        ][:3]
 
-    # filter by keyword afterwards (AND logic)
     if raw_q:
         keyword = raw_q.lower()
         books = [b for b in books if keyword in b["title"].lower()]
 
-    # ------------------------------------------------------------------ #
-    # 3) render the template                                             #
-    # ------------------------------------------------------------------ #
+    show_popup = session.pop("show_feedback_popup", False)
+
     return render_template(
         "home.html",
-        books              = books,
-        search_term        = raw_q,
-        selected_category  = raw_category
+        books=books,
+        search_term=raw_q,
+        selected_category=raw_category,
+        show_feedback_popup=show_popup
     )
-    # pass the filters back to the template so
-    # the <input> and <select> keep their values
-    return render_template(
-        "home.html",
-        books            = books,
-        search_term      = keyword,
-        selected_category= category.lower() or "all"
-    )
-    
-@app.route('/home')
-def home():
-    session.pop('show_feedback_popup', None)
-    return render_template("home.html")
 
-from datetime import datetime
-
+# ────────── Feedback Route ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
     if "user" not in session:
@@ -212,12 +178,11 @@ def submit_feedback():
     with open("feedback.json", "w") as f:
         json.dump(feedback_list, f, indent=2)
 
+    session["show_feedback_popup"] = True  # Show confirmation again if desired
     flash("Thanks for your feedback!", "success")
     return redirect(url_for("home"))
 
-
-
-# ────────── Protected: Book pages
+# ────────── Book Pages ──────────
 @app.route("/book/<int:id>")
 def book_page(id):
     if "user" not in session:
@@ -281,7 +246,7 @@ def seed_books():
         }
     ]
     save_books(sample)
-    print("📚  sample books added → books.json")
+    print("\U0001F4DA  sample books added → books.json")
 
 # ────────── Run ────────────────
 if __name__ == "__main__":
