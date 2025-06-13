@@ -14,7 +14,7 @@
 
     body {
       height: 100vh;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
+      background: linear-gradient(135deg, #f8f9fa, #dde6f2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,25 +27,25 @@
       border-radius: 50%;
       filter: blur(100px);
       opacity: 0.25;
-      animation: float 20s ease-in-out infinite;
       z-index: 0;
+      animation: float 18s ease-in-out infinite;
     }
 
     .blob1 {
-      background: #ffffff;
+      background: #f8d7da;
       width: 300px;
       height: 300px;
-      top: -80px;
+      top: -100px;
       left: -100px;
     }
 
     .blob2 {
-      background: #a4c0ff;
+      background: #dee2e6;
       width: 400px;
       height: 400px;
-      bottom: -120px;
+      bottom: -100px;
       right: -100px;
-      animation-delay: 5s;
+      animation-delay: 6s;
     }
 
     @keyframes float {
@@ -55,20 +55,19 @@
 
     .container {
       display: flex;
-      width: 800px;
+      width: 820px;
       max-width: 95%;
       border-radius: 16px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
       z-index: 1;
+      background: #fff;
     }
 
     .form-side {
       flex: 1;
       background: #ffffff;
-      padding: 40px;
-      color: #333;
+      padding: 48px 40px;
     }
 
     .form-side h2 {
@@ -84,7 +83,7 @@
       margin-bottom: 18px;
       border: 1px solid #ccc;
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .form-side input:focus {
@@ -112,7 +111,7 @@
     .form-side a {
       display: block;
       text-align: center;
-      margin-top: 14px;
+      margin-top: 16px;
       color: #e74c3c;
       font-size: 14px;
       text-decoration: none;
@@ -155,7 +154,7 @@
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
-        border-radius: 0;
+        width: 92%;
       }
       .info-side {
         display: none;
@@ -189,7 +188,7 @@
 
     <div class="info-side">
       <h2>Welcome Back!</h2>
-      <p>Books are windows to infinite worlds. Start your journey again today!</p>
+      <p>Books open doors to endless imagination. Log in and discover your next adventure.</p>
     </div>
   </div>
 </body>
