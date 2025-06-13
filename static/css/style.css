@@ -272,14 +272,22 @@ header nav ul li a:hover {
 }
 
 .book-body a {
-  color: #007bff;
-  font-size: 0.88rem;
-  text-decoration: none;
-  font-weight: 500;
+  margin-top: 14px;
+  display: inline-block;
+  background-color: #553CDF;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .book-body a:hover {
-  text-decoration: underline;
+  background-color: #3d2bbd;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(85, 60, 223, 0.3);
 }
 
 /* -------------------------------------------------
