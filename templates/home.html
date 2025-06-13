@@ -10,151 +10,193 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-    body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
-    a { text-decoration:none; color:inherit; }
-    ul { list-style:none; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
     /* Navbar */
     header {
-      background:#141d33;
-      padding:14px 28px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      background: #141d33;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .brand {
-      font-weight:600; font-size:1.3rem; color:#fff; display:flex; gap:.4rem;
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #fff;
+      display: flex;
+      gap: .4rem;
     }
-    nav ul { display:flex; gap:18px; }
+    nav ul {
+      display: flex;
+      gap: 18px;
+    }
     .nav-btn {
-      background:#1e2742; color:#fff; padding:8px 22px;
-      border-radius:6px; font-size:.92rem; transition:.25s;
-      display:flex; align-items:center; gap:.4rem;
+      background: #1e2742;
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-size: .92rem;
+      transition: .25s;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
     }
-    .nav-btn:hover { background:#2d3554; }
+    .nav-btn:hover {
+      background: #2d3554;
+    }
 
     /* Hero Section */
     .hero {
-      position:relative;
-      padding:110px 12px 160px;
-      text-align:center;
-      overflow:hidden;
+      padding: 110px 12px 160px;
+      text-align: center;
+      overflow: hidden;
     }
     .hero h1 {
-      font-size:clamp(2rem,4vw,3rem);
-      font-weight:600;
-      color:#111;
-      margin-bottom:.65rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: #111;
+      margin-bottom: .65rem;
     }
     .hero p {
-      font-size:clamp(.9rem,1.3vw,1.15rem);
-      color:#67718c;
-      margin-bottom:3.5rem;
-    }
-
-    .blob, .blob.alt {
-      position:absolute;
-      width:480px; height:480px;
-      filter:blur(50px); border-radius:50%;
-      animation:horizontalMove 18s linear infinite;
-    }
-    .blob {
-      background:radial-gradient(circle, rgba(255,113,113,.35), rgba(255,113,113,0) 70%);
-      top:50px; left:0;
-    }
-    .blob.alt {
-      background:radial-gradient(circle, rgba(123,104,238,.32), rgba(123,104,238,0) 70%);
-      top:100px; right:0;
-      animation-delay: 9s;
-    }
-    @keyframes horizontalMove {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(40px); }
-      100% { transform: translateX(0); }
+      font-size: clamp(.9rem, 1.3vw, 1.15rem);
+      color: #67718c;
+      margin-bottom: 3.5rem;
     }
 
     .search-bar {
-      width:90%; max-width:730px;
-      margin-inline:auto;
-      background:#fff;
-      border-radius:50px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);
-      padding:6px;
-      display:flex; gap:0;
+      width: 90%;
+      max-width: 730px;
+      margin-inline: auto;
+      background: #fff;
+      border-radius: 50px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+      padding: 6px;
+      display: flex;
+      gap: 0;
+    }
+    .search-bar input, .search-bar select, .search-bar button {
+      border: none;
+      outline: none;
     }
     .search-bar input {
-      flex:2 1 280px; border:none; outline:none;
-      padding:16px 20px; border-radius:50px 0 0 50px;
-      font-size:.95rem;
+      flex: 2 1 280px;
+      padding: 16px 20px;
+      border-radius: 50px 0 0 50px;
+      font-size: .95rem;
     }
     .search-bar select {
-      flex:1 1 180px; border:none; outline:none;
-      font-size:.93rem; padding:0 20px;
-      color:#000; font-weight:600;
-      appearance:none;
-      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
-      background-color:#fff;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .search-bar select:hover,
-    .search-bar select:focus {
-      background-color:#ffffff;
-      color:#000000;
+      flex: 1 1 180px;
+      font-size: .93rem;
+      padding: 0 20px;
+      color: #000;
+      font-weight: 600;
+      appearance: none;
+      background: url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+      background-color: #fff;
     }
     .search-bar button {
-      border:none; outline:none; cursor:pointer;
-      padding:0 34px; display:flex; align-items:center; gap:.45rem;
-      background:#e74c3c; color:#fff;
-      font-weight:600;
-      border-radius:50px; transition:.25s;
+      padding: 0 34px;
+      background: #e74c3c;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 0 50px 50px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
     }
-    .search-bar button:hover { background:#c0392b; }
+    .search-bar button:hover {
+      background: #c0392b;
+    }
 
     .section-title {
-      text-align:center; margin-top:90px;
+      text-align: center;
+      margin-top: 90px;
     }
     .section-title h2 {
-      font-size:2rem; font-weight:600; color:#111;
-      position:relative; display:inline-block; padding-bottom:.4rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #111;
+      position: relative;
+      display: inline-block;
+      padding-bottom: .4rem;
     }
     .section-title h2::after {
-      content:""; height:3px; width:60px;
-      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-      border-radius:2px;
+      content: "";
+      height: 3px;
+      width: 60px;
+      background: #553CDF;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
     }
-    .section-title p { color:#67718c; margin-top:.6rem; }
+    .section-title p {
+      color: #67718c;
+      margin-top: .6rem;
+    }
 
     .book-grid {
-      display:grid; gap:34px; justify-content:center;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      max-width:1100px; margin:60px auto;
-      padding:0 16px;
+      display: grid;
+      gap: 34px;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 16px;
     }
     .book-card {
-      background:#fff; border-radius:14px; overflow:hidden;
-      box-shadow:0 8px 22px rgba(0,0,0,.08);
-      transition:.3s ease;
-      display:flex; flex-direction:column; text-align:center;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
+      transition: .3s ease;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
     .book-card:hover {
-      transform:translateY(-6px);
-      box-shadow:0 14px 28px rgba(0,0,0,.12);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, .12);
     }
     .book-card img {
-      width:100%; height:250px; object-fit:cover;
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
     }
     .book-body {
-      padding:22px 18px 28px;
-      flex:1; display:flex; flex-direction:column;
+      padding: 22px 18px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
-    .book-body h3 { font-size:1.1rem; margin-bottom:.55rem; color:#222; }
-    .book-body p { font-size:.87rem; color:#555; margin-bottom:auto; }
+    .book-body h3 {
+      font-size: 1.1rem;
+      margin-bottom: .55rem;
+      color: #222;
+    }
+    .book-body p {
+      font-size: .87rem;
+      color: #555;
+      margin-bottom: auto;
+    }
     .book-body a {
-      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
+      margin-top: 18px;
+      color: #553CDF;
+      font-weight: 600;
+      font-size: .9rem;
     }
 
-    /* Flash Messages */
     .flash-messages {
       max-width: 720px;
       margin: 20px auto 0;
@@ -167,65 +209,86 @@
       margin-bottom: 10px;
       border-left: 5px solid #2ecc71;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
       font-weight: 500;
     }
 
-    /* Feedback Form */
-    .feedback-form {
-      max-width: 700px;
-      margin: 60px auto 80px;
-      background: #fff;
-      border-radius: 14px;
-      padding: 32px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    }
-
-    .feedback-form h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #222;
-    }
-
-    .feedback-form textarea {
-      width: 100%;
-      height: 120px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      padding: 16px;
-      font-size: 1rem;
-      resize: vertical;
-      margin-bottom: 20px;
-    }
-
-    .feedback-form button {
+    /* Feedback Widget */
+    .feedback-btn {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
       background: #553CDF;
       color: white;
       border: none;
-      padding: 12px 28px;
-      font-size: 1rem;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .feedback-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 30px;
+      width: 320px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 14px;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .feedback-modal textarea {
+      width: 100%;
+      height: 100px;
+      border-radius: 10px;
+      padding: 12px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      margin-bottom: 14px;
+    }
+
+    .feedback-modal button[type="submit"] {
+      background: #553CDF;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      transition: background 0.3s ease;
     }
 
-    .feedback-form button:hover {
-      background: #422bcf;
+    .feedback-modal .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #aaa;
     }
 
-    @media(max-width:600px){
+    @media (max-width: 600px) {
       .search-bar {
-        flex-direction:column;
-        border-radius:24px; padding:10px;
+        flex-direction: column;
+        border-radius: 24px;
+        padding: 10px;
       }
       .search-bar input,
       .search-bar select,
       .search-bar button {
-        border-radius:12px; width:100%;
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 6px;
       }
-      .search-bar button {
-        margin-top:8px; justify-content:center;
+      .feedback-modal {
+        width: 90%;
+        right: 5%;
       }
     }
   </style>
@@ -242,7 +305,6 @@
   </nav>
 </header>
 
-<!-- Flash Messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     <ul class="flash-messages">
@@ -256,15 +318,11 @@
 {% endwith %}
 
 <section class="hero">
-  <div class="blob"></div>
-  <div class="blob alt"></div>
-
   <h1>Discover Your Next Great Read</h1>
   <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-  <!-- Search Bar -->
   <form class="search-bar" method="get" action="{{ url_for('home') }}">
-    <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
+    <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}">
     <select name="category" onchange="this.form.submit()">
       <option value="">All Categories</option>
       <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
@@ -278,7 +336,6 @@
   </form>
 </section>
 
-<!-- Featured Books -->
 <div class="section-title">
   <h2>Featured Books</h2>
   <p>Explore our hand-picked selection of must-read books</p>
@@ -293,18 +350,23 @@
     <div class="book-body">
       <h3>{{ book.title }}</h3>
       <p>{{ book.description }}</p>
-      <a class="read-btn" href="{{ url_for('book_page', id=book.id) }}">View Details</a>
+      <a href="{{ url_for('book_page', id=book.id) }}">View Details</a>
     </div>
   </div>
   {% endfor %}
 </div>
 
-<!-- Feedback Section -->
-<div class="feedback-form">
-  <h2>We Value Your Feedback</h2>
+<!-- Feedback Popup Button -->
+<button class="feedback-btn" onclick="document.getElementById('feedback-modal').style.display='flex'">
+  💬 Feedback
+</button>
+
+<!-- Feedback Modal -->
+<div class="feedback-modal" id="feedback-modal">
+  <span class="close-btn" onclick="document.getElementById('feedback-modal').style.display='none'">&times;</span>
   <form method="POST" action="{{ url_for('submit_feedback') }}">
-    <textarea name="feedback" placeholder="Leave your feedback here..." required></textarea>
-    <button type="submit">Submit Feedback</button>
+    <textarea name="feedback" placeholder="Leave your feedback..." required></textarea>
+    <button type="submit">Submit</button>
   </form>
 </div>
 
