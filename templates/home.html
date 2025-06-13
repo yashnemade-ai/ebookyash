@@ -5,24 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-Book Library – Home</title>
 
-  <!-- Google Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f4f6f9;
+      background: linear-gradient(to right, #f8fbff, #eef1f9);
       color: #333;
     }
 
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
 
-    /* Navbar */
     header {
-      background: #141d33;
+      background: #1d2540;
       padding: 14px 28px;
       display: flex;
       align-items: center;
@@ -40,7 +39,7 @@
       gap: 18px;
     }
     .nav-btn {
-      background: #1e2742;
+      background: #27345c;
       color: #fff;
       padding: 8px 22px;
       border-radius: 6px;
@@ -51,14 +50,12 @@
       gap: .4rem;
     }
     .nav-btn:hover {
-      background: #2d3554;
+      background: #384976;
     }
 
-    /* Hero Section */
     .hero {
       padding: 110px 12px 160px;
       text-align: center;
-      overflow: hidden;
     }
     .hero h1 {
       font-size: clamp(2rem, 4vw, 3rem);
@@ -68,7 +65,7 @@
     }
     .hero p {
       font-size: clamp(.9rem, 1.3vw, 1.15rem);
-      color: #67718c;
+      color: #5f6b7a;
       margin-bottom: 3.5rem;
     }
 
@@ -81,27 +78,21 @@
       box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
       padding: 6px;
       display: flex;
-      gap: 0;
     }
     .search-bar input, .search-bar select, .search-bar button {
-      border: none;
-      outline: none;
+      border: none; outline: none;
     }
     .search-bar input {
       flex: 2 1 280px;
       padding: 16px 20px;
       border-radius: 50px 0 0 50px;
-      font-size: .95rem;
     }
     .search-bar select {
       flex: 1 1 180px;
-      font-size: .93rem;
-      padding: 0 20px;
-      color: #000;
       font-weight: 600;
+      padding: 0 20px;
       appearance: none;
-      background: url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
-      background-color: #fff;
+      background: url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
     }
     .search-bar button {
       padding: 0 34px;
@@ -110,12 +101,6 @@
       font-weight: 600;
       border-radius: 0 50px 50px 0;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: .45rem;
-    }
-    .search-bar button:hover {
-      background: #c0392b;
     }
 
     .section-title {
@@ -126,24 +111,9 @@
       font-size: 2rem;
       font-weight: 600;
       color: #111;
-      position: relative;
-      display: inline-block;
       padding-bottom: .4rem;
-    }
-    .section-title h2::after {
-      content: "";
-      height: 3px;
-      width: 60px;
-      background: #553CDF;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 2px;
-    }
-    .section-title p {
-      color: #67718c;
-      margin-top: .6rem;
+      display: inline-block;
+      border-bottom: 3px solid #553CDF;
     }
 
     .book-grid {
@@ -158,11 +128,8 @@
     .book-card {
       background: #fff;
       border-radius: 14px;
-      overflow: hidden;
       box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
       transition: .3s ease;
-      display: flex;
-      flex-direction: column;
       text-align: center;
     }
     .book-card:hover {
@@ -176,117 +143,105 @@
     }
     .book-body {
       padding: 22px 18px 28px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
     }
     .book-body h3 {
       font-size: 1.1rem;
       margin-bottom: .55rem;
-      color: #222;
     }
     .book-body p {
       font-size: .87rem;
       color: #555;
-      margin-bottom: auto;
     }
     .book-body a {
       margin-top: 18px;
+      display: inline-block;
       color: #553CDF;
       font-weight: 600;
       font-size: .9rem;
     }
 
-    .flash-messages {
-      max-width: 720px;
-      margin: 20px auto 0;
-      padding: 0;
-      list-style: none;
-    }
-    .flash-messages li {
-      background: #fff;
-      padding: 14px 20px;
-      margin-bottom: 10px;
-      border-left: 5px solid #2ecc71;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
-      font-weight: 500;
-    }
-
-    /* Feedback Widget */
+    /* Feedback Button */
     .feedback-btn {
       position: fixed;
-      bottom: 26px;
-      right: 26px;
+      bottom: 28px;
+      right: 28px;
       background: #553CDF;
       color: white;
       border: none;
-      padding: 14px 20px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 16px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+      padding: 14px 18px;
+      border-radius: 50px;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       cursor: pointer;
-      z-index: 999;
+      z-index: 1001;
     }
 
-    .feedback-modal {
+    /* Feedback Popup */
+    .feedback-widget {
       position: fixed;
-      bottom: 90px;
+      bottom: 100px;
       right: 30px;
       width: 320px;
       background: white;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
-      border-radius: 14px;
-      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      padding: 20px 22px;
       display: none;
-      flex-direction: column;
       z-index: 1000;
     }
 
-    .feedback-modal textarea {
+    .feedback-widget h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .feedback-widget textarea {
       width: 100%;
       height: 100px;
+      border: 1px solid #ddd;
       border-radius: 10px;
-      padding: 12px;
+      padding: 10px;
+      font-size: 14px;
       resize: vertical;
-      border: 1px solid #ccc;
       margin-bottom: 14px;
     }
 
-    .feedback-modal button[type="submit"] {
-      background: #553CDF;
-      color: #fff;
+    .feedback-widget button[type="submit"] {
+      width: 100%;
+      background-color: #553CDF;
+      color: white;
       border: none;
-      padding: 10px 16px;
+      padding: 10px;
       border-radius: 8px;
-      cursor: pointer;
       font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
     }
 
-    .feedback-modal .close-btn {
+    .feedback-widget small {
+      display: block;
+      margin-top: 10px;
+      color: #888;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .close-widget {
       position: absolute;
-      top: 8px;
-      right: 12px;
-      font-size: 1.2rem;
+      top: 10px;
+      right: 16px;
+      font-size: 1.1rem;
       cursor: pointer;
       color: #aaa;
     }
 
     @media (max-width: 600px) {
-      .search-bar {
-        flex-direction: column;
-        border-radius: 24px;
-        padding: 10px;
-      }
-      .search-bar input,
-      .search-bar select,
-      .search-bar button {
-        width: 100%;
-        border-radius: 12px;
-        margin-top: 6px;
-      }
-      .feedback-modal {
+      .feedback-widget {
         width: 90%;
         right: 5%;
       }
@@ -304,18 +259,6 @@
     </ul>
   </nav>
 </header>
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class="flash-messages">
-      {% for category, message in messages %}
-        <li style="border-left-color: {% if category == 'error' %}#e74c3c{% elif category == 'warning' %}#f39c12{% elif category == 'success' %}#2ecc71{% else %}#3498db{% endif %};">
-          {{ message }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 
 <section class="hero">
   <h1>Discover Your Next Great Read</h1>
@@ -338,7 +281,6 @@
 
 <div class="section-title">
   <h2>Featured Books</h2>
-  <p>Explore our hand-picked selection of must-read books</p>
 </div>
 
 <div class="book-grid">
@@ -356,18 +298,20 @@
   {% endfor %}
 </div>
 
-<!-- Feedback Popup Button -->
-<button class="feedback-btn" onclick="document.getElementById('feedback-modal').style.display='flex'">
-  💬 Feedback
+<!-- Feedback Button -->
+<button class="feedback-btn" onclick="document.getElementById('feedback-widget').style.display='block'">
+  💬
 </button>
 
-<!-- Feedback Modal -->
-<div class="feedback-modal" id="feedback-modal">
-  <span class="close-btn" onclick="document.getElementById('feedback-modal').style.display='none'">&times;</span>
+<!-- Feedback Popup -->
+<div class="feedback-widget" id="feedback-widget">
+  <span class="close-widget" onclick="document.getElementById('feedback-widget').style.display='none'">&times;</span>
+  <h3>Share Your Thoughts</h3>
   <form method="POST" action="{{ url_for('submit_feedback') }}">
-    <textarea name="feedback" placeholder="Leave your feedback..." required></textarea>
-    <button type="submit">Submit</button>
+    <textarea name="feedback" placeholder="We'd love to hear your feedback about our library..." required></textarea>
+    <button type="submit"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
   </form>
+  <small>Your feedback helps us improve our service</small>
 </div>
 
 </body>
