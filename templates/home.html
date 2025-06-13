@@ -8,7 +8,309 @@
   <!-- Google Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    header {
+      background: #141d33;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #fff;
+      display: flex;
+      gap: .4rem;
+    }
+    nav ul {
+      display: flex;
+      gap: 18px;
+    }
+    .nav-btn {
+      background: #1e2742;
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-size: .92rem;
+      transition: .25s;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .nav-btn:hover {
+      background: #2d3554;
+    }
+
+    .hero {
+      padding: 110px 12px 160px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: #111;
+      margin-bottom: .65rem;
+    }
+    .hero p {
+      font-size: clamp(.9rem, 1.3vw, 1.15rem);
+      color: #67718c;
+      margin-bottom: 3.5rem;
+    }
+
+    .search-bar {
+      width: 90%;
+      max-width: 730px;
+      margin-inline: auto;
+      background: #fff;
+      border-radius: 50px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+      padding: 6px;
+      display: flex;
+    }
+    .search-bar input, .search-bar select, .search-bar button {
+      border: none;
+      outline: none;
+    }
+    .search-bar input {
+      flex: 2;
+      padding: 16px 20px;
+      border-radius: 50px 0 0 50px;
+      font-size: .95rem;
+    }
+    .search-bar select {
+      flex: 1;
+      font-size: .93rem;
+      padding: 0 20px;
+      appearance: none;
+      font-weight: 600;
+      background: #fff url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+    }
+    .search-bar button {
+      padding: 0 34px;
+      background: #e74c3c;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 0 50px 50px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-top: 90px;
+    }
+    .section-title h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #111;
+      position: relative;
+      display: inline-block;
+      padding-bottom: .4rem;
+    }
+    .section-title h2::after {
+      content: "";
+      height: 3px;
+      width: 60px;
+      background: #553CDF;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .book-grid {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 16px;
+    }
+    .book-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
+      display: flex;
+      flex-direction: column;
+      transition: .3s ease;
+      text-align: center;
+    }
+    .book-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, .12);
+    }
+
+    .book-card .img-container {
+      width: 100%;
+      background: #f9f9f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .book-card img {
+      max-height: 300px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .book-body {
+      padding: 20px 16px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-body h3 {
+      font-size: 1.05rem;
+      margin-bottom: .5rem;
+      color: #222;
+    }
+    .book-body p {
+      font-size: .85rem;
+      color: #555;
+      margin-bottom: auto;
+    }
+    .book-body a {
+      margin-top: 14px;
+      color: #553CDF;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    .flash-messages {
+      max-width: 720px;
+      margin: 20px auto 0;
+      padding: 0;
+    }
+    .flash-messages li {
+      background: #fff;
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      border-left: 5px solid #2ecc71;
+      border-radius: 8px;
+      font-weight: 500;
+      animation: fadeOut 4s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      0%, 90% { opacity: 1; }
+      100% { opacity: 0; display: none; }
+    }
+
+    .feedback-btn {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      background: #553CDF;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .feedback-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 30px;
+      width: 320px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .feedback-modal h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .feedback-modal textarea {
+      width: 100%;
+      height: 100px;
+      border-radius: 10px;
+      padding: 12px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      font-size: .9rem;
+      margin-bottom: 14px;
+    }
+
+    .feedback-modal button[type="submit"] {
+      background: #553CDF;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .feedback-modal .note {
+      text-align: center;
+      font-size: .8rem;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .feedback-modal .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      .search-bar {
+        flex-direction: column;
+        border-radius: 24px;
+        padding: 10px;
+      }
+      .search-bar input,
+      .search-bar select,
+      .search-bar button {
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 6px;
+      }
+      .feedback-modal {
+        width: 90%;
+        right: 5%;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -88,12 +390,5 @@
   </form>
 </div>
 
-<script>
-  // Optional: Flash message fade out
-  setTimeout(() => {
-    document.querySelectorAll('.flash-messages li').forEach(el => el.style.display = 'none');
-  }, 4000);
-</script>
-
 </body>
-</html>
+</html> update this html to adapt chnages in css
