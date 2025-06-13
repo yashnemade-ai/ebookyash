@@ -148,6 +148,10 @@ def home():
         selected_category=raw_category,
         show_feedback_popup=show_popup
     )
+@app.route('/google-login')
+def google_login():
+    # This is just a placeholder
+    return redirect("https://accounts.google.com/")  # Replace with actual OAuth logic
 
 # ────── Feedback Route (updated) ──────
 @app.route("/submit_feedback", methods=["POST"])
