@@ -153,6 +153,17 @@ def google_login():
     # This is just a placeholder
     return redirect("https://accounts.google.com/")  # Replace with actual OAuth logic
 
+@app.route('/github-login')
+def github_login():
+    if not github.authorized:
+        return redirect(url_for("github.login"))
+    resp = github.get("/user")
+    if resp.ok:
+        username = resp.json()["login"]
+        return f"Hello, {username}!"
+    return "GitHub login failed.", 400
+
+
 # ────── Feedback Route (updated) ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
