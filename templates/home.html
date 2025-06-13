@@ -1,5 +1,3 @@
-[media pointer="file-service://file-LgaAtBiAfHfhrNHwXGnRzi"]
-[media pointer="file-service://file-HCjPNhYafft7nQFGs26Jgp"]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,6 +59,7 @@
       padding: 110px 12px 160px;
       text-align: center;
       overflow: hidden;
+      background: none;
     }
     .hero h1 {
       font-size: clamp(2rem, 4vw, 3rem);
@@ -174,7 +173,8 @@
     .book-card img {
       width: 100%;
       height: 250px;
-      object-fit: cover;
+      object-fit: contain;
+      background-color: #f9f9f9;
     }
     .book-body {
       padding: 22px 18px 28px;
@@ -213,6 +213,12 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
       font-weight: 500;
+      animation: fadeOut 4s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      0%, 90% { opacity: 1; }
+      100% { opacity: 0; display: none; }
     }
 
     /* Feedback Widget */
