@@ -60,18 +60,56 @@ header nav ul li a:hover {
   animation: gradientShift 15s ease infinite;
 }
 
-.hero h1 { font-size: 48px; margin-bottom: 10px; animation: fadeInUp 1s; }
-.hero p  { font-size: 20px; margin-bottom: 25px; animation: fadeInUp 1.2s; }
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  animation: fadeInUp 1s;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 25px;
+  animation: fadeInUp 1.2s;
+}
 
 /* -------------------------------------------------
    Auto-scroll Book Covers (welcome.html)
 -------------------------------------------------- */
-.ad-container   { overflow: hidden; padding: 40px 0; background: #fff; border-block: 2px solid #eee; }
-.ad-content     { display: flex; gap: 30px; padding-inline: 20px; width: max-content; animation: scrollBooks 25s linear infinite; }
-.ad-card        { flex: 0 0 auto; width: 200px; height: 300px; border-radius: 12px; overflow: hidden;
-                  background: #fefefe; box-shadow: 0 4px 10px rgba(0,0,0,.1); transition: transform .3s; }
-.ad-card img    { width: 100%; height: 100%; object-fit: cover; }
-.ad-card:hover  { transform: scale(1.05); }
+.ad-container {
+  overflow: hidden;
+  padding: 40px 0;
+  background: #fff;
+  border-block: 2px solid #eee;
+}
+
+.ad-content {
+  display: flex;
+  gap: 30px;
+  padding-inline: 20px;
+  width: max-content;
+  animation: scrollBooks 25s linear infinite;
+}
+
+.ad-card {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fefefe;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+  transition: transform .3s;
+}
+
+.ad-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ad-card:hover {
+  transform: scale(1.05);
+}
 
 /* -------------------------------------------------
    Home Page Hero (home.html)
@@ -84,8 +122,15 @@ header nav ul li a:hover {
   color: #fff;
 }
 
-.home-hero h1 { font-size: 42px; margin-bottom: 8px; }
-.home-hero p  { font-size: 18px; margin-bottom: 35px; }
+.home-hero h1 {
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.home-hero p {
+  font-size: 18px;
+  margin-bottom: 35px;
+}
 
 /* Search bar */
 .search-bar {
@@ -161,7 +206,7 @@ header nav ul li a:hover {
 }
 
 /* -------------------------------------------------
-   Book Cards (Updated)
+   Book Cards (Updated for full image zoom)
 -------------------------------------------------- */
 .book-list {
   display: flex;
@@ -194,12 +239,13 @@ header nav ul li a:hover {
   overflow: hidden;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
+  padding: 0; /* ✅ Removed padding */
 }
 
 .book-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* ✅ Fully fills image area */
   display: block;
 }
 
@@ -247,7 +293,9 @@ header nav ul li a:hover {
   text-align: center;
 }
 
-.cta-section { margin-top: 40px; }
+.cta-section {
+  margin-top: 40px;
+}
 
 /* -------------------------------------------------
    Footer
@@ -259,7 +307,9 @@ footer {
   text-align: center;
 }
 
-footer nav { margin-bottom: 12px; }
+footer nav {
+  margin-bottom: 12px;
+}
 
 footer nav a {
   margin: 0 10px;
@@ -267,39 +317,93 @@ footer nav a {
   text-decoration: none;
 }
 
-footer nav a:hover { color: #fff; }
+footer nav a:hover {
+  color: #fff;
+}
 
 /* -------------------------------------------------
    Keyframes
 -------------------------------------------------- */
 @keyframes gradientShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes scrollBooks {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* -------------------------------------------------
    Responsive
 -------------------------------------------------- */
 @media (max-width: 768px) {
-  .hero h1, .home-hero h1 { font-size: 32px; }
-  .search-bar { flex-direction: column; }
-  .search-bar input, .search-bar select, .search-bar button { width: 100%; }
-  .book-card { width: 90%; }
-  .ad-card { width: 140px; height: 210px; }
-  header nav ul { flex-direction: column; align-items: center; }
-  .hero h1 { font-size: 2rem; }
-  .hero p { font-size: 1rem; }
-  .white-box { padding: 20px 15px; }
-  .button { width: 90%; display: block; margin: 10px auto; }
+  .hero h1,
+  .home-hero h1 {
+    font-size: 32px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar input,
+  .search-bar select,
+  .search-bar button {
+    width: 100%;
+  }
+
+  .book-card {
+    width: 90%;
+  }
+
+  .ad-card {
+    width: 140px;
+    height: 210px;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .white-box {
+    padding: 20px 15px;
+  }
+
+  .button {
+    width: 90%;
+    display: block;
+    margin: 10px auto;
+  }
 }
