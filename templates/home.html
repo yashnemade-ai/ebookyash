@@ -231,6 +231,9 @@
 </div>
    {% endfor %}
   </div>
-
+<form method="POST" action="{{ url_for('submit_feedback') }}">
+  <textarea name="feedback" placeholder="Leave your feedback here..." required></textarea>
+  <button type="submit">Submit Feedback</button>
+</form>
 </body>
 </html>
