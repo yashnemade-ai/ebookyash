@@ -169,8 +169,6 @@ def home():
         search_term        = raw_q,
         selected_category  = raw_category
     )
-
-
     # pass the filters back to the template so
     # the <input> and <select> keep their values
     return render_template(
@@ -179,6 +177,22 @@ def home():
         search_term      = keyword,
         selected_category= category.lower() or "all"
     )
+
+@app.route("/admin/feedback")
+def admin_feedback():
+    # Optional: Protect this with a session-based admin check
+    if session.get("user") != "admin@example.com":
+        flash("Admin access required", "error")
+        return redirect(url_for("login"))
+
+    feedback_file = "feedback.json"
+    feedback_list = []
+
+    if os.path.exists(feedback_file):
+        with open(feedback_file, "r") as f:
+            feedback_list = json.load(f)
+
+    return render_template("feedback.html", feedback_list=feedback_list)
 
 
 # ────────── Protected: Book pages
