@@ -5,56 +5,189 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      background: #e6f2ff;
-      display: flex; justify-content: center; align-items: center;
       height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* Animated background blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.6;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .blob1 {
+      background: #ff9a9e;
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -80px;
+    }
+
+    .blob2 {
+      background: #fad0c4;
+      width: 400px;
+      height: 400px;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
     .container {
-      display: flex; width: 800px; max-width: 90%;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-      border-radius: 12px; overflow: hidden;
+      display: flex;
+      width: 850px;
+      max-width: 95%;
+      border-radius: 16px;
+      overflow: hidden;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
     }
+
+    .form-side, .info-side {
+      flex: 1;
+      padding: 40px;
+      color: #fff;
+    }
+
     .form-side {
-      flex: 1; padding: 40px;
-      background: #fff;
+      background: rgba(255,255,255,0.1);
     }
+
     .form-side h2 {
-      text-align: center; color: #2c3e50; margin-bottom: 25px;
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 28px;
+      color: #fff;
     }
+
     .form-side input {
-      width: 100%; padding: 12px; margin-bottom: 20px;
-      border: 1px solid #ccc; border-radius: 8px;
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      box-shadow: inset 0 0 5px rgba(255,255,255,0.2);
     }
+
+    .form-side input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .form-side input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+    }
+
     .form-side button {
-      width: 100%; padding: 12px;
-      background: #e74c3c; color: #fff; border: none;
-      border-radius: 8px; font-weight: bold; cursor: pointer;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, #fc6076, #ff9a44);
+      color: #fff;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
+
+    .form-side button:hover {
+      filter: brightness(1.1);
+    }
+
     .form-side a {
-      display: block; text-align: center;
-      margin-top: 12px; color: #e74c3c;
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+      color: #ffd6e0;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .form-side a:hover {
+      text-decoration: underline;
     }
 
     .info-side {
-      flex: 1; background: #e74c3c; color: #fff;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 40px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    .info-side h2 { font-size: 26px; margin-bottom: 16px; }
-    .info-side p { font-size: 15px; max-width: 300px; text-align: center; }
+
+    .info-side h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .info-side p {
+      font-size: 16px;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    .flash {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #ffbaba;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        border-radius: 0;
+      }
+      .info-side {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Background blobs -->
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+
   <div class="container">
     <div class="form-side">
       <h2>Login</h2>
+
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, msg in messages %}
-          <p style="color:red;">{{ msg }}</p>
+          <p class="flash">{{ msg }}</p>
         {% endfor %}
       {% endwith %}
+
       <form method="POST">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
