@@ -113,8 +113,8 @@ header nav ul li a:hover {
   outline: none;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #111; /* Black text */
-  background-color: #fff; /* White background */
+  color: #111;
+  background-color: #fff;
   border-radius: 0 50px 50px 0;
   appearance: none;
   -webkit-appearance: none;
@@ -130,12 +130,10 @@ header nav ul li a:hover {
 .search-bar select:hover,
 .search-bar select:focus {
   background-color: #f1f1f1;
-  color: #000; /* Force black on hover/focus */
+  color: #000;
   cursor: pointer;
 }
 
-
-/* Stylish purple Search button */
 .search-bar button {
   padding: 12px 24px;
   border: none;
@@ -163,7 +161,7 @@ header nav ul li a:hover {
 }
 
 /* -------------------------------------------------
-   Book Cards  (shared)
+   Book Cards (Updated)
 -------------------------------------------------- */
 .book-list {
   display: flex;
@@ -174,35 +172,70 @@ header nav ul li a:hover {
 }
 
 .book-card {
-  width: 240px;
   background: #fff;
-  padding: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
-  transition: transform .3s;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
 }
 
-.book-card:hover { transform: translateY(-6px); }
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.book-card .img-container {
+  background-color: #fff;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
 
 .book-card img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  border-radius: 8px;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  padding: 0;
 }
 
-.book-card h2 { font-size: 20px; margin: 14px 0 8px; }
-.book-card p  { font-size: 14px; color: #666; }
+.book-body {
+  padding: 18px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
-.book-card a {
-  display: inline-block;
-  margin-top: 12px;
-  text-decoration: none;
+.book-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.book-body p {
+  font-size: 0.87rem;
+  color: #555;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  min-height: 48px;
+}
+
+.book-body a {
   color: #007bff;
+  font-size: 0.88rem;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.book-card a:hover { text-decoration: underline; }
+.book-body a:hover {
+  text-decoration: underline;
+}
 
 /* -------------------------------------------------
    Generic Info / CTA Sections
@@ -265,35 +298,9 @@ footer nav a:hover { color: #fff; }
   .search-bar input, .search-bar select, .search-bar button { width: 100%; }
   .book-card { width: 90%; }
   .ad-card { width: 140px; height: 210px; }
-
-   @media (max-width: 768px) {
-  header nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .ad-card {
-    width: 140px;
-    height: 210px;
-  }
-
-  .white-box {
-    padding: 20px 15px;
-  }
-
-  .button {
-    width: 90%;
-    display: block;
-    margin: 10px auto;
-  }
-}
-
+  header nav ul { flex-direction: column; align-items: center; }
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .white-box { padding: 20px 15px; }
+  .button { width: 90%; display: block; margin: 10px auto; }
 }
