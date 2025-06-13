@@ -4,171 +4,290 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-Book Library – Home</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
-  <!-- Google Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Example hero section */
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: #f5f7fb;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
+      background: #f4f6f9;
       color: #333;
     }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
 
-    /* Floating Feedback Widget */
-    #feedback-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-    }
-
-    .feedback-icon {
-      background: #f8485e;
-      color: white;
-      border: none;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      font-size: 1.4rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .feedback-icon:hover {
-      background: #e53950;
-    }
-
-    .feedback-popup-card {
-      position: absolute;
-      bottom: 70px;
-      right: 0;
-      width: 320px;
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-      padding: 20px 22px;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .feedback-popup-card.hidden {
-      display: none;
-    }
-
-    .feedback-popup-card h3 {
-      margin-bottom: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .feedback-popup-card textarea {
-      width: 100%;
-      height: 100px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 0.95rem;
-      resize: vertical;
-      margin-bottom: 12px;
-    }
-
-    .feedback-popup-card button {
-      background: #3f51b5;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
+    header {
+      background: #141d33;
+      padding: 14px 28px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+    }
+    .brand {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #fff;
+      display: flex;
+      gap: .4rem;
+    }
+    nav ul { display: flex; gap: 18px; }
+    .nav-btn {
+      background: #1e2742;
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-size: .92rem;
+      transition: .25s;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .nav-btn:hover { background: #2d3554; }
+
+    .hero {
+      padding: 110px 12px 160px;
+      text-align: center;
+      background: #f4f6f9;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: #111;
+      margin-bottom: .65rem;
+    }
+    .hero p {
+      font-size: clamp(.9rem, 1.3vw, 1.15rem);
+      color: #67718c;
+      margin-bottom: 3.5rem;
     }
 
-    .feedback-popup-card .note {
-      font-size: 0.85rem;
-      color: #888;
+    .search-bar {
+      width: 90%;
+      max-width: 730px;
+      margin-inline: auto;
+      background: #fff;
+      border-radius: 50px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.08);
+      padding: 6px;
+      display: flex;
+    }
+    .search-bar input {
+      flex: 2 1 280px;
+      border: none;
+      outline: none;
+      padding: 16px 20px;
+      border-radius: 50px 0 0 50px;
+      font-size: .95rem;
+    }
+    .search-bar select {
+      flex: 1 1 180px;
+      border: none;
+      outline: none;
+      font-size: .93rem;
+      padding: 0 20px;
+      font-weight: 600;
+      background: #fff;
+      appearance: none;
+    }
+    .search-bar button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      background: #e74c3c;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: .25s;
+    }
+    .search-bar button:hover { background: #c0392b; }
+
+    .section-title {
+      text-align: center;
+      margin-top: 90px;
+    }
+    .section-title h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #111;
+      display: inline-block;
+      padding-bottom: .4rem;
+      border-bottom: 3px solid #553CDF;
+    }
+
+    .book-grid {
+      display: grid;
+      gap: 34px;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      max-width: 1100px;
+      margin: 60px auto 120px;
+      padding: 0 16px;
+    }
+    .book-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+      transition: .3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-card:hover {
+      transform: translateY(-6px);
+    }
+    .book-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .book-body {
+      padding: 22px 18px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-body h3 { font-size: 1.1rem; margin-bottom: .55rem; color: #222; }
+    .book-body p  { font-size: .87rem; color: #555; margin-bottom: auto; }
+    .book-body a  {
+      margin-top: 18px;
+      color: #553CDF;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+
+    /* Feedback Widget */
+    .feedback-box {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 320px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      z-index: 999;
+    }
+    .feedback-box h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #222;
+      font-weight: 600;
+    }
+    .feedback-box textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      resize: none;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .feedback-box button {
+      width: 100%;
+      padding: 12px;
+      background: #553CDF;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .feedback-box button:hover {
+      background: #3e2db8;
+    }
+    .feedback-box small {
+      display: block;
+      text-align: center;
+      color: #777;
       margin-top: 10px;
+      font-size: 12px;
+    }
+
+    @media(max-width: 600px) {
+      .search-bar { flex-direction: column; padding: 10px; border-radius: 20px; }
+      .search-bar input,
+      .search-bar select,
+      .search-bar button {
+        width: 100%; border-radius: 10px;
+      }
+      .book-card { width: 90%; }
+      .feedback-box {
+        bottom: 20px;
+        right: 10px;
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to the E-Book Library</h1>
-    <p>Explore a world of digital books</p>
-  </section>
+<header>
+  <div class="brand"><i class="fas fa-book-reader"></i> E-Book Library</div>
+  <nav>
+    <ul>
+      <li><a class="nav-btn" href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+      <li><a class="nav-btn" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- Feedback Chat Button & Popup -->
-  <div id="feedback-widget">
-    <button id="feedback-toggle" class="feedback-icon" title="Give Feedback">
-      <i class="fas fa-comment-dots"></i>
-    </button>
+<section class="hero">
+  <h1>Discover Your Next Great Read</h1>
+  <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
-    <div id="feedback-popup" class="feedback-popup-card hidden">
-      <h3>Share Your Thoughts</h3>
-      <form method="POST" action="{{ url_for('submit_feedback') }}">
-        <textarea name="feedback" placeholder="We'd love to hear your feedback about our library..." required></textarea>
-        <button type="submit"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
-      </form>
-      <p class="note">Your feedback helps us improve our service</p>
+  <form class="search-bar" method="get" action="{{ url_for('home') }}">
+    <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
+    <select name="category" onchange="this.form.submit()">
+      <option value="">All Categories</option>
+      <option value="Adventure" {% if selected_category == "Adventure" %}selected{% endif %}>Adventure</option>
+      <option value="Biography" {% if selected_category == "Biography" %}selected{% endif %}>Biography</option>
+      <option value="Sci-Fi" {% if selected_category == "Sci-Fi" %}selected{% endif %}>Sci-Fi</option>
+      <option value="Self-Help" {% if selected_category == "Self-Help" %}selected{% endif %}>Self-Help</option>
+      <option value="Non-Fiction" {% if selected_category == "Non-Fiction" %}selected{% endif %}>Non-Fiction</option>
+      <option value="Action" {% if selected_category == "Action" %}selected{% endif %}>Action</option>
+    </select>
+    <button type="submit"><i class="fas fa-search"></i> Search</button>
+  </form>
+</section>
+
+<div class="section-title">
+  <h2>Featured Books</h2>
+  <p>Explore our hand-picked selection of must-read books</p>
+</div>
+
+<div class="book-grid">
+  {% for book in books %}
+    <div class="book-card">
+      <a href="{{ url_for('book_page', id=book.id) }}">
+        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+      </a>
+      <div class="book-body">
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description }}</p>
+        <a href="{{ url_for('book_page', id=book.id) }}">View Details</a>
+      </div>
     </div>
-  </div>
+  {% endfor %}
+</div>
 
-  <!-- Optional: Flash message -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul class="flashes">
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
-  <script>
-    const toggleBtn = document.getElementById("feedback-toggle");
-    const popup = document.getElementById("feedback-popup");
-
-    toggleBtn.addEventListener("click", () => {
-      popup.classList.toggle("hidden");
-    });
-
-    // Show popup on scroll down (only once)
-    let popupShownOnScroll = false;
-    window.addEventListener("scroll", () => {
-      if (!popupShownOnScroll && window.scrollY > 300) {
-        popup.classList.remove("hidden");
-        popupShownOnScroll = true;
-      }
-    });
-
-    // Flash trigger on login success
-    {% if session.get('show_feedback_popup') %}
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          popup.classList.remove("hidden");
-        }, 500);
-      });
-    {% endif %}
-  </script>
+<!-- Feedback Box -->
+<div class="feedback-box">
+  <h3>Share Your Thoughts</h3>
+  <form method="POST" action="{{ url_for('submit_feedback') }}">
+    <textarea name="feedback" placeholder="We'd love to hear your feedback about our library..." required></textarea>
+    <button type="submit"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+    <small>Your feedback helps us improve our service</small>
+  </form>
+</div>
 
 </body>
 </html>
