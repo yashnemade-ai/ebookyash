@@ -180,19 +180,12 @@ def home():
 
 @app.route("/admin/feedback")
 def admin_feedback():
-    # Optional: Protect this with a session-based admin check
-    if session.get("user") != "admin@example.com":
-        flash("Admin access required", "error")
-        return redirect(url_for("login"))
-
-    feedback_file = "feedback.json"
-    feedback_list = []
-
-    if os.path.exists(feedback_file):
-        with open(feedback_file, "r") as f:
+    if not os.path.exists("feedback.json"):
+        feedback_list = []
+    else:
+        with open("feedback.json") as f:
             feedback_list = json.load(f)
-
-    return render_template("feedback.html", feedback_list=feedback_list)
+    return render_template("admin_feedback.html", feedback_list=feedback_list)
 
 
 # ────────── Protected: Book pages
