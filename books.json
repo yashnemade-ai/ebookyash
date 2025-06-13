@@ -151,5 +151,14 @@
     "description": "Brace yourself for a seafaring adventure you will never forget! Experience the adrenaline rush of being on board the amazing submarine, the Nautilus, while Captain Nemo, his crew and passengers, traverse the oceans on a quest for scientific knowledge",
     "pdf_file": "pdf/20000-leagues-under-the-sea.pdf",
     "image_url": "images/20000-twenty-thousand-leagues-under-the-sea.jpg"
+  },
+  {
+    "id": 17,
+    "title": "",
+    "author": "Jules Verne",
+    "category": "Adventure",
+    "description": "A Journey To The Center Of The Earth is a science fiction novel by French author Jules Verne, first published in 1864. It is the third book in the Extraordinary Voyages series",
+    "pdf_file": "pdf/jules-verne_journey-to-the-center-of-the-earth.pdf",
+    "image_url": "images/jules-verne_journey-to-the-center-of-the-earth.jpg"
   }
 ]
