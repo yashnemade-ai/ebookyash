@@ -60,56 +60,18 @@ header nav ul li a:hover {
   animation: gradientShift 15s ease infinite;
 }
 
-.hero h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-  animation: fadeInUp 1s;
-}
-
-.hero p {
-  font-size: 20px;
-  margin-bottom: 25px;
-  animation: fadeInUp 1.2s;
-}
+.hero h1 { font-size: 48px; margin-bottom: 10px; animation: fadeInUp 1s; }
+.hero p  { font-size: 20px; margin-bottom: 25px; animation: fadeInUp 1.2s; }
 
 /* -------------------------------------------------
    Auto-scroll Book Covers (welcome.html)
 -------------------------------------------------- */
-.ad-container {
-  overflow: hidden;
-  padding: 40px 0;
-  background: #fff;
-  border-block: 2px solid #eee;
-}
-
-.ad-content {
-  display: flex;
-  gap: 30px;
-  padding-inline: 20px;
-  width: max-content;
-  animation: scrollBooks 25s linear infinite;
-}
-
-.ad-card {
-  flex: 0 0 auto;
-  width: 200px;
-  height: 300px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fefefe;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.ad-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ad-card:hover {
-  transform: scale(1.05);
-}
+.ad-container   { overflow: hidden; padding: 40px 0; background: #fff; border-block: 2px solid #eee; }
+.ad-content     { display: flex; gap: 30px; padding-inline: 20px; width: max-content; animation: scrollBooks 25s linear infinite; }
+.ad-card        { flex: 0 0 auto; width: 200px; height: 300px; border-radius: 12px; overflow: hidden;
+                  background: #fefefe; box-shadow: 0 4px 10px rgba(0,0,0,.1); transition: transform .3s; }
+.ad-card img    { width: 100%; height: 100%; object-fit: cover; }
+.ad-card:hover  { transform: scale(1.05); }
 
 /* -------------------------------------------------
    Home Page Hero (home.html)
@@ -118,19 +80,12 @@ header nav ul li a:hover {
   padding: 100px 20px 70px;
   text-align: center;
   background: url("../images/hero-bg.jpg") center/cover no-repeat;
-  backdrop-filter: brightness(0.6);
+  backdrop-filter: brightness(.6);
   color: #fff;
 }
 
-.home-hero h1 {
-  font-size: 42px;
-  margin-bottom: 8px;
-}
-
-.home-hero p {
-  font-size: 18px;
-  margin-bottom: 35px;
-}
+.home-hero h1 { font-size: 42px; margin-bottom: 8px; }
+.home-hero p  { font-size: 18px; margin-bottom: 35px; }
 
 /* Search bar */
 .search-bar {
@@ -158,8 +113,8 @@ header nav ul li a:hover {
   outline: none;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #111;
-  background-color: #fff;
+  color: #111; /* Black text */
+  background-color: #fff; /* White background */
   border-radius: 0 50px 50px 0;
   appearance: none;
   -webkit-appearance: none;
@@ -175,20 +130,22 @@ header nav ul li a:hover {
 .search-bar select:hover,
 .search-bar select:focus {
   background-color: #f1f1f1;
-  color: #000;
+  color: #000; /* Force black on hover/focus */
   cursor: pointer;
 }
 
+
+/* Stylish purple Search button */
 .search-bar button {
   padding: 12px 24px;
   border: none;
   background: #ffffff;
   color: #fff;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: .95rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background .3s;
 }
 
 .search-bar button:hover {
@@ -222,32 +179,21 @@ header nav ul li a:hover {
   padding: 20px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  transition: transform .3s;
 }
 
-.book-card:hover {
-  transform: translateY(-6px);
-}
+.book-card:hover { transform: translateY(-6px); }
 
 .book-card img {
   width: 100%;
   height: 260px;
   object-fit: cover;
-  object-position: top;
   border-radius: 8px;
-  background-color: #f9f9f9;
 }
 
-.book-card h2 {
-  font-size: 20px;
-  margin: 14px 0 8px;
-}
-
-.book-card p {
-  font-size: 14px;
-  color: #666;
-}
+.book-card h2 { font-size: 20px; margin: 14px 0 8px; }
+.book-card p  { font-size: 14px; color: #666; }
 
 .book-card a {
   display: inline-block;
@@ -256,9 +202,7 @@ header nav ul li a:hover {
   color: #007bff;
 }
 
-.book-card a:hover {
-  text-decoration: underline;
-}
+.book-card a:hover { text-decoration: underline; }
 
 /* -------------------------------------------------
    Generic Info / CTA Sections
@@ -271,9 +215,7 @@ header nav ul li a:hover {
   text-align: center;
 }
 
-.cta-section {
-  margin-top: 40px;
-}
+.cta-section { margin-top: 40px; }
 
 /* -------------------------------------------------
    Footer
@@ -285,9 +227,7 @@ footer {
   text-align: center;
 }
 
-footer nav {
-  margin-bottom: 12px;
-}
+footer nav { margin-bottom: 12px; }
 
 footer nav a {
   margin: 0 10px;
@@ -295,80 +235,54 @@ footer nav a {
   text-decoration: none;
 }
 
-footer nav a:hover {
-  color: #fff;
-}
+footer nav a:hover { color: #fff; }
 
 /* -------------------------------------------------
    Keyframes
 -------------------------------------------------- */
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes scrollBooks {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* -------------------------------------------------
    Responsive
 -------------------------------------------------- */
 @media (max-width: 768px) {
-  .hero h1,
-  .home-hero h1 {
-    font-size: 32px;
-  }
+  .hero h1, .home-hero h1 { font-size: 32px; }
+  .search-bar { flex-direction: column; }
+  .search-bar input, .search-bar select, .search-bar button { width: 100%; }
+  .book-card { width: 90%; }
+  .ad-card { width: 140px; height: 210px; }
 
-  .search-bar {
-    flex-direction: column;
-  }
-
-  .search-bar input,
-  .search-bar select,
-  .search-bar button {
-    width: 100%;
-  }
-
-  .book-card {
-    width: 90%;
-  }
-
-  .ad-card {
-    width: 140px;
-    height: 210px;
-  }
-
+   @media (max-width: 768px) {
   header nav ul {
     flex-direction: column;
     align-items: center;
   }
 
+  .hero h1 {
+    font-size: 2rem;
+  }
+
   .hero p {
     font-size: 1rem;
+  }
+
+  .ad-card {
+    width: 140px;
+    height: 210px;
   }
 
   .white-box {
@@ -380,4 +294,6 @@ footer nav a:hover {
     display: block;
     margin: 10px auto;
   }
+}
+
 }
