@@ -1,31 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Sign Up</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
-  body{background:#eef2f7;display:flex;justify-content:center;align-items:center;height:100vh}
-  .card{width:360px;background:#fff;padding:40px 32px;border-radius:12px;
-        box-shadow:0 8px 30px rgba(0,0,0,.08)}
-  .card h2{margin-bottom:24px;text-align:center;color:#2c3e50}
-  .card input{width:100%;padding:12px;margin-bottom:18px;border:1px solid #ccd5e0;
-              border-radius:8px;font-size:15px}
-  .card button{width:100%;padding:12px;background:#e74c3c;color:#fff;border:none;
-               border-radius:8px;font-weight:600;cursor:pointer}
-  .card a{display:block;text-align:center;margin-top:14px;color:#e74c3c;font-size:14px}
-  /* flash styling */
-  .flash{margin-bottom:10px;font-size:14px;text-align:center}
-  .flash.error{color:#e74c3c}
-  .flash.success{color:#27ae60}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: #eef2f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated Gradient Blobs */
+    .blob {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e74c3c, #8e44ad);
+      opacity: 0.35;
+      filter: blur(80px);
+      animation: blobMove 18s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    .blob:nth-child(1) {
+      top: -120px;
+      left: -100px;
+    }
+
+    .blob:nth-child(2) {
+      bottom: -100px;
+      right: -100px;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      animation-delay: 3s;
+    }
+
+    @keyframes blobMove {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, -30px) scale(1.2); }
+    }
+
+    .card {
+      position: relative;
+      width: 360px;
+      background: #ffffff;
+      padding: 40px 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .card h2 {
+      margin-bottom: 24px;
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .card input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px solid #ccd5e0;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    .card input:focus {
+      border-color: #553cdf;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(85, 60, 223, 0.15);
+    }
+
+    .card button {
+      width: 100%;
+      padding: 14px;
+      background: #553cdf;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .card button:hover {
+      background: #412ac3;
+    }
+
+    .card a {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: #553cdf;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    .flash {
+      margin-bottom: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .flash.error {
+      color: #e74c3c;
+    }
+
+    .flash.success {
+      color: #27ae60;
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        width: 90%;
+        padding: 30px 24px;
+      }
+
+      .blob {
+        width: 200px;
+        height: 200px;
+        filter: blur(60px);
+      }
+    }
+  </style>
 </head>
 <body>
+
+<!-- Background blobs -->
+<div class="blob"></div>
+<div class="blob"></div>
 
 <div class="card">
   <h2>Sign Up</h2>
 
-  <!-- flash messages -->
+  <!-- Flash messages -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for cat,msg in messages %}
@@ -35,9 +161,9 @@
   {% endwith %}
 
   <form method="POST">
-    <input type="email"    name="email"    placeholder="Email"        required>
-    <input type="password" name="password" placeholder="Password"     required>
-    <input type="password" name="confirm"  placeholder="Confirm Password" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="password" name="confirm" placeholder="Confirm Password" required>
     <button type="submit">Sign Up</button>
   </form>
 
