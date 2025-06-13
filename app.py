@@ -1,10 +1,9 @@
-# app.py
 from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session
 )
 import os, json
-import werkzeug.security as ws  # for password hashing
+import werkzeug.security as ws
 from datetime import datetime
 
 app = Flask(__name__)
@@ -13,7 +12,7 @@ app.secret_key = "replace-with-real-secret-key"
 BOOKS_FILE  = "books.json"
 USERS_FILE  = "users.json"
 
-# ────────── Helpers: books ──────
+# ────── Helpers: books ──────
 def load_books():
     if os.path.exists(BOOKS_FILE):
         with open(BOOKS_FILE) as f:
@@ -24,7 +23,7 @@ def save_books(data):
     with open(BOOKS_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-# ────────── Helpers: users ──────
+# ────── Helpers: users ──────
 def load_users():
     if os.path.exists(USERS_FILE):
         try:
@@ -38,7 +37,7 @@ def save_users(users):
     with open(USERS_FILE, "w") as f:
         json.dump(users, f, indent=4)
 
-# ────────── Public: Welcome ─────
+# ────── Public: Welcome ──────
 @app.route("/")
 def welcome():
     img_dir = os.path.join(app.static_folder, "images")
@@ -46,7 +45,7 @@ def welcome():
                if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     return render_template("welcome.html", images=images)
 
-# ────────── Auth: Sign-up ───────
+# ────── Auth: Signup ──────
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -71,7 +70,7 @@ def signup():
 
     return render_template("signup.html")
 
-# ────────── Auth: Login ─────────
+# ────── Auth: Login ──────
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -87,7 +86,7 @@ def login():
 
         if user and ws.check_password_hash(user["password"], password):
             session["user"] = user["email"]
-            session["show_feedback_popup"] = True  # Feedback popup trigger
+            session["show_feedback_popup"] = True
             flash("Login successful!", "success")
             return redirect(url_for("home"))
         else:
@@ -96,14 +95,14 @@ def login():
 
     return render_template("login.html")
 
-# ────────── Auth: Logout ────────
+# ────── Auth: Logout ──────
 @app.route("/logout")
 def logout():
     session.pop("user", None)
     flash("Logged out.", "info")
     return redirect(url_for("welcome"))
 
-# ────────── Protected: Home ─────
+# ────── Protected: Home ──────
 @app.route("/home")
 def home():
     if "user" not in session:
@@ -150,39 +149,50 @@ def home():
         show_feedback_popup=show_popup
     )
 
-# ────────── Feedback Route ──────
+# ────── Feedback Route (updated) ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
     if "user" not in session:
         flash("Please log in to submit feedback.", "warning")
         return redirect(url_for("login"))
 
-    feedback_text = request.form.get("feedback", "").strip()
-    if not feedback_text:
-        flash("Feedback cannot be empty.", "error")
-        return redirect(url_for("home"))
+    try:
+        feedback_text = request.form.get("feedback", "").strip()
+        if not feedback_text:
+            flash("Feedback cannot be empty.", "error")
+            return redirect(url_for("home"))
 
-    feedback_entry = {
-        "username": session["user"],
-        "feedback": feedback_text,
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M")
-    }
+        feedback_entry = {
+            "username": session["user"],
+            "feedback": feedback_text,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
 
-    if os.path.exists("feedback.json"):
-        with open("feedback.json") as f:
-            feedback_list = json.load(f)
-    else:
+        feedback_file = "feedback.json"
         feedback_list = []
 
-    feedback_list.append(feedback_entry)
-    with open("feedback.json", "w") as f:
-        json.dump(feedback_list, f, indent=2)
+        if os.path.exists(feedback_file):
+            with open(feedback_file, "r", encoding="utf-8") as f:
+                try:
+                    feedback_list = json.load(f)
+                except json.JSONDecodeError:
+                    feedback_list = []
 
-    session["show_feedback_popup"] = True  # Show confirmation again if desired
-    flash("Thanks for your feedback!", "success")
-    return redirect(url_for("home"))
+        feedback_list.append(feedback_entry)
 
-# ────────── Book Pages ──────────
+        with open(feedback_file, "w", encoding="utf-8") as f:
+            json.dump(feedback_list, f, indent=2)
+
+        session["show_feedback_popup"] = True
+        flash("Thanks for your feedback!", "success")
+        return redirect(url_for("home"))
+
+    except Exception as e:
+        print("Feedback Error:", e)
+        flash("Something went wrong. Please try again.", "error")
+        return redirect(url_for("home"))
+
+# ────── Book Pages ──────
 @app.route("/book/<int:id>")
 def book_page(id):
     if "user" not in session:
@@ -211,7 +221,7 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-# ────────── Seed sample data ────
+# ────── Seed sample data ──────
 @app.before_first_request
 def seed_books():
     if load_books():
@@ -248,6 +258,6 @@ def seed_books():
     save_books(sample)
     print("\U0001F4DA  sample books added → books.json")
 
-# ────────── Run ────────────────
+# ────── Run App ──────
 if __name__ == "__main__":
     app.run(debug=True)
