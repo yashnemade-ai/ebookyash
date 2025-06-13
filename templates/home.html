@@ -5,225 +5,227 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-Book Library – Home</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f4f6f9;
-      color: #333;
-    }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body  { font-family:'Poppins',sans-serif; background:#f4f6f9; color:#333; }
+    a { text-decoration:none; color:inherit; }
+    ul { list-style:none; }
 
+    /* Navbar */
     header {
-      background: #141d33;
-      padding: 14px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background:#141d33;
+      padding:14px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
     }
     .brand {
-      font-weight: 600;
-      font-size: 1.3rem;
-      color: #fff;
-      display: flex;
-      gap: .4rem;
+      font-weight:600; font-size:1.3rem; color:#fff; display:flex; gap:.4rem;
     }
-    nav ul { display: flex; gap: 18px; }
+    nav ul { display:flex; gap:18px; }
     .nav-btn {
-      background: #1e2742;
-      color: #fff;
-      padding: 8px 22px;
-      border-radius: 6px;
-      font-size: .92rem;
-      transition: .25s;
-      display: flex;
-      align-items: center;
-      gap: .4rem;
+      background:#1e2742; color:#fff; padding:8px 22px;
+      border-radius:6px; font-size:.92rem; transition:.25s;
+      display:flex; align-items:center; gap:.4rem;
     }
-    .nav-btn:hover { background: #2d3554; }
+    .nav-btn:hover { background:#2d3554; }
 
+    /* Hero Section */
     .hero {
-      padding: 110px 12px 160px;
-      text-align: center;
-      background: #f4f6f9;
+      position:relative;
+      padding:110px 12px 160px;
+      text-align:center;
+      overflow:hidden;
     }
     .hero h1 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      color: #111;
-      margin-bottom: .65rem;
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:600;
+      color:#111;
+      margin-bottom:.65rem;
     }
     .hero p {
-      font-size: clamp(.9rem, 1.3vw, 1.15rem);
-      color: #67718c;
-      margin-bottom: 3.5rem;
+      font-size:clamp(.9rem,1.3vw,1.15rem);
+      color:#67718c;
+      margin-bottom:3.5rem;
+    }
+
+    .blob, .blob.alt {
+      position:absolute;
+      width:480px; height:480px;
+      filter:blur(50px); border-radius:50%;
+      animation:horizontalMove 18s linear infinite;
+    }
+    .blob {
+      background:radial-gradient(circle, rgba(255,113,113,.35), rgba(255,113,113,0) 70%);
+      top:50px; left:0;
+    }
+    .blob.alt {
+      background:radial-gradient(circle, rgba(123,104,238,.32), rgba(123,104,238,0) 70%);
+      top:100px; right:0;
+      animation-delay: 9s;
+    }
+    @keyframes horizontalMove {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(40px); }
+      100% { transform: translateX(0); }
     }
 
     .search-bar {
-      width: 90%;
-      max-width: 730px;
-      margin-inline: auto;
-      background: #fff;
-      border-radius: 50px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.08);
-      padding: 6px;
-      display: flex;
+      width:90%; max-width:730px;
+      margin-inline:auto;
+      background:#fff;
+      border-radius:50px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      padding:6px;
+      display:flex; gap:0;
     }
     .search-bar input {
-      flex: 2 1 280px;
-      border: none;
-      outline: none;
-      padding: 16px 20px;
-      border-radius: 50px 0 0 50px;
-      font-size: .95rem;
+      flex:2 1 280px; border:none; outline:none;
+      padding:16px 20px; border-radius:50px 0 0 50px;
+      font-size:.95rem;
     }
     .search-bar select {
-      flex: 1 1 180px;
-      border: none;
-      outline: none;
-      font-size: .93rem;
-      padding: 0 20px;
-      font-weight: 600;
-      background: #fff;
-      appearance: none;
+      flex:1 1 180px; border:none; outline:none;
+      font-size:.93rem; padding:0 20px;
+      color:#000; font-weight:600;
+      appearance:none;
+      background:url("data:image/svg+xml,%3Csvg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") right 18px center no-repeat;
+      background-color:#fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .search-bar select:hover,
+    .search-bar select:focus {
+      background-color:#ffffff;
+      color:#000000;
     }
     .search-bar button {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 0 34px;
-      display: flex;
-      align-items: center;
-      background: #e74c3c;
-      color: #fff;
-      font-weight: 600;
-      border-radius: 50px;
-      transition: .25s;
+      border:none; outline:none; cursor:pointer;
+      padding:0 34px; display:flex; align-items:center; gap:.45rem;
+      background:#e74c3c; color:#fff;
+      font-weight:600;
+      border-radius:50px; transition:.25s;
     }
-    .search-bar button:hover { background: #c0392b; }
+    .search-bar button:hover { background:#c0392b; }
 
     .section-title {
-      text-align: center;
-      margin-top: 90px;
+      text-align:center; margin-top:90px;
     }
     .section-title h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #111;
-      display: inline-block;
-      padding-bottom: .4rem;
-      border-bottom: 3px solid #553CDF;
+      font-size:2rem; font-weight:600; color:#111;
+      position:relative; display:inline-block; padding-bottom:.4rem;
     }
+    .section-title h2::after {
+      content:""; height:3px; width:60px;
+      background:#553CDF; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      border-radius:2px;
+    }
+    .section-title p { color:#67718c; margin-top:.6rem; }
 
     .book-grid {
-      display: grid;
-      gap: 34px;
-      justify-content: center;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      max-width: 1100px;
-      margin: 60px auto 120px;
-      padding: 0 16px;
+      display:grid; gap:34px; justify-content:center;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      max-width:1100px; margin:60px auto;
+      padding:0 16px;
     }
     .book-card {
-      background: #fff;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 8px 22px rgba(0,0,0,.08);
-      transition: .3s ease;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
+      background:#fff; border-radius:14px; overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+      transition:.3s ease;
+      display:flex; flex-direction:column; text-align:center;
     }
     .book-card:hover {
-      transform: translateY(-6px);
+      transform:translateY(-6px);
+      box-shadow:0 14px 28px rgba(0,0,0,.12);
     }
     .book-card img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
+      width:100%; height:250px; object-fit:cover;
     }
     .book-body {
-      padding: 22px 18px 28px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      padding:22px 18px 28px;
+      flex:1; display:flex; flex-direction:column;
     }
-    .book-body h3 { font-size: 1.1rem; margin-bottom: .55rem; color: #222; }
-    .book-body p  { font-size: .87rem; color: #555; margin-bottom: auto; }
-    .book-body a  {
-      margin-top: 18px;
-      color: #553CDF;
-      font-weight: 600;
-      font-size: .9rem;
+    .book-body h3 { font-size:1.1rem; margin-bottom:.55rem; color:#222; }
+    .book-body p { font-size:.87rem; color:#555; margin-bottom:auto; }
+    .book-body a {
+      margin-top:18px; color:#553CDF; font-weight:600; font-size:.9rem;
     }
 
-    /* Feedback Widget */
-    .feedback-box {
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      width: 320px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      padding: 24px;
-      z-index: 999;
+    /* Flash Messages */
+    .flash-messages {
+      max-width: 720px;
+      margin: 20px auto 0;
+      padding: 0;
+      list-style: none;
     }
-    .feedback-box h3 {
-      font-size: 20px;
+    .flash-messages li {
+      background: #fff;
+      padding: 14px 20px;
       margin-bottom: 10px;
+      border-left: 5px solid #2ecc71;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.05);
+      font-weight: 500;
+    }
+
+    /* Feedback Form */
+    .feedback-form {
+      max-width: 700px;
+      margin: 60px auto 80px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .feedback-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
       color: #222;
-      font-weight: 600;
     }
-    .feedback-box textarea {
+
+    .feedback-form textarea {
       width: 100%;
-      min-height: 80px;
-      padding: 12px;
-      border: 1px solid #ccc;
+      height: 120px;
       border-radius: 10px;
-      resize: none;
-      font-size: 14px;
-      font-family: inherit;
+      border: 1px solid #ccc;
+      padding: 16px;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 20px;
     }
-    .feedback-box button {
-      width: 100%;
-      padding: 12px;
+
+    .feedback-form button {
       background: #553CDF;
       color: white;
       border: none;
-      border-radius: 10px;
-      margin-top: 12px;
-      font-weight: bold;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
-    }
-    .feedback-box button:hover {
-      background: #3e2db8;
-    }
-    .feedback-box small {
-      display: block;
-      text-align: center;
-      color: #777;
-      margin-top: 10px;
-      font-size: 12px;
+      font-weight: 600;
+      transition: background 0.3s ease;
     }
 
-    @media(max-width: 600px) {
-      .search-bar { flex-direction: column; padding: 10px; border-radius: 20px; }
+    .feedback-form button:hover {
+      background: #422bcf;
+    }
+
+    @media(max-width:600px){
+      .search-bar {
+        flex-direction:column;
+        border-radius:24px; padding:10px;
+      }
       .search-bar input,
       .search-bar select,
       .search-bar button {
-        width: 100%; border-radius: 10px;
+        border-radius:12px; width:100%;
       }
-      .book-card { width: 90%; }
-      .feedback-box {
-        bottom: 20px;
-        right: 10px;
-        width: 90%;
+      .search-bar button {
+        margin-top:8px; justify-content:center;
       }
     }
   </style>
@@ -240,10 +242,27 @@
   </nav>
 </header>
 
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flash-messages">
+      {% for category, message in messages %}
+        <li style="border-left-color: {% if category == 'error' %}#e74c3c{% elif category == 'warning' %}#f39c12{% elif category == 'success' %}#2ecc71{% else %}#3498db{% endif %};">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <section class="hero">
+  <div class="blob"></div>
+  <div class="blob alt"></div>
+
   <h1>Discover Your Next Great Read</h1>
   <p>Explore thousands of ebooks across every genre, from bestsellers to hidden gems</p>
 
+  <!-- Search Bar -->
   <form class="search-bar" method="get" action="{{ url_for('home') }}">
     <input type="text" name="q" placeholder="Search for books by title…" value="{{ request.args.get('q', '') }}" />
     <select name="category" onchange="this.form.submit()">
@@ -259,6 +278,7 @@
   </form>
 </section>
 
+<!-- Featured Books -->
 <div class="section-title">
   <h2>Featured Books</h2>
   <p>Explore our hand-picked selection of must-read books</p>
@@ -266,26 +286,25 @@
 
 <div class="book-grid">
   {% for book in books %}
-    <div class="book-card">
-      <a href="{{ url_for('book_page', id=book.id) }}">
-        <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
-      </a>
-      <div class="book-body">
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.description }}</p>
-        <a href="{{ url_for('book_page', id=book.id) }}">View Details</a>
-      </div>
+  <div class="book-card">
+    <a href="{{ url_for('book_page', id=book.id) }}">
+      <img src="{{ url_for('static', filename=book.image_url) }}" alt="{{ book.title }}">
+    </a>
+    <div class="book-body">
+      <h3>{{ book.title }}</h3>
+      <p>{{ book.description }}</p>
+      <a class="read-btn" href="{{ url_for('book_page', id=book.id) }}">View Details</a>
     </div>
+  </div>
   {% endfor %}
 </div>
 
-<!-- Feedback Box -->
-<div class="feedback-box">
-  <h3>Share Your Thoughts</h3>
+<!-- Feedback Section -->
+<div class="feedback-form">
+  <h2>We Value Your Feedback</h2>
   <form method="POST" action="{{ url_for('submit_feedback') }}">
-    <textarea name="feedback" placeholder="We'd love to hear your feedback about our library..." required></textarea>
-    <button type="submit"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
-    <small>Your feedback helps us improve our service</small>
+    <textarea name="feedback" placeholder="Leave your feedback here..." required></textarea>
+    <button type="submit">Submit Feedback</button>
   </form>
 </div>
 
