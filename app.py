@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
 
 # Google OAuth setup
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Use HTTPS in production
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 google_bp = make_google_blueprint(
     client_id="133669733575-lhah8j60ep069r2pmjifj14kcb5776ev.apps.googleusercontent.com",
     client_secret="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",
@@ -19,8 +19,8 @@ google_bp = make_google_blueprint(
 )
 app.register_blueprint(google_bp, url_prefix="/login")
 
-BOOKS_FILE  = "books.json"
-USERS_FILE  = "users.json"
+BOOKS_FILE = "books.json"
+USERS_FILE = "users.json"
 
 # ────── Helpers: books ──────
 def load_books():
@@ -247,9 +247,9 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-# ────── Seed sample data ──────
-@app.before_first_request
-def seed_books():
+# ────── Seed sample data (Flask 3 compatible) ──────
+@app.before_serving
+async def seed_books():
     if load_books():
         return
     sample = [
@@ -282,8 +282,8 @@ def seed_books():
         }
     ]
     save_books(sample)
-    print("\U0001F4DA  sample books added → books.json")
+    print("\U0001F4DA  Sample books added → books.json")
 
-# ────── Run App ──────
+# ────── Run App Locally ──────
 if __name__ == "__main__":
     app.run(debug=True)
