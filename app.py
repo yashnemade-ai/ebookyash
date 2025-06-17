@@ -275,4 +275,4 @@ def seed_books():
 
 # ────── Run App ──────
 if __name__ == "__main__":
-    app.run(debug=True) update this and give me full updated code
+    app.run(debug=True)
