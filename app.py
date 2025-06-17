@@ -12,7 +12,7 @@ app.secret_key = "replace-with-real-secret-key"
 BOOKS_FILE = "books.json"
 USERS_FILE = "users.json"
 
-# ────── Helpers: books ──────
+# ────── Helpers: books ─────
 def load_books():
     if os.path.exists(BOOKS_FILE):
         with open(BOOKS_FILE) as f:
