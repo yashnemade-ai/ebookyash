@@ -210,11 +210,9 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-@app.before_first_request
-def seed_books():
-    if load_json(BOOKS_FILE):
-        return
-    sample = [
+# ────── Seed sample books (only if not already) ──────
+if not load_json(BOOKS_FILE):
+    sample_books = [
         {
             "id": 1,
             "title": "Deep Work",
@@ -243,8 +241,8 @@ def seed_books():
             "image_url": "images/alchemist.jpg"
         }
     ]
-    save_json(sample, BOOKS_FILE)
-    print("📚  Sample books added.")
+    save_json(sample_books, BOOKS_FILE)
+    print("📚 Sample books seeded.")
 
 # ────── Run Locally ──────
 if __name__ == "__main__":
