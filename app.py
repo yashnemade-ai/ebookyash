@@ -1,273 +1,94 @@
-from flask import (
-    Flask, render_template, request, redirect,
-    url_for, flash, session
-)
-import os, json
-import werkzeug.security as ws
-from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import json
+import os
 
 app = Flask(__name__)
-app.secret_key = "replace-with-real-secret-key"
+app.secret_key = 'your_secret_key'  # Replace with a secure key
 
-BOOKS_FILE = "books.json"
-USERS_FILE = "users.json"
-
-# ────── Helpers: books ─────
+# Load books from JSON
 def load_books():
-    if os.path.exists(BOOKS_FILE):
-        with open(BOOKS_FILE) as f:
-            return json.load(f)
-    return []
+    with open('books.json', 'r') as f:
+        return json.load(f)
 
-def save_books(data):
-    with open(BOOKS_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-
-# ────── Helpers: users ──────
+# Load users from JSON
 def load_users():
-    if os.path.exists(USERS_FILE):
-        try:
-            with open(USERS_FILE) as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            return []
-    return []
+    if not os.path.exists('users.json'):
+        with open('users.json', 'w') as f:
+            json.dump({}, f)
+    with open('users.json', 'r') as f:
+        return json.load(f)
 
+# Save users to JSON
 def save_users(users):
-    with open(USERS_FILE, "w") as f:
+    with open('users.json', 'w') as f:
         json.dump(users, f, indent=4)
 
-# ────── Public: Welcome ──────
-@app.route("/")
+@app.route('/')
 def welcome():
-    img_dir = os.path.join(app.static_folder, "images")
-    images = [f for f in os.listdir(img_dir)
-              if f.lower().endswith((".jpg", ".jpeg", ".png"))]
-    return render_template("welcome.html", images=images)
+    return render_template('welcome.html')
 
-# ────── Auth: Signup ──────
-@app.route("/signup", methods=["GET", "POST"])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == "POST":
-        email = request.form.get("email", "").strip()
-        password = request.form.get("password", "").strip()
-
-        if not email or not password:
-            flash("All fields are required.", "error")
-            return redirect(url_for("signup"))
-
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
         users = load_users()
-        if any(u["email"] == email for u in users):
-            flash("User already exists. Please log in.", "error")
-            return redirect(url_for("login"))
-
-        hash_pw = ws.generate_password_hash(password)
-        users.append({"email": email, "password": hash_pw})
+        if email in users:
+            flash('Email already exists. Please login.', 'error')
+            return redirect(url_for('signup'))
+        users[email] = {'password': password}
         save_users(users)
+        flash('Signup successful. Please login.', 'success')
+        return redirect(url_for('login'))
+    return render_template('signup.html')
 
-        flash("Signup successful. Please log in.", "success")
-        return redirect(url_for("login"))
-
-    return render_template("signup.html")
-
-# ────── Auth: Login ──────
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
-        email = request.form.get("email", "").strip()
-        password = request.form.get("password", "").strip()
-
-        if not email or not password:
-            flash("All fields are required.", "error")
-            return redirect(url_for("login"))
-
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
         users = load_users()
-        user = next((u for u in users if u["email"] == email), None)
-
-        if user and ws.check_password_hash(user["password"], password):
-            session["user"] = user["email"]
-            session["show_feedback_popup"] = True
-            flash("Login successful!", "success")
-            return redirect(url_for("home"))
+        if email in users and users[email]['password'] == password:
+            session['user'] = email
+            flash('Login successful.', 'success')
+            return redirect(url_for('home'))
         else:
-            flash("Invalid email or password.", "error")
-            return redirect(url_for("login"))
+            flash('Invalid email or password.', 'error')
+            return redirect(url_for('login'))
+    return render_template('login.html')
 
-    return render_template("login.html")
-
-# ────── Auth: Logout ──────
-@app.route("/logout")
+@app.route('/logout')
 def logout():
-    session.pop("user", None)
-    flash("Logged out.", "info")
-    return redirect(url_for("welcome"))
+    session.pop('user', None)
+    flash('Logged out successfully.', 'success')
+    return redirect(url_for('login'))
 
-# ────── Protected: Home ──────
-@app.route("/home")
+@app.route('/home')
 def home():
-    if "user" not in session:
-        flash("Please log in first.", "warning")
-        return redirect(url_for("login"))
-
-    raw_q = request.args.get("q", "").strip()
-    raw_category = request.args.get("category", "").strip()
-
-    alias_map = {
-        "self-help": "Self-Help Book",
-        "self help": "Self-Help Book",
-        "biography": "Autobiography",
-        "bio": "Autobiography",
-        "nonfiction": "Non-fiction",
-        "personalfinance": "Personal Finance",
-        "fiction": "Fiction / Inspirational / Philosophical",
-        "action": "Action-book",
-        "value": "value investing-educational",
-        "sci-fi": "Sci-Fi",
-        "adventure": "Adventure"
-    }
-
-    canonical_category = alias_map.get(raw_category.lower(), raw_category)
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    
     books = load_books()
+    category = request.args.get('category', '')
+    search = request.args.get('search', '').lower()
+    
+    filtered_books = books
+    
+    if category:
+        filtered_books = [book for book in filtered_books if book['category'].lower() == category.lower()]
+        filtered_books = filtered_books[:3]
+    
+    if search:
+        filtered_books = [book for book in filtered_books if search in book['title'].lower()]
+    
+    return render_template('home.html', books=filtered_books, user=session['user'])
 
-    if canonical_category:
-        books = [
-            b for b in books
-            if b["category"].lower() == canonical_category.lower()
-        ][:3]
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    data = request.form.get('feedback')
+    print("Feedback received:", data)  # You can log this or save it
+    flash("Thanks for your feedback!", "success")
+    return redirect(url_for('home'))
 
-    if raw_q:
-        keyword = raw_q.lower()
-        books = [b for b in books if keyword in b["title"].lower()]
-
-    show_popup = session.pop("show_feedback_popup", False)
-
-    return render_template(
-        "home.html",
-        books=books,
-        search_term=raw_q,
-        selected_category=raw_category,
-        show_feedback_popup=show_popup
-    )
-
-# ────── OAuth Placeholders ──────
-@app.route('/google-login')
-def google_login():
-    return redirect("https://accounts.google.com/")  # Replace with actual logic
-
-@app.route('/github-login')
-def github_login():
-    # This requires GitHub OAuth setup with Flask-Dance or similar
-    return "GitHub login placeholder"
-
-# ────── Feedback ──────
-@app.route("/submit_feedback", methods=["POST"])
-def submit_feedback():
-    if "user" not in session:
-        flash("Please log in to submit feedback.", "warning")
-        return redirect(url_for("login"))
-
-    try:
-        feedback_text = request.form.get("feedback", "").strip()
-        if not feedback_text:
-            flash("Feedback cannot be empty.", "error")
-            return redirect(url_for("home"))
-
-        feedback_entry = {
-            "username": session["user"],
-            "feedback": feedback_text,
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-
-        feedback_file = "feedback.json"
-        feedback_list = []
-
-        if os.path.exists(feedback_file):
-            with open(feedback_file, "r", encoding="utf-8") as f:
-                try:
-                    feedback_list = json.load(f)
-                except json.JSONDecodeError:
-                    feedback_list = []
-
-        feedback_list.append(feedback_entry)
-
-        with open(feedback_file, "w", encoding="utf-8") as f:
-            json.dump(feedback_list, f, indent=2)
-
-        session["show_feedback_popup"] = True
-        flash("Thanks for your feedback!", "success")
-        return redirect(url_for("home"))
-
-    except Exception as e:
-        print("Feedback Error:", e)
-        flash("Something went wrong. Please try again.", "error")
-        return redirect(url_for("home"))
-
-# ────── Book Pages ──────
-@app.route("/book/<int:id>")
-def book_page(id):
-    if "user" not in session:
-        flash("Please log in first.", "warning")
-        return redirect(url_for("login"))
-
-    book = next((b for b in load_books() if b["id"] == id), None)
-    if not book:
-        flash("Book not found.", "danger")
-        return redirect(url_for("home"))
-    return render_template("book_page.html", book=book)
-
-@app.route("/book/pdf/<int:id>")
-def book_pdf(id):
-    if "user" not in session:
-        flash("Please log in first.", "warning")
-        return redirect(url_for("login"))
-
-    book = next((b for b in load_books() if b["id"] == id), None)
-    if not book:
-        flash("PDF not found.", "danger")
-        return redirect(url_for("home"))
-    return redirect(url_for("static", filename=book["pdf_file"]))
-
-@app.route("/read/<int:id>")
-def read_book(id):
-    return redirect(url_for("book_pdf", id=id))
-
-# ────── Seed Books ──────
-@app.before_first_request
-def seed_books():
-    if load_books():
-        return
-    sample = [
-        {
-            "id": 1,
-            "title": "Deep Work",
-            "author": "Cal Newport",
-            "category": "Self-Help",
-            "description": "Rules for focused success in a distracted world.",
-            "pdf_file": "pdf/Deep-Work.pdf",
-            "image_url": "images/deepwork.jpg"
-        },
-        {
-            "id": 2,
-            "title": "Rich Dad Poor Dad",
-            "author": "Robert Kiyosaki",
-            "category": "Finance",
-            "description": "What the rich teach their kids about money.",
-            "pdf_file": "pdf/Rich Dad Poor Dad.pdf",
-            "image_url": "images/richdad.jpg"
-        },
-        {
-            "id": 3,
-            "title": "The Alchemist",
-            "author": "Paulo Coelho",
-            "category": "Fiction",
-            "description": "A journey of self-discovery.",
-            "pdf_file": "pdf/The_Alchemist.pdf",
-            "image_url": "images/alchemist.jpg"
-        }
-    ]
-    save_books(sample)
-    print("📚 Sample books added → books.json")
-
-# ────── Run App ──────
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
