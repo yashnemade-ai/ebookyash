@@ -244,9 +244,9 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-# ────── Seed sample data (Flask 3 compatible) ──────
-@app.before_serving
-async def seed_books():
+# ────── Seed sample data (Flask 2.3 compatible) ──────
+@app.before_first_request
+def seed_books():
     if load_books():
         return
     sample = [
