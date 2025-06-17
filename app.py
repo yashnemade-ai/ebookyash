@@ -2,7 +2,6 @@ from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session
 )
-from flask_dance.contrib.google import make_google_blueprint, google
 import os, json
 import werkzeug.security as ws
 from datetime import datetime
@@ -10,78 +9,80 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
 
-# Google OAuth Setup
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-google_bp = make_google_blueprint(
-    client_id="133669733575-lhah8j60ep069r2pmjifj14kcb5776ev.apps.googleusercontent.com",
-    client_secret="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",
-    redirect_to="google_login"
-)
-app.register_blueprint(google_bp, url_prefix="/login")
+BOOKS_FILE  = "books.json"
+USERS_FILE  = "users.json"
 
-BOOKS_FILE = "books.json"
-USERS_FILE = "users.json"
-FEEDBACK_FILE = "feedback.json"
+# ────── Helpers: books ──────
+def load_books():
+    if os.path.exists(BOOKS_FILE):
+        with open(BOOKS_FILE) as f:
+            return json.load(f)
+    return []
 
-# ────── Helpers ──────
-def load_json(file_path):
-    if os.path.exists(file_path):
+def save_books(data):
+    with open(BOOKS_FILE, "w") as f:
+        json.dump(data, f, indent=4)
+
+# ────── Helpers: users ──────
+def load_users():
+    if os.path.exists(USERS_FILE):
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(USERS_FILE) as f:
                 return json.load(f)
         except json.JSONDecodeError:
             return []
     return []
 
-def save_json(data, file_path):
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+def save_users(users):
+    with open(USERS_FILE, "w") as f:
+        json.dump(users, f, indent=4)
 
-# ────── Routes ──────
-
+# ────── Public: Welcome ──────
 @app.route("/")
 def welcome():
     img_dir = os.path.join(app.static_folder, "images")
-    images = [f for f in os.listdir(img_dir)
-              if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+    images  = [f for f in os.listdir(img_dir)
+               if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     return render_template("welcome.html", images=images)
 
+# ────── Auth: Signup ──────
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        email = request.form.get("email", "").strip()
+        email    = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
 
         if not email or not password:
             flash("All fields are required.", "error")
             return redirect(url_for("signup"))
 
-        users = load_json(USERS_FILE)
+        users = load_users()
         if any(u["email"] == email for u in users):
             flash("User already exists. Please log in.", "error")
             return redirect(url_for("login"))
 
         hash_pw = ws.generate_password_hash(password)
         users.append({"email": email, "password": hash_pw})
-        save_json(users, USERS_FILE)
+        save_users(users)
 
         flash("Signup successful. Please log in.", "success")
         return redirect(url_for("login"))
 
     return render_template("signup.html")
 
+# ────── Auth: Login ──────
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email", "").strip()
+        email    = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
 
         if not email or not password:
             flash("All fields are required.", "error")
             return redirect(url_for("login"))
 
-        users = load_json(USERS_FILE)
-        user = next((u for u in users if u["email"] == email), None)
+        users = load_users()
+        user  = next((u for u in users if u["email"] == email), None)
 
         if user and ws.check_password_hash(user["password"], password):
             session["user"] = user["email"]
@@ -94,56 +95,45 @@ def login():
 
     return render_template("login.html")
 
-@app.route("/google-login")
-def google_login():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-
-    resp = google.get("/oauth2/v2/userinfo")
-    if resp.ok:
-        user_info = resp.json()
-        email = user_info.get("email")
-
-        if email:
-            session["user"] = email
-            users = load_json(USERS_FILE)
-            if not any(u["email"] == email for u in users):
-                users.append({"email": email, "password": ""})
-                save_json(users, USERS_FILE)
-            flash("Logged in with Google!", "success")
-            return redirect(url_for("home"))
-    flash("Google login failed.", "error")
-    return redirect(url_for("login"))
-
+# ────── Auth: Logout ──────
 @app.route("/logout")
 def logout():
     session.pop("user", None)
     flash("Logged out.", "info")
     return redirect(url_for("welcome"))
 
+# ────── Protected: Home ──────
 @app.route("/home")
 def home():
     if "user" not in session:
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    raw_q = request.args.get("q", "").strip()
+    raw_q        = request.args.get("q", "").strip()
     raw_category = request.args.get("category", "").strip()
 
     alias_map = {
-        "self-help": "Self-Help", "self help": "Self-Help",
-        "biography": "Autobiography", "bio": "Autobiography",
-        "nonfiction": "Non-fiction", "personalfinance": "Personal Finance",
-        "fiction": "Fiction", "action": "Action-book",
-        "value": "value investing-educational", "sci-fi": "Sci-Fi",
+        "self-help": "Self-Help Book",
+        "self help": "Self-Help Book",
+        "biography": "Autobiography",
+        "bio": "Autobiography",
+        "nonfiction": "Non-fiction",
+        "personalfinance": "Personal Finance",
+        "fiction": "Fiction / Inspirational / Philosophical",
+        "action": "Action-book",
+        "value": "value investing-educational",
+        "sci-fi": "Sci-Fi",
         "adventure": "Adventure"
     }
 
     canonical_category = alias_map.get(raw_category.lower(), raw_category)
-    books = load_json(BOOKS_FILE)
+    books = load_books()
 
     if canonical_category:
-        books = [b for b in books if b["category"].lower() == canonical_category.lower()][:3]
+        books = [
+            b for b in books
+            if b["category"].lower() == canonical_category.lower()
+        ][:3]
 
     if raw_q:
         keyword = raw_q.lower()
@@ -158,37 +148,73 @@ def home():
         selected_category=raw_category,
         show_feedback_popup=show_popup
     )
+@app.route('/google-login')
+def google_login():
+    # This is just a placeholder
+    return redirect("https://accounts.google.com/")  # Replace with actual OAuth logic
 
+@app.route('/github-login')
+def github_login():
+    if not github.authorized:
+        return redirect(url_for("github.login"))
+    resp = github.get("/user")
+    if resp.ok:
+        username = resp.json()["login"]
+        return f"Hello, {username}!"
+    return "GitHub login failed.", 400
+
+
+# ────── Feedback Route (updated) ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
     if "user" not in session:
         flash("Please log in to submit feedback.", "warning")
         return redirect(url_for("login"))
 
-    feedback_text = request.form.get("feedback", "").strip()
-    if not feedback_text:
-        flash("Feedback cannot be empty.", "error")
+    try:
+        feedback_text = request.form.get("feedback", "").strip()
+        if not feedback_text:
+            flash("Feedback cannot be empty.", "error")
+            return redirect(url_for("home"))
+
+        feedback_entry = {
+            "username": session["user"],
+            "feedback": feedback_text,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        feedback_file = "feedback.json"
+        feedback_list = []
+
+        if os.path.exists(feedback_file):
+            with open(feedback_file, "r", encoding="utf-8") as f:
+                try:
+                    feedback_list = json.load(f)
+                except json.JSONDecodeError:
+                    feedback_list = []
+
+        feedback_list.append(feedback_entry)
+
+        with open(feedback_file, "w", encoding="utf-8") as f:
+            json.dump(feedback_list, f, indent=2)
+
+        session["show_feedback_popup"] = True
+        flash("Thanks for your feedback!", "success")
         return redirect(url_for("home"))
 
-    feedback_list = load_json(FEEDBACK_FILE)
-    feedback_list.append({
-        "username": session["user"],
-        "feedback": feedback_text,
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    })
-    save_json(feedback_list, FEEDBACK_FILE)
+    except Exception as e:
+        print("Feedback Error:", e)
+        flash("Something went wrong. Please try again.", "error")
+        return redirect(url_for("home"))
 
-    session["show_feedback_popup"] = True
-    flash("Thanks for your feedback!", "success")
-    return redirect(url_for("home"))
-
+# ────── Book Pages ──────
 @app.route("/book/<int:id>")
 def book_page(id):
     if "user" not in session:
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    book = next((b for b in load_json(BOOKS_FILE) if b["id"] == id), None)
+    book = next((b for b in load_books() if b["id"] == id), None)
     if not book:
         flash("Book not found.", "danger")
         return redirect(url_for("home"))
@@ -200,7 +226,7 @@ def book_pdf(id):
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    book = next((b for b in load_json(BOOKS_FILE) if b["id"] == id), None)
+    book = next((b for b in load_books() if b["id"] == id), None)
     if not book:
         flash("PDF not found.", "danger")
         return redirect(url_for("home"))
@@ -210,9 +236,12 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-# ────── Seed sample books (only if not already) ──────
-if not load_json(BOOKS_FILE):
-    sample_books = [
+# ────── Seed sample data ──────
+@app.before_first_request
+def seed_books():
+    if load_books():
+        return
+    sample = [
         {
             "id": 1,
             "title": "Deep Work",
@@ -241,9 +270,9 @@ if not load_json(BOOKS_FILE):
             "image_url": "images/alchemist.jpg"
         }
     ]
-    save_json(sample_books, BOOKS_FILE)
-    print("📚 Sample books seeded.")
+    save_books(sample)
+    print("\U0001F4DA  sample books added → books.json")
 
-# ────── Run Locally ──────
+# ────── Run App ──────
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 
