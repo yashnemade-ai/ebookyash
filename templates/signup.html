@@ -152,6 +152,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       padding: 12px;
       border-radius: 8px;
       font-weight: 600;
@@ -159,6 +160,10 @@
       cursor: pointer;
       border: none;
       transition: 0.3s ease;
+    }
+
+    .social-btn img {
+      height: 20px;
     }
 
     .google {
@@ -234,10 +239,16 @@
     <p>Or sign up with</p>
     <div class="social-buttons">
       <form action="{{ url_for('google_login') }}" method="GET">
-        <button class="social-btn google" type="submit">Continue with Google</button>
+        <button class="social-btn google" type="submit">
+          <img src="{{ url_for('static', filename='images/google-icon.svg') }}" alt="Google Logo">
+          Continue with Google
+        </button>
       </form>
       <form action="{{ url_for('github_login') }}" method="GET">
-        <button class="social-btn github" type="submit">Continue with GitHub</button>
+        <button class="social-btn github" type="submit">
+          <img src="{{ url_for('static', filename='images/github-icon.svg') }}" alt="GitHub Logo">
+          Continue with GitHub
+        </button>
       </form>
     </div>
   </div>
