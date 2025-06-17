@@ -9,8 +9,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
 
-BOOKS_FILE  = "books.json"
-USERS_FILE  = "users.json"
+BOOKS_FILE = "books.json"
+USERS_FILE = "users.json"
 
 # ────── Helpers: books ──────
 def load_books():
@@ -41,15 +41,15 @@ def save_users(users):
 @app.route("/")
 def welcome():
     img_dir = os.path.join(app.static_folder, "images")
-    images  = [f for f in os.listdir(img_dir)
-               if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+    images = [f for f in os.listdir(img_dir)
+              if f.lower().endswith((".jpg", ".jpeg", ".png"))]
     return render_template("welcome.html", images=images)
 
 # ────── Auth: Signup ──────
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        email    = request.form.get("email", "").strip()
+        email = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
 
         if not email or not password:
@@ -74,7 +74,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email    = request.form.get("email", "").strip()
+        email = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
 
         if not email or not password:
@@ -82,7 +82,7 @@ def login():
             return redirect(url_for("login"))
 
         users = load_users()
-        user  = next((u for u in users if u["email"] == email), None)
+        user = next((u for u in users if u["email"] == email), None)
 
         if user and ws.check_password_hash(user["password"], password):
             session["user"] = user["email"]
@@ -109,7 +109,7 @@ def home():
         flash("Please log in first.", "warning")
         return redirect(url_for("login"))
 
-    raw_q        = request.args.get("q", "").strip()
+    raw_q = request.args.get("q", "").strip()
     raw_category = request.args.get("category", "").strip()
 
     alias_map = {
@@ -148,23 +148,18 @@ def home():
         selected_category=raw_category,
         show_feedback_popup=show_popup
     )
+
+# ────── OAuth Placeholders ──────
 @app.route('/google-login')
 def google_login():
-    # This is just a placeholder
-    return redirect("https://accounts.google.com/")  # Replace with actual OAuth logic
+    return redirect("https://accounts.google.com/")  # Replace with actual logic
 
 @app.route('/github-login')
 def github_login():
-    if not github.authorized:
-        return redirect(url_for("github.login"))
-    resp = github.get("/user")
-    if resp.ok:
-        username = resp.json()["login"]
-        return f"Hello, {username}!"
-    return "GitHub login failed.", 400
+    # This requires GitHub OAuth setup with Flask-Dance or similar
+    return "GitHub login placeholder"
 
-
-# ────── Feedback Route (updated) ──────
+# ────── Feedback ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
     if "user" not in session:
@@ -236,7 +231,7 @@ def book_pdf(id):
 def read_book(id):
     return redirect(url_for("book_pdf", id=id))
 
-# ────── Seed sample data ──────
+# ────── Seed Books ──────
 @app.before_first_request
 def seed_books():
     if load_books():
@@ -271,8 +266,8 @@ def seed_books():
         }
     ]
     save_books(sample)
-    print("\U0001F4DA  sample books added → books.json")
+    print("📚 Sample books added → books.json")
 
 # ────── Run App ──────
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
