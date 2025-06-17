@@ -2,12 +2,22 @@ from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session
 )
+from flask_dance.contrib.google import make_google_blueprint, google
 import os, json
 import werkzeug.security as ws
 from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "replace-with-real-secret-key"
+
+# Google OAuth setup
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Use HTTPS in production
+google_bp = make_google_blueprint(
+    client_id="133669733575-lhah8j60ep069r2pmjifj14kcb5776ev.apps.googleusercontent.com",
+    client_secret="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",
+    redirect_to="google_login"
+)
+app.register_blueprint(google_bp, url_prefix="/login")
 
 BOOKS_FILE  = "books.json"
 USERS_FILE  = "users.json"
@@ -95,6 +105,22 @@ def login():
 
     return render_template("login.html")
 
+# ────── Google OAuth Login ──────
+@app.route("/google-login")
+def google_login():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+
+    resp = google.get("/oauth2/v2/userinfo")
+    if resp.ok:
+        user_info = resp.json()
+        session["user"] = user_info["email"]
+        flash("Logged in with Google!", "success")
+        return redirect(url_for("home"))
+    else:
+        flash("Google login failed.", "error")
+        return redirect(url_for("login"))
+
 # ────── Auth: Logout ──────
 @app.route("/logout")
 def logout():
@@ -148,23 +174,8 @@ def home():
         selected_category=raw_category,
         show_feedback_popup=show_popup
     )
-@app.route('/google-login')
-def google_login():
-    # This is just a placeholder
-    return redirect("https://accounts.google.com/")  # Replace with actual OAuth logic
 
-@app.route('/github-login')
-def github_login():
-    if not github.authorized:
-        return redirect(url_for("github.login"))
-    resp = github.get("/user")
-    if resp.ok:
-        username = resp.json()["login"]
-        return f"Hello, {username}!"
-    return "GitHub login failed.", 400
-
-
-# ────── Feedback Route (updated) ──────
+# ────── Feedback ──────
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback():
     if "user" not in session:
