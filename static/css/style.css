@@ -1,18 +1,6 @@
 /* -------------------------------------------------
-   Global Variables & Reset
+   Global Reset & Typography
 -------------------------------------------------- */
-:root {
-  --primary-color: #007bff;
-  --secondary-color: #1e1e2f;
-  --bg-light: #f4f6f9;
-  --text-dark: #333;
-  --white: #fff;
-
-  /* header height used for fixed header spacing; adjust if header size changes */
-  --header-h: 72px;
-  --header-bg: #171822; /* header background color used to hide top strip */
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -21,43 +9,23 @@
   scroll-behavior: smooth;
 }
 
-html {
-  /* make the very-top background match header so no pale strip shows */
-  background: var(--header-bg);
-  height: 100%;
-}
-
-html, body {
-  height: 100%;
-}
-
-/* reserve space for the fixed header so page content doesn't jump under it */
 body {
-  padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   background: linear-gradient(120deg, #f4f6f9, #edf1f5);
-  color: var(--text-dark);
-  min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: #333;
 }
 
 /* -------------------------------------------------
-   Header: fixed, centered layout + animated buttons
-   (keeps nav visible and prevents "missing" buttons)
+   Header: centered layout + animated buttons
 -------------------------------------------------- */
 header {
-  background: var(--header-bg); /* slightly darker for contrast */
+  background: #171822; /* slightly darker for contrast */
   padding: 14px 20px;
-  position: fixed;      /* FIXED so it never disappears or reflows on anchor clicks */
-  top: env(safe-area-inset-top, 0px);
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: var(--header-h);
+  position: sticky;
+  top: 0;
   z-index: 1100;
   box-shadow: 0 6px 20px rgba(10,10,20,0.20);
   display: flex;
-  justify-content: center;
+  justify-content: center; /* center nav horizontally */
   align-items: center;
 }
 
@@ -67,10 +35,8 @@ header nav {
   max-width: 1100px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-/* prevent nav from wrapping & allow horizontal scroll when needed */
 header nav ul {
   list-style: none;
   display: flex;
@@ -78,19 +44,6 @@ header nav ul {
   align-items: center;
   margin: 0;
   padding: 0;
-  flex-wrap: nowrap;      /* don't wrap items to new lines */
-  white-space: nowrap;    /* avoid breaking text inside items */
-  overflow-x: auto;       /* allow horizontal scrolling on narrow screens */
-  -webkit-overflow-scrolling: touch;
-}
-
-/* style for the nav scrollbar (subtle) */
-header nav ul::-webkit-scrollbar {
-  height: 6px;
-}
-header nav ul::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.06);
-  border-radius: 6px;
 }
 
 /* Animated header buttons (use .header-btn on anchors) */
@@ -146,7 +99,6 @@ header nav ul::-webkit-scrollbar-thumb {
   pointer-events: none;
 }
 
-/* hover/focus lift & glow */
 .header-btn:hover,
 .header-btn:focus {
   transform: translateY(-6px);
@@ -196,16 +148,16 @@ header nav ul::-webkit-scrollbar-thumb {
 .header-btn.animated { animation: floaty 5s ease-in-out infinite; }
 
 /* -------------------------------------------------
-   Hero (with hero-scoped video)
+   “Welcome” Hero  (welcome.html) - with hero-scoped video
 -------------------------------------------------- */
 .hero {
   padding: 100px 20px 40px;
   text-align: center;
   color: #fff;
-  position: relative;      /* stacking context for video */
+  position: relative;      /* create stacking context for video */
   overflow: hidden;        /* clip video to hero area */
   z-index: 2;
-  /* fallback gradient if video blocked */
+  /* fallback gradient if video is blocked */
   background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
@@ -218,6 +170,7 @@ header nav ul::-webkit-scrollbar-thumb {
   z-index: 0;              /* behind hero content */
   pointer-events: none;
   overflow: hidden;
+  display: block;
 }
 
 #hero-video {
@@ -257,7 +210,7 @@ header nav ul::-webkit-scrollbar-thumb {
 }
 
 /* -------------------------------------------------
-   Auto-scroll Book Covers
+   Auto-scroll Book Covers (welcome.html)
 -------------------------------------------------- */
 .ad-container {
   overflow: hidden;
@@ -316,9 +269,7 @@ header nav ul::-webkit-scrollbar-thumb {
   margin-bottom: 35px;
 }
 
-/* -------------------------------------------------
-   Search bar
--------------------------------------------------- */
+/* Search bar */
 .search-bar {
   display: flex;
   justify-content: center;
@@ -380,7 +331,7 @@ header nav ul::-webkit-scrollbar-thumb {
 }
 
 /* -------------------------------------------------
-   Section Title
+   Section Heading
 -------------------------------------------------- */
 .section-title {
   text-align: center;
@@ -533,24 +484,9 @@ footer nav a:hover {
 }
 
 /* -------------------------------------------------
-   Anchor target offset (prevents content hiding under fixed header)
--------------------------------------------------- */
-/* apply scroll-margin-top to common anchor targets */
-#about,
-#support,
-.hero,
-.white-box,
-.ad-container {
-  scroll-margin-top: calc(var(--header-h) + 8px);
-}
-
-/* -------------------------------------------------
    Responsive
 -------------------------------------------------- */
 @media (max-width: 768px) {
-
-  /* reduce header height variable on smaller screens */
-  :root { --header-h: 64px; }
 
   .hero h1,
   .home-hero h1 {
@@ -577,7 +513,7 @@ footer nav a:hover {
   }
 
   header nav ul {
-    flex-direction: row; /* keep horizontal but allow scroll */
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     padding: 8px;
