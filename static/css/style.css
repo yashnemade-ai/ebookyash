@@ -198,16 +198,15 @@ header nav ul::-webkit-scrollbar-thumb {
   z-index: 2;
 }
 
-/* -------------------------------------------------
-   ⭐ Featured Collection Title (Centered)
--------------------------------------------------- */
 .featured-collection-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 700;
-  color: #1e1e2f;
-  margin: 30px auto 10px;
+  width: 100%;
   display: block;
+  text-align: center !important;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 40px 0 20px !important; /* top & bottom spacing */
+  padding: 0;
+  color: #1e1e2f;
 }
 
 /* -------------------------------------------------
@@ -255,3 +254,4 @@ header nav ul::-webkit-scrollbar-thumb {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
