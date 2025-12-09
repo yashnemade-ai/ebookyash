@@ -276,6 +276,64 @@ header nav ul::-webkit-scrollbar-thumb {
 }
 
 /* -------------------------------------------------
+   Featured Collection overlay (title on moving books)
+   Add this wrapper in HTML: <section class="ad-section"> ... </section>
+-------------------------------------------------- */
+.ad-section {
+  position: relative;
+  width: 100%;
+  margin: 40px 0;
+  display: block;
+}
+
+/* floating, pill-like title centered above the carousel */
+.ad-section .carousel-title {
+  position: absolute;
+  top: 8px;                     /* distance from top of carousel area */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;                   /* above the carousel */
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.6rem;
+  padding: 10px 22px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  letter-spacing: 0.2px;
+  display: inline-block;
+  pointer-events: none;         /* don't block carousel interactions */
+  opacity: 0;
+  animation: slideFadeIn 900ms ease forwards;
+}
+
+/* optional small subtitle (inside pill if desired) */
+.ad-section .carousel-sub {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin-top: 4px;
+  opacity: 0.9;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+}
+
+/* make sure carousel container sits below the title */
+.ad-section .ad-container {
+  position: relative;
+  z-index: 2;
+  margin-top: 28px; /* create space so title doesn't overlap book edges too tightly */
+}
+
+/* animation for title */
+@keyframes slideFadeIn {
+  from { transform: translateX(-50%) translateY(-8px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);  opacity: 1; }
+}
+
+/* -------------------------------------------------
    Auto-scroll Book Covers
 -------------------------------------------------- */
 .ad-container {
@@ -631,4 +689,12 @@ footer nav a:hover {
     height: 26px;
     min-width: 26px;
   }
+
+  .ad-section .carousel-title {
+    font-size: 1.1rem;
+    padding: 8px 14px;
+    top: 6px;
+  }
+
+  .ad-section .ad-container { margin-top: 22px; }
 }
