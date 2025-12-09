@@ -364,7 +364,11 @@
 
   <!-- Scrolling Book Cards -->
 <div class="ad-container" data-aos="fade-up">
-  <h2 class="ad-title">Featured Collection</h2>
+
+  <div class="ad-title-wrapper">
+    <h2 class="ad-title">Featured Collection</h2>
+  </div>
+
   <div class="ad-content">
     {% for image in images %}
       <div class="ad-card">
@@ -372,9 +376,10 @@
       </div>
     {% endfor %}
   </div>
+
 </div>
 
-
+  
   <!-- About Section -->
   <div class="white-box" id="about" data-aos="fade-up">
     <h2>About Us</h2>
