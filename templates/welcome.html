@@ -30,30 +30,8 @@
       scroll-behavior: smooth;
     }
 
-    /* ===== Video background ===== */
-    #bg-video {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -2;           /* behind everything */
-      pointer-events: none;  /* allow clicks through */
-      filter: saturate(1.02) contrast(1.02);
-      background: #000;
-    }
-
-    /* Slight overlay to make text readable on top of video */
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.55));
-      z-index: -1; /* sits above video, below content */
-      pointer-events: none;
-    }
-
     body {
-      /* fallback background while video loads or for small devices */
+      /* fallback animated gradient behind everything (only visible when video blocked) */
       background: linear-gradient(-45deg, var(--bg-light), #dbe9f4, #e0f7fa, var(--bg-light));
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
@@ -72,7 +50,7 @@
       padding: 15px 0;
       position: sticky;
       top: 0;
-      z-index: 1000; /* keep header above video & overlay */
+      z-index: 1000;
       animation: slideDown 0.6s ease-out forwards;
     }
 
@@ -106,27 +84,53 @@
       background-color: #57576f;
     }
 
+    /* ===== HERO (video scoped inside hero only) ===== */
     .hero {
-      position: relative;
+      position: relative;      /* create stacking context for video */
       padding: 100px 20px;
       text-align: center;
       color: white;
-      overflow: hidden;
-      z-index: 2; /* above overlay & video */
-    }
-
-    /* existing decorative gradient behind hero content */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      overflow: hidden;        /* clip video to hero area */
+      z-index: 2;              /* content above video */
+      /* fallback background color/gradient if video blocked */
       background: linear-gradient(-45deg, #1e1e2f, #007bff, #6f42c1, #1e1e2f);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
-      z-index: -1; /* sits between content and overlay/video */
-      opacity: 0.55;
+    }
+
+    /* VIDEO container inside hero */
+    .hero-video {
+      position: absolute;
+      inset: 0;                /* top:0; right:0; bottom:0; left:0 */
+      z-index: 0;              /* behind hero content */
       pointer-events: none;
+      overflow: hidden;
+      display: block;
+    }
+
+    /* actual video fills the hero area */
+    #hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;       /* cover hero area nicely */
+      display: block;
+      transform: translateZ(0);
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    /* optional overlay for better contrast */
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.42));
+      z-index: 1; /* above video, below text */
+      pointer-events: none;
+    }
+
+    /* ensure hero content sits above video/overlay */
+    .hero > *:not(.hero-video) {
+      position: relative;
+      z-index: 2;
     }
 
     .hero h1 {
@@ -273,13 +277,6 @@
 </head>
 <body>
 
-  <!-- Video background (placed first so it stays behind content) -->
-  <video autoplay muted loop playsinline id="bg-video">
-    <source src="{{ url_for('static', filename='vecteezy_abstract-flowing-light-ombre-gradient-background_2221733.mp4') }}" type="video/mp4">
-    <!-- fallback: if video doesn't play, you can show a static image -->
-  </video>
-  <div class="bg-overlay" aria-hidden="true"></div>
-
   <!-- Header -->
   <header>
     <nav>
@@ -292,8 +289,17 @@
     </nav>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero (video is scoped to this section only) -->
   <div class="hero" data-aos="fade-in">
+    <!-- hero-scoped video -->
+    <div class="hero-video" aria-hidden="true">
+      <video autoplay muted loop playsinline id="hero-video" poster="{{ url_for('static', filename='images/hero-fallback.jpg') }}">
+        <source src="{{ url_for('static', filename='vecteezy_abstract-flowing-light-ombre-gradient-background_2221733.mp4') }}" type="video/mp4">
+        <!-- fallback content -->
+      </video>
+      <div class="hero-video-overlay"></div>
+    </div>
+
     <h1>Welcome to the E-Book World</h1>
     <p>Your gateway to knowledge and inspiration</p>
     <a href="{{ url_for('signup') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-user-plus"></i> Sign Up</a>
