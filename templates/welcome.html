@@ -5,178 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Welcome - E-Book Website</title>
 
-  <!-- External CSS (kept for other pages) -->
+  <!-- External CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
-    /* -------------------------------------------------
-       Full updated CSS: header, hero/video, carousel title
-    -------------------------------------------------- */
-    :root {
+    /* ---------- Variables & Reset ---------- */
+    :root{
       --primary-color: #007bff;
       --secondary-color: #1e1e2f;
       --bg-light: #f4f6f9;
       --text-dark: #333;
-      --white: #fff;
+      --white:#fff;
+      --header-h:72px;
+      --header-bg:#171822;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;scroll-behavior:smooth}
+    html,body{height:100%}
+    html{background:var(--header-bg);} /* hide pale address bar gap */
 
-      --header-h: 72px;
-      --header-bg: #171822;
+    /* dark band behind top area to fully cover url area in mobile/desktop */
+    body::before{
+      content:"";
+      position:fixed;
+      top:0;left:0;right:0;
+      height:calc(var(--header-h) + env(safe-area-inset-top, 0px));
+      background:var(--header-bg);
+      z-index:1098;
+      pointer-events:none;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
-    html, body { height:100%; }
-    html { background: var(--header-bg); }
-
-    /* fixed band to hide pale address-bar gap */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-      background: var(--header-bg);
-      z-index: 1098;
-      pointer-events: none;
-    }
-
-    body {
+    body{
+      min-height:100vh;
+      color:var(--text-dark);
       background: linear-gradient(-45deg, var(--bg-light), #dbe9f4, #e0f7fa, var(--bg-light));
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: var(--text-dark);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      background-size:400% 400%;
+      animation: gradientBG 15s linear infinite;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
+    @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* header */
-    header {
-      background: var(--header-bg);
-      padding: 14px 20px;
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1100;
-      height: var(--header-h);
+    /* ---------- Header: fixed + animated pills ---------- */
+    header{
+      position:fixed;
+      top:0;left:0;right:0;
+      height:var(--header-h);
+      background:var(--header-bg);
+      z-index:1100;
       display:flex;
       justify-content:center;
       align-items:center;
-      box-shadow: 0 6px 20px rgba(10,10,20,0.20);
+      padding:14px 20px;
+      box-shadow:0 6px 20px rgba(10,10,20,0.20);
     }
-
-    header nav { width:100%; max-width:1100px; display:flex; justify-content:center; align-items:center; }
-    header nav ul { list-style:none; display:flex; gap:18px; align-items:center; margin:0; padding:0; white-space:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-
-    header nav ul::-webkit-scrollbar { height:6px; }
-    header nav ul::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius:6px; }
+    header nav{width:100%;max-width:1100px;display:flex;justify-content:center;align-items:center}
+    header nav ul{display:flex;gap:18px;align-items:center;list-style:none;margin:0;padding:0;white-space:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    header nav ul::-webkit-scrollbar{height:6px}
+    header nav ul::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:6px}
 
     .header-btn{
       --bg-1:#3e3e50; --bg-2:#2f2f40;
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 18px; border-radius:10px; color:#fff; font-weight:600; font-size:.95rem;
-      text-decoration:none; background-image:linear-gradient(180deg,var(--bg-1),var(--bg-2));
-      box-shadow:0 6px 18px rgba(30,30,40,0.35); position:relative; overflow:hidden;
-      transition: transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s, background-position .8s, opacity .18s;
-      -webkit-tap-highlight-color: transparent;
+      display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:10px;
+      color:#fff;font-weight:600;font-size:.95rem;text-decoration:none;
+      background-image:linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      box-shadow:0 6px 18px rgba(30,30,40,0.35);
+      position:relative;overflow:hidden;transition:transform .22s cubic-bezier(.2,.9,.2,1),box-shadow .22s,opacity .18s;
+      -webkit-tap-highlight-color:transparent;
     }
-    .header-btn .icon-circle{ width:30px; height:30px; min-width:30px; border-radius:8px; display:inline-grid; place-items:center; background:rgba(255,255,255,0.04); transition:background .2s, transform .22s; }
-    .header-btn::after{ content:""; position:absolute; left:-110%; top:-50%; width:60%; height:220%; background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06)); transform:rotate(18deg); transition:left .9s cubic-bezier(.2,.9,.2,1); pointer-events:none; }
-    .header-btn:hover, .header-btn:focus{ transform: translateY(-6px); box-shadow: 0 18px 36px rgba(50,40,90,0.28); outline:none; }
-    .header-btn:hover::after, .header-btn:focus::after{ left:120%; }
-    .header-btn i{ transition: transform .28s cubic-bezier(.2,.9,.2,1); font-size:1.05rem; }
-    .header-btn:hover i, .header-btn:focus i{ transform: translateY(-3px) rotate(-10deg); }
-    .header-btn:hover .icon-circle{ transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+    .header-btn .icon-circle{width:30px;height:30px;min-width:30px;border-radius:8px;display:inline-grid;place-items:center;background:rgba(255,255,255,0.04);transition:background .2s,transform .22s}
+    .header-btn::after{content:"";position:absolute;left:-110%;top:-50%;width:60%;height:220%;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06));transform:rotate(18deg);transition:left .9s cubic-bezier(.2,.9,.2,1);pointer-events:none}
+    .header-btn:hover,.header-btn:focus{transform:translateY(-6px);box-shadow:0 18px 36px rgba(50,40,90,0.28);outline:none}
+    .header-btn:hover::after,.header-btn:focus::after{left:120%}
+    .header-btn i{transition:transform .28s; font-size:1.05rem}
+    .header-btn:hover i,.header-btn:focus i{transform:translateY(-3px) rotate(-10deg)}
+    .header-btn:hover .icon-circle{transform:translateY(-3px);background:rgba(255,255,255,0.08)}
 
-    .header-btn.primary{ --bg-1:#ff6b4a; --bg-2:#e64a3c; background-image:linear-gradient(90deg,var(--bg-1),var(--bg-2)); box-shadow:0 10px 26px rgba(230,74,60,0.28); }
-    .header-btn:focus-visible{ box-shadow:0 10px 26px rgba(0,0,0,0.25), 0 0 0 4px rgba(85,60,223,0.12); border-radius:10px; }
-    @keyframes floaty{ 0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)} }
-    .header-btn.animated{ animation: floaty 5s ease-in-out infinite; }
+    .header-btn.primary{--bg-1:#ff6b4a;--bg-2:#e64a3c;background-image:linear-gradient(90deg,var(--bg-1),var(--bg-2));box-shadow:0 10px 26px rgba(230,74,60,0.28)}
+    .header-btn:focus-visible{box-shadow:0 10px 26px rgba(0,0,0,0.25),0 0 0 4px rgba(85,60,223,0.12);border-radius:10px}
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+    .header-btn.animated{animation:floaty 5s ease-in-out infinite}
 
-    /* hero (scoped video) */
+    /* ---------- Hero (video scoped to hero and extends behind header) ---------- */
     .hero{
       margin-top:0;
-      padding-top: calc(var(--header-h) + 40px);
+      padding-top: calc(var(--header-h) + 40px); /* shift content below header visually */
       padding-bottom: 40px;
-      text-align:center;
-      color:#fff;
-      position:relative;
-      overflow:hidden;
-      z-index:2;
-      background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
-      background-size:400% 400%;
-      animation: gradientShift 15s ease infinite;
+      position:relative; overflow:hidden; text-align:center; color:#fff; z-index:2;
+      background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad); background-size:400% 400%; animation: gradientShift 15s linear infinite;
     }
-    @keyframes gradientShift{ 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     .hero-video{
       position:absolute;
       left:0; right:0;
-      top: calc(-1 * var(--header-h));
+      top: calc(-1 * var(--header-h));  /* lift video up so it sits behind header */
       height: calc(100% + var(--header-h));
-      z-index:0;
-      pointer-events:none;
-      overflow:hidden;
+      z-index:0; pointer-events:none; overflow:hidden;
     }
-    #hero-video{ width:100%; height:100%; object-fit:cover; display:block; filter: saturate(1.02) contrast(1.02); }
-    .hero-video-overlay{ position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.42)); z-index:1; pointer-events:none; }
-    .hero > *:not(.hero-video){ position:relative; z-index:2; }
+    #hero-video{ width:100%; height:100%; object-fit:cover; filter:saturate(1.02) contrast(1.02); display:block; transform:translateZ(0) }
+    .hero-video-overlay{ position:absolute; inset:0; z-index:1; background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.42)); pointer-events:none }
+    .hero > *:not(.hero-video){ position:relative; z-index:2 }
 
-    .hero h1{ font-size:48px; margin-bottom:10px; animation: fadeInUp 1s ease-out forwards; }
-    .hero p{ font-size:20px; margin-bottom:30px; animation: fadeInUp 1.2s ease-out forwards; }
+    .hero h1{ font-size:48px; margin-bottom:10px; animation:fadeInUp 1s ease-out forwards }
+    .hero p{ font-size:20px; margin-bottom:30px; animation:fadeInUp 1.2s ease-out forwards }
+    @keyframes fadeInUp{0%{opacity:0;transform:translateY(40px)}100%{opacity:1;transform:translateY(0)}}
 
-    .button{ display:inline-block; margin:10px; padding:12px 24px; background-color:var(--primary-color); color:#fff; border-radius:6px; text-decoration:none; transition: background .3s ease; }
-    .button:hover{ background-color:#0056b3; }
-    @keyframes fadeInUp{ 0%{opacity:0; transform:translateY(40px)} 100%{opacity:1; transform:translateY(0)} }
+    .button{ display:inline-block;margin:10px;padding:12px 24px;border-radius:6px;background:var(--primary-color);color:#fff;text-decoration:none;transition:background .3s }
+    .button:hover{ background:#0056b3 }
 
-    /* Featured Collection overlay/title + ad-section wrapper */
-    .ad-section{ position:relative; width:100%; margin:40px 0; display:block; }
-    .ad-section .carousel-title{
+    /* ---------- Featured Collection title over carousel ---------- */
+    .ad-section{ position:relative; width:100%; margin:40px 0; }
+    .carousel-title{
       position:absolute; top:8px; left:50%; transform:translateX(-50%);
-      z-index:5; background: rgba(255,255,255,0.06); color:#fff; font-weight:700;
-      font-size:1.6rem; padding:10px 22px; border-radius:999px; box-shadow:0 6px 18px rgba(0,0,0,0.45);
-      backdrop-filter:blur(6px); -webkit-backdrop-filter: blur(6px); letter-spacing:0.2px;
-      display:inline-block; pointer-events:none; opacity:0; animation: slideFadeIn 900ms ease forwards;
+      z-index:5; display:inline-block; padding:10px 22px; border-radius:999px;
+      background: rgba(255,255,255,0.06); color: #fff; font-weight:700; font-size:1.6rem;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      pointer-events:none; opacity:0; animation: slideFadeIn .9s ease forwards;
     }
-    .ad-section .carousel-sub{ display:block; font-size:0.78rem; font-weight:600; margin-top:4px; color: rgba(255,255,255,0.9); }
+    .carousel-sub{ display:block; font-size:.78rem; margin-top:4px; color: rgba(255,255,255,0.9) }
     @keyframes slideFadeIn{ from{ transform:translateX(-50%) translateY(-8px); opacity:0 } to{ transform:translateX(-50%) translateY(0); opacity:1 } }
 
-    /* ad carousel */
-    .ad-container{ overflow:hidden; padding:30px 0; background-color: rgba(255,255,255,0.95); margin-top:28px; border-top:4px solid #ddd; border-bottom:4px solid #ddd; z-index:2; position:relative; }
-    .ad-content{ display:flex; gap:30px; padding-inline:20px; width:max-content; animation: scrollBooks 25s linear infinite; }
+    /* ---------- ad carousel ---------- */
+    .ad-container{ overflow:hidden; padding:30px 0; margin-top:28px; background: rgba(255,255,255,0.95); border-top:4px solid #ddd; border-bottom:4px solid #ddd; position:relative; z-index:2 }
+    .ad-content{ display:flex; gap:30px; padding-inline:20px; width:max-content; animation: scrollBooks 25s linear infinite }
     @keyframes scrollBooks{ 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-    .ad-card{ flex:0 0 auto; width:200px; height:300px; border-radius:12px; overflow:hidden; background:#fafafa; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition: transform .3s ease; }
-    .ad-card img{ width:100%; height:100%; object-fit:contain; display:block; }
-    .ad-card:hover{ transform:scale(1.05); }
+    .ad-card{ flex:0 0 auto; width:200px; height:300px; border-radius:12px; background:#fafafa; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition:transform .3s }
+    .ad-card img{ width:100%; height:100%; object-fit:cover; display:block }
+    .ad-card:hover{ transform:scale(1.05) }
 
-    /* white boxes and other content (kept simple) */
-    .white-box{ background:#fff; box-shadow:0 8px 24px rgba(0,0,0,0.06); border-radius:12px; padding:40px 30px; margin:40px auto; max-width:1000px; text-align:center; transition:transform .3s ease; position:relative; z-index:2; }
-    .white-box:hover{ transform:translateY(-4px); }
-    .white-box h2{ font-size:32px; color:var(--secondary-color); margin-bottom:20px; }
-    .white-box p{ font-size:18px; color:#555; max-width:800px; margin:0 auto 20px; }
+    /* ---------- white-box / sections ---------- */
+    .white-box{ background:#fff; border-radius:12px; padding:40px 30px; margin:40px auto; max-width:1000px; box-shadow:0 8px 24px rgba(0,0,0,0.06); text-align:center; z-index:2; position:relative; transition:transform .3s }
+    .white-box:hover{ transform:translateY(-4px) }
+    .white-box h2{ font-size:32px; color:var(--secondary-color); margin-bottom:20px }
+    .white-box p{ font-size:18px; color:#555; max-width:800px; margin:0 auto 20px }
 
-    footer{ background-color:var(--secondary-color); color:#fff; padding:20px 40px; text-align:center; margin-top:40px; position:relative; z-index:2; }
-    footer nav{ margin-bottom:10px; } footer nav a{ color:#bbb; margin:0 10px; text-decoration:none; } footer nav a:hover{ color:#fff; }
+    footer{ background:var(--secondary-color); color:#fff; padding:20px 40px; text-align:center; z-index:2; position:relative }
+    footer nav { margin-bottom:10px } footer nav a{ color:#bbb; margin:0 10px; text-decoration:none } footer nav a:hover{ color:#fff }
 
-    /* responsive */
+    /* anchor offset so targets are visible under fixed header */
+    #about,#support,.hero,.white-box,.ad-container{ scroll-margin-top: calc(var(--header-h) + 8px + env(safe-area-inset-top, 0px)) }
+
+    /* ---------- responsive ---------- */
     @media (max-width:768px){
-      :root{ --header-h:64px; }
-      .hero h1{ font-size:32px; } .hero p{ font-size:16px; } .ad-card{ width:150px; height:220px; }
-      header nav{ max-width:100%; padding:0 12px; } header nav ul{ gap:10px; }
-      .header-btn{ padding:8px 12px; font-size:.9rem; border-radius:8px; } .header-btn .icon-circle{ width:26px; height:26px; min-width:26px; }
-      .ad-section .carousel-title{ font-size:1.1rem; padding:8px 14px; top:6px; }
-      .ad-section .ad-container{ margin-top:22px; }
+      :root{ --header-h:64px }
+      .hero h1{ font-size:32px } .hero p{ font-size:16px } .ad-card{ width:150px;height:220px }
+      header nav{ max-width:100%; padding:0 12px } header nav ul{ gap:10px }
+      .header-btn{ padding:8px 12px; font-size:.9rem; border-radius:8px } .header-btn .icon-circle{ width:26px;height:26px;min-width:26px }
+      .carousel-title{ font-size:1.1rem; padding:8px 14px; top:6px }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header (animated buttons) -->
+  <!-- Header (animated pills) -->
   <header>
     <nav>
       <ul>
@@ -211,7 +194,7 @@
     </nav>
   </header>
 
-  <!-- Hero (video scoped to hero) -->
+  <!-- Hero (video scoped inside hero; stretches behind header so no white gap) -->
   <div class="hero" data-aos="fade-in">
     <div class="hero-video" aria-hidden="true">
       <video autoplay muted loop playsinline id="hero-video" poster="{{ url_for('static', filename='images/hero-fallback.jpg') }}">
@@ -225,7 +208,7 @@
     <a href="{{ url_for('signup') }}" class="button" style="background-color:#e74c3c;"><i class="fas fa-user-plus"></i> Sign Up</a>
   </div>
 
-  <!-- Scrolling Book Cards with Featured title -->
+  <!-- Featured Collection + Scrolling Book Cards -->
   <section class="ad-section" aria-labelledby="featured-title">
     <div id="featured-title" class="carousel-title">Featured Collection</div>
 
@@ -238,13 +221,13 @@
     </div>
   </section>
 
-  <!-- About Section -->
+  <!-- About -->
   <div class="white-box" id="about" data-aos="fade-up">
     <h2>About Us</h2>
     <p>We are a platform dedicated to providing a diverse collection of e-books across various genres. Our goal is to empower readers worldwide by offering easy access to knowledge.</p>
   </div>
 
-  <!-- Support Section -->
+  <!-- Support -->
   <div class="white-box" id="support" data-aos="fade-up">
     <h2>Support</h2>
     <p>If you have any questions or need assistance, feel free to contact us. Our support team is available 24/7 to help you with any queries you may have.</p>
@@ -254,7 +237,7 @@
     </div>
   </div>
 
-  <!-- Call to Action -->
+  <!-- CTA -->
   <div class="white-box" data-aos="fade-up">
     <h2>Discover your next favorite book today</h2>
     <p>Join thousands of readers expanding their minds and unlocking new ideas.</p>
@@ -271,10 +254,8 @@
     <p>&copy; 2025 E-Book Website. All rights reserved.</p>
   </footer>
 
-  <!-- AOS Animation Script -->
+  <!-- AOS & init -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  <script>AOS.init();</script>
 </body>
 </html>
