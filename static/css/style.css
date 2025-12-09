@@ -10,6 +10,7 @@
 
   /* header height used for fixed header spacing; adjust if header size changes */
   --header-h: 72px;
+  --header-bg: #171822;
 }
 
 * {
@@ -24,11 +25,18 @@ html, body {
   height: 100%;
 }
 
-/* reserve space for the fixed header so page content doesn't jump under it */
+/* make the very-top background match header so no pale strip shows */
+html {
+  background: var(--header-bg);
+}
+
+/* keep body normal (we offset the main content instead of padding the body) */
 body {
-  padding-top: var(--header-h);
   background: linear-gradient(120deg, #f4f6f9, #edf1f5);
   color: var(--text-dark);
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* -------------------------------------------------
@@ -36,10 +44,10 @@ body {
    (keeps nav visible and prevents "missing" buttons)
 -------------------------------------------------- */
 header {
-  background: #171822; /* slightly darker for contrast */
+  background: var(--header-bg); /* slightly darker for contrast */
   padding: 14px 20px;
   position: fixed;      /* FIXED so it never disappears or reflows on anchor clicks */
-  top: 0;
+  top: 0;               /* FLUSH to the very top */
   left: 0;
   right: 0;
   width: 100%;
@@ -48,6 +56,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: var(--header-h);
 }
 
 /* constrain nav width so buttons stay centered nicely */
@@ -186,8 +195,10 @@ header nav ul::-webkit-scrollbar-thumb {
 
 /* -------------------------------------------------
    Hero (with hero-scoped video)
+   NOTE: We offset hero so header is flush to top like your 2nd screenshot
 -------------------------------------------------- */
 .hero {
+  margin-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); /* NEW: offset for fixed header */
   padding: 100px 20px 40px;
   text-align: center;
   color: #fff;
@@ -530,7 +541,7 @@ footer nav a:hover {
 .hero,
 .white-box,
 .ad-container {
-  scroll-margin-top: calc(var(--header-h) + 8px);
+  scroll-margin-top: calc(var(--header-h) + 8px + env(safe-area-inset-top, 0px));
 }
 
 /* -------------------------------------------------
