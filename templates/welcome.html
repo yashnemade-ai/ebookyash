@@ -30,11 +30,35 @@
       scroll-behavior: smooth;
     }
 
+    /* ===== Video background ===== */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;           /* behind everything */
+      pointer-events: none;  /* allow clicks through */
+      filter: saturate(1.02) contrast(1.02);
+      background: #000;
+    }
+
+    /* Slight overlay to make text readable on top of video */
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.55));
+      z-index: -1; /* sits above video, below content */
+      pointer-events: none;
+    }
+
     body {
+      /* fallback background while video loads or for small devices */
       background: linear-gradient(-45deg, var(--bg-light), #dbe9f4, #e0f7fa, var(--bg-light));
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       color: var(--text-dark);
+      min-height: 100vh;
     }
 
     @keyframes gradientBG {
@@ -48,7 +72,7 @@
       padding: 15px 0;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1000; /* keep header above video & overlay */
       animation: slideDown 0.6s ease-out forwards;
     }
 
@@ -88,8 +112,10 @@
       text-align: center;
       color: white;
       overflow: hidden;
+      z-index: 2; /* above overlay & video */
     }
 
+    /* existing decorative gradient behind hero content */
     .hero::before {
       content: '';
       position: absolute;
@@ -98,8 +124,9 @@
       background: linear-gradient(-45deg, #1e1e2f, #007bff, #6f42c1, #1e1e2f);
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
-      z-index: -1;
-      opacity: 0.85;
+      z-index: -1; /* sits between content and overlay/video */
+      opacity: 0.55;
+      pointer-events: none;
     }
 
     .hero h1 {
@@ -138,11 +165,13 @@
     .ad-container {
       width: 100%;
       overflow-x: auto;
-      background-color: white;
+      background-color: rgba(255,255,255,0.95);
       padding: 30px 0;
       margin-top: 40px;
       border-top: 4px solid #ddd;
       border-bottom: 4px solid #ddd;
+      z-index: 2;
+      position: relative;
     }
 
     .ad-content {
@@ -182,6 +211,8 @@
       max-width: 1000px;
       text-align: center;
       transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
     }
 
     .white-box:hover {
@@ -215,6 +246,8 @@
       padding: 20px 40px;
       text-align: center;
       margin-top: 40px;
+      position: relative;
+      z-index: 2;
     }
 
     footer nav {
@@ -239,6 +272,13 @@
   </style>
 </head>
 <body>
+
+  <!-- Video background (placed first so it stays behind content) -->
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="{{ url_for('static', filename='vecteezy_abstract-flowing-light-ombre-gradient-background_2221733.mp4') }}" type="video/mp4">
+    <!-- fallback: if video doesn't play, you can show a static image -->
+  </video>
+  <div class="bg-overlay" aria-hidden="true"></div>
 
   <!-- Header -->
   <header>
