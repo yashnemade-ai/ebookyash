@@ -15,72 +15,186 @@ body {
 }
 
 /* -------------------------------------------------
-   VIDEO BACKGROUND (Added as requested)
--------------------------------------------------- */
-#bg-video {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -2;
-  pointer-events: none;
-  filter: saturate(1.05) contrast(1.05);
-  background: #000;
-}
-
-.bg-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* -------------------------------------------------
-   Navigation
+   Header: centered layout + animated buttons
 -------------------------------------------------- */
 header {
-  background: #1e1e2f;
-  padding: 15px 0;
+  background: #171822; /* slightly darker for contrast */
+  padding: 14px 20px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1100;
+  box-shadow: 0 6px 20px rgba(10,10,20,0.20);
+  display: flex;
+  justify-content: center; /* center nav horizontally */
+  align-items: center;
+}
+
+/* constrain nav width so buttons stay centered nicely */
+header nav {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: center;
 }
 
 header nav ul {
   list-style: none;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-header nav ul li a {
-  display: flex;
+  gap: 18px;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  color: #fff;
-  text-decoration: none;
-  background: #3e3e50;
-  border-radius: 6px;
-  transition: background 0.3s;
+  margin: 0;
+  padding: 0;
 }
 
-header nav ul li a:hover {
-  background: #007bff;
+/* Animated header buttons (use .header-btn on anchors) */
+.header-btn {
+  --bg-1: #3e3e50;
+  --bg-2: #2f2f40;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  background-image: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  box-shadow: 0 6px 18px rgba(30,30,40,0.35);
+  border: 0;
+  cursor: pointer;
+  transition: transform .22s cubic-bezier(.2,.9,.2,1),
+              box-shadow .22s ease,
+              background-position .8s ease,
+              opacity .18s ease;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
+
+/* small icon circle */
+.header-btn .icon-circle {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 8px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(255,255,255,0.04);
+  transition: background .2s ease, transform .22s ease;
+  font-size: 0.95rem;
+}
+
+/* gloss sliding effect */
+.header-btn::after {
+  content: "";
+  position: absolute;
+  left: -110%;
+  top: -50%;
+  width: 60%;
+  height: 220%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+  transform: rotate(18deg);
+  transition: left .9s cubic-bezier(.2,.9,.2,1);
+  pointer-events: none;
+}
+
+.header-btn:hover,
+.header-btn:focus {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(50,40,90,0.28);
+  outline: none;
+}
+
+.header-btn:hover::after,
+.header-btn:focus::after {
+  left: 120%;
+}
+
+.header-btn i {
+  display: inline-block;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1);
+  font-size: 1.05rem;
+}
+
+.header-btn:hover i,
+.header-btn:focus i {
+  transform: translateY(-3px) rotate(-10deg);
+}
+
+.header-btn:hover .icon-circle { transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+
+/* primary variant (for login) */
+.header-btn.primary {
+  --bg-1: #ff6b4a;
+  --bg-2: #e64a3c;
+  background-image: linear-gradient(90deg,var(--bg-1),var(--bg-2));
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(230,74,60,0.28);
+}
+
+/* focus-visible ring for keyboard users */
+.header-btn:focus-visible {
+  box-shadow: 0 10px 26px rgba(0,0,0,0.25), 0 0 0 4px rgba(85,60,223,0.12);
+  border-radius: 10px;
+}
+
+/* floating micro animation */
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+.header-btn.animated { animation: floaty 5s ease-in-out infinite; }
 
 /* -------------------------------------------------
-   “Welcome” Hero  (welcome.html)
+   “Welcome” Hero  (welcome.html) - with hero-scoped video
 -------------------------------------------------- */
 .hero {
   padding: 100px 20px 40px;
   text-align: center;
   color: #fff;
+  position: relative;      /* create stacking context for video */
+  overflow: hidden;        /* clip video to hero area */
+  z-index: 2;
+  /* fallback gradient if video is blocked */
   background: linear-gradient(-45deg, #6a0dad, #8a2be2, #7b68ee, #6a0dad);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
+}
+
+/* video container scoped to hero */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;              /* behind hero content */
+  pointer-events: none;
+  overflow: hidden;
+  display: block;
+}
+
+#hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* subtle overlay to improve contrast */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.42));
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ensure hero text sits above the video and overlay */
+.hero > *:not(.hero-video) {
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
@@ -401,6 +515,8 @@ footer nav a:hover {
   header nav ul {
     flex-direction: column;
     align-items: center;
+    gap: 10px;
+    padding: 8px;
   }
 
   .hero h1 {
@@ -419,5 +535,17 @@ footer nav a:hover {
     width: 90%;
     display: block;
     margin: 10px auto;
+  }
+
+  .header-btn {
+    padding: 8px 12px;
+    font-size: .9rem;
+    border-radius: 8px;
+  }
+
+  .header-btn .icon-circle {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
   }
 }
