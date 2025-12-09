@@ -30,6 +30,20 @@ html {
   background: var(--header-bg);
 }
 
+/* Paint a fixed dark band behind the header (covers safe-area / address bar)
+   This prevents the pale/white strip under the URL area */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  background: var(--header-bg);
+  z-index: 1098; /* sits below header (1100) but above page bg */
+  pointer-events: none;
+}
+
 /* keep body normal (we offset the main content instead of padding the body) */
 body {
   background: linear-gradient(120deg, #f4f6f9, #edf1f5);
@@ -41,7 +55,6 @@ body {
 
 /* -------------------------------------------------
    Header: fixed, centered layout + animated buttons
-   (keeps nav visible and prevents "missing" buttons)
 -------------------------------------------------- */
 header {
   background: var(--header-bg); /* slightly darker for contrast */
@@ -195,11 +208,14 @@ header nav ul::-webkit-scrollbar-thumb {
 
 /* -------------------------------------------------
    Hero (with hero-scoped video)
-   NOTE: We offset hero so header is flush to top like your 2nd screenshot
+   NOTE: Hero video is extended behind the fixed header so there is no white gap
 -------------------------------------------------- */
+/* Remove the top gap and let the hero video start at the very top behind the header.
+   Push hero content down with padding-top so text doesn't hide under header. */
 .hero {
-  margin-top: calc(var(--header-h) + env(safe-area-inset-top, 0px)); /* NEW: offset for fixed header */
-  padding: 100px 20px 40px;
+  margin-top: 0; /* start at page top */
+  padding-top: calc(var(--header-h) + 40px); /* pushes text below header visually */
+  padding-bottom: 40px;
   text-align: center;
   color: #fff;
   position: relative;      /* stacking context for video */
@@ -211,10 +227,13 @@ header nav ul::-webkit-scrollbar-thumb {
   animation: gradientShift 15s ease infinite;
 }
 
-/* video container scoped to hero */
+/* video container scoped to hero; move it up so it fills behind header */
 .hero-video {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--header-h)); /* lift video up to sit behind fixed header */
+  height: calc(100% + var(--header-h)); /* extend video height to cover top area */
   z-index: 0;              /* behind hero content */
   pointer-events: none;
   overflow: hidden;
