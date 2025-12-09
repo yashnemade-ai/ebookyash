@@ -10,6 +10,7 @@
 
   /* header height used for fixed header spacing; adjust if header size changes */
   --header-h: 72px;
+  --header-bg: #171822; /* header background color used to hide top strip */
 }
 
 * {
@@ -20,15 +21,24 @@
   scroll-behavior: smooth;
 }
 
+html {
+  /* make the very-top background match header so no pale strip shows */
+  background: var(--header-bg);
+  height: 100%;
+}
+
 html, body {
   height: 100%;
 }
 
 /* reserve space for the fixed header so page content doesn't jump under it */
 body {
-  padding-top: var(--header-h);
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   background: linear-gradient(120deg, #f4f6f9, #edf1f5);
   color: var(--text-dark);
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* -------------------------------------------------
@@ -36,13 +46,14 @@ body {
    (keeps nav visible and prevents "missing" buttons)
 -------------------------------------------------- */
 header {
-  background: #171822; /* slightly darker for contrast */
+  background: var(--header-bg); /* slightly darker for contrast */
   padding: 14px 20px;
   position: fixed;      /* FIXED so it never disappears or reflows on anchor clicks */
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   left: 0;
   right: 0;
   width: 100%;
+  height: var(--header-h);
   z-index: 1100;
   box-shadow: 0 6px 20px rgba(10,10,20,0.20);
   display: flex;
